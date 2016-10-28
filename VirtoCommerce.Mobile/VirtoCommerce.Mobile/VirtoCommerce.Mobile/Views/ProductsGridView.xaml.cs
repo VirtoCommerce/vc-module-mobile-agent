@@ -12,8 +12,10 @@ namespace VirtoCommerce.Mobile.Views
     {
         public ProductsGridView(ViewModels.ProductsGridViewModel vm)
         {
-            InitializeComponent();
             BindingContext = vm;
+            InitializeComponent();
+            //set to navigation
+            vm.NavigationService.Navigation = Navigation;
         }
     }
 }

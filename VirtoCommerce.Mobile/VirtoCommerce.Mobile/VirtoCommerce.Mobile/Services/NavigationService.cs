@@ -11,19 +11,13 @@ namespace VirtoCommerce.Mobile.Services
 {
     public class NavigationService : INavigationService
     {
-        private readonly INavigation _navigation;
-        
-
-        public NavigationService()
-        {
-
-        }
+        public INavigation Navigation { set; get; }
 
         public async void NavigateTo(Page page)
         {
-            if (_navigation != null)
+            if (Navigation != null)
             {
-                await _navigation.PushAsync(page);
+                await Navigation.PushAsync(page);
             }
         }
 
@@ -34,9 +28,9 @@ namespace VirtoCommerce.Mobile.Services
 
         public async void Pop()
         {
-            if (_navigation != null)
+            if (Navigation != null)
             {
-                await _navigation.PopAsync();
+                await Navigation.PopAsync();
             }
         }
     }

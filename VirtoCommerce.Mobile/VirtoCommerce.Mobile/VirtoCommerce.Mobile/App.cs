@@ -13,6 +13,7 @@ namespace VirtoCommerce.Mobile
     public class App : Application
     {
         public static UnityContainer UnityContainer;
+        public static bool SyncComplete { set; get; }
         public App()
         {
             // The root page of your application
@@ -63,6 +64,12 @@ namespace VirtoCommerce.Mobile
             UnityContainer.RegisterType(typeof(MenuView));
             //navigation service
             UnityContainer.RegisterType<INavigationService, NavigationService>();
+            //sync service
+            UnityContainer.RegisterType<ISyncService, SyncService>();
+            //sync server service
+            UnityContainer.RegisterType<ISyncServerService, MockSyncServerService>();
+            //product storage service
+            UnityContainer.RegisterType<IProductStorageService, ProductStorageService>();
 
         }
     }

@@ -36,13 +36,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Enums\ResponseStatus.cs" />
+    <Compile Include="Enums\SyncStatus.cs" />
+    <Compile Include="Model\Filter.cs" />
+    <Compile Include="Model\Price.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Responses\BaseResponse.cs" />
+    <Compile Include="Responses\ServerResponse.cs" />
+    <Compile Include="Responses\ServerResponseCollection.cs" />
+    <Compile Include="Responses\SyncResponse.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\IProductStorageService.cs" />
+    <Compile Include="Services\ISyncServerService.cs" />
     <Compile Include="Services\ISyncService.cs" />
     <Compile Include="Services\IUserManagerService.cs" />
     <Compile Include="Services\MockUserManagerService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\MockSyncServerService.cs" />
+    <Compile Include="Services\ProductStorageService.cs" />
+    <Compile Include="Services\SyncService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProductsGridViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

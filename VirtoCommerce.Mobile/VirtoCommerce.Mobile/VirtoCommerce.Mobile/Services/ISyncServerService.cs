@@ -8,17 +8,15 @@ using VirtoCommerce.Mobile.Responses;
 
 namespace VirtoCommerce.Mobile.Services
 {
-    public interface ISyncService
+    public interface ISyncServerService
     {
         /// <summary>
-        /// Sync products from server
+        /// Get list products
         /// </summary>
-        Task<SyncResponse> SyncProducts();
-
+        Task<ServerResponseCollection<Product>> GetProducts();
         /// <summary>
-        /// Sync filters from server
+        /// Get list filters
         /// </summary>
-        /// <returns></returns>
-        Task<SyncResponse> SyncFilters();
+        Task<ServerResponseCollection<Filter>> GetFilters();
     }
 }

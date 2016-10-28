@@ -14,7 +14,7 @@ namespace VirtoCommerce.Mobile.ViewModels
     {
         private string _title;
         protected bool _isBusy;
-
+        private string _busyMessage;
         public string Title
         {
             get
@@ -50,6 +50,19 @@ namespace VirtoCommerce.Mobile.ViewModels
 
                 _isBusy = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public string BusyMessage
+        {
+            set
+            {
+                _busyMessage = value;
+                RaisePropertyChanged();
+            }
+            get
+            {
+                return _busyMessage;
             }
         }
 

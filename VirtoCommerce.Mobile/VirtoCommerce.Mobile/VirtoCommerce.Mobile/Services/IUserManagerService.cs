@@ -9,7 +9,13 @@ namespace VirtoCommerce.Mobile.Services
 {
     public interface IUserManagerService
     {
+        /// <summary>
+        /// User authentication on the server
+        /// </summary>
         User Login(string userName, string password);
+        /// <summary>
+        /// Check user is authentication
+        /// </summary>
         bool IsLogin();
     }
 }
