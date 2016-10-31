@@ -36,7 +36,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
 		Product data;
 
-		public static readonly NSString Key = new NSString ("FasionCell");
+		public static readonly NSString Key = new NSString ("ProductCell");
 		
 		public ProductCell() : base (UITableViewCellStyle.Default, Key)
 		{
@@ -104,13 +104,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
 			_statusView.AddSubviews(_titleLabel, _likesLabel, _commentsLabel, _likeButton, dotLabel, _shareButton, _likesView, _commentsView);
 
-			_tableView = new UITableView(new RectangleF(2, 283, 237, 266), UITableViewStyle.Plain) {
+			/*_tableView = new UITableView(new RectangleF(2, 283, 237, 266), UITableViewStyle.Plain) {
 				SeparatorStyle = UITableViewCellSeparatorStyle.SingleLineEtched,
 				ScrollEnabled = false
 			};
 
 			Add (_statusView);
-			Add (_tableView);
+			Add (_tableView);*/
 		}
 
 		void ApplyStyles()
@@ -120,15 +120,15 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
 		public void Bind(Product data)
 		{
-			_dataCount = data.Mentions.Count;
+			//_dataCount = data.Mentions.Count;
 
 			this.data = data;
 
-			_titleLabel.Text = "Spring 2012 Collection";
-			_commentsLabel.Text = data.Comments.ToString();
-			_likesLabel.Text = data.Likes.ToString();
+			_titleLabel.Text = data.Name;
+			//_commentsLabel.Text = data.Comments.ToString();
+			//_likesLabel.Text = data.Likes.ToString();
 
-			_tableView.Source = new FashionSource(data.Mentions);
+			//_tableView.Source = new FashionSource(data.Mentions);
 		}
 
 		public override void LayoutSubviews ()
@@ -136,9 +136,9 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 			base.LayoutSubviews ();
 
 			var imageFrame = _modelImageView.Frame;
-			imageFrame.Size = data.TitleImage.Size;
-			_modelImageView.Frame = imageFrame;
-			_modelImageView.Image = data.TitleImage;			
+			//imageFrame.Size = data.TitleImage.Size;
+			//_modelImageView.Frame = imageFrame;
+			//_modelImageView.Image = data.TitleImage;			
 
 			var statusFrame = _statusView.Frame;
 			statusFrame.Y = 2 * imageFrame.Y + imageFrame.Height;

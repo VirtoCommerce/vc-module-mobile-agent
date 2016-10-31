@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VirtoCommerce.Mobile.Views.LoginView" Title="{Binding Title}">
     <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
-        <Entry Placeholder="Login" WidthRequest="250" Text="{Binding Login}" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Entry Placeholder="Login" WidthRequest="250" Text="{Binding Login}" HorizontalOptions="Center" VerticalOptions="Center" />
         <Entry Placeholder="Password" WidthRequest="250" Text="{Binding Password}" HorizontalOptions="Center" VerticalOptions="Center" IsPassword="True"/>
         <Button Command="{Binding LoginCommand}" Text="Login" WidthRequest="250" HorizontalOptions="Center" VerticalOptions="Center"/>
     </StackLayout>

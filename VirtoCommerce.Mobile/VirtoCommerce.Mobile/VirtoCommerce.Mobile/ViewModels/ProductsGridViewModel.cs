@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 using Xamarin.Forms;
 
@@ -10,12 +11,40 @@ namespace VirtoCommerce.Mobile.ViewModels
 {
     public class ProductsGridViewModel : ViewModelBase
     {
+        #region Services
         private readonly INavigationService _navigationService;
+        private readonly IProductStorageService _productsStorageService;
         public INavigationService NavigationService { get { return _navigationService; } }
+        #endregion
+
+        #region Private field
         private readonly ISyncService _syncService;
         private string _status = "";
         private bool _isSync;
         private bool _displayTable = true;
+        private int _countProductPerPage = 20;
+        private ICollection<Product> _products = new Product[0];
+        #endregion
+
+        #region Constructor
+        public ProductsGridViewModel(INavigationService navigation, ISyncService syncService, IProductStorageService productService)
+        {
+            Title = "Products";
+            _syncService = syncService;
+            _navigationService = navigation;
+            _productsStorageService = productService;
+            if (!App.SyncComplete)
+            {
+                RunSync();
+            }
+            else
+            {
+                GetProducts(0, _countProductPerPage);
+            }
+        }
+        #endregion
+
+        #region Public properties
         public string Status
         {
             set { _status = value; RaisePropertyChanged(); }
@@ -31,16 +60,28 @@ namespace VirtoCommerce.Mobile.ViewModels
             set { _isSync = value; _displayTable = !_isSync; RaisePropertyChanged(); }
         }
 
-        public ProductsGridViewModel(INavigationService navigation, ISyncService syncService)
+        public ICollection<Product> Products
         {
-            Title = "Products";
-            _syncService = syncService;
-            _navigationService = navigation;
-            if (!App.SyncComplete)
+            set
             {
-                RunSync();
+                _products = value;
+                RaisePropertyChanged();
+            }
+            get
+            {
+                return _products;
             }
         }
+        #endregion
+
+        #region Public methods
+        public void GetProducts(int start, int count)
+        {
+            Products = _productsStorageService.GetProducts(start, count);
+        }
+        #endregion
+
+        #region Private methods
         /// <summary>
         /// Run sync with server
         /// </summary>
@@ -54,6 +95,9 @@ namespace VirtoCommerce.Mobile.ViewModels
             Status = "";
             App.SyncComplete = true;
             IsSync = false;
+            GetProducts(0, _countProductPerPage);
         }
+        #endregion
     }
 }
+

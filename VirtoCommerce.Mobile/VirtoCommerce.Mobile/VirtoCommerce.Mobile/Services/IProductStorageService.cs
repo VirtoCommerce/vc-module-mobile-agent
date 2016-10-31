@@ -17,7 +17,7 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// Get product list from LocalStorage
         /// </summary>
-        ICollection<Product> GetProducts(int start, int end);
+        ICollection<Product> GetProducts(int start, int count);
         /// <summary>
         /// Get product from LocalStorage
         /// </summary>

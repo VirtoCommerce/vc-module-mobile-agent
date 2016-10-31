@@ -18,6 +18,11 @@ namespace VirtoCommerce.Mobile.iOS.CustomRenderers
     {
         private GridView _gridView { set; get; }
 
+        public ProductsTableViewRenderer()
+        {
+
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<ProductsTableView> e)
         {
             base.OnElementChanged(e);
@@ -32,6 +37,10 @@ namespace VirtoCommerce.Mobile.iOS.CustomRenderers
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
             };
+            if (e.NewElement?.Items != null)
+            {
+                SetGridView(e.NewElement.Items);
+            }
             SetNativeControl(_gridView);
         }
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -41,11 +50,16 @@ namespace VirtoCommerce.Mobile.iOS.CustomRenderers
             SetGridView(view.Items);
         }
 
-        private void SetGridView(ICollection<Product> product)
+        private void SetGridView(ICollection<Product> products)
         {
-            //_gridView.
-            var cell = new ProductCell();
-            _gridView.AddTile(new ProductCell());
+            if (products == null)
+                return;
+            foreach (var product in products)
+            {
+                var cell = new ProductCell();
+                cell.Bind(product);
+                _gridView.AddTile(new ProductCell());
+            }
         }
     }
 }

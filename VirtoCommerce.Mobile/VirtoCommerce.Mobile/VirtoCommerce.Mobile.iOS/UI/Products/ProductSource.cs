@@ -45,9 +45,9 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 		
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
-			var cell = tableView.DequeueReusableCell (FashionCell.Key) as UITableViewCell;
+			var cell = tableView.DequeueReusableCell (ProductCell.Key) as UITableViewCell;
 			if (cell == null)
-				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, FashionCell.Key);
+				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, ProductCell.Key);
 
 			var item = data[indexPath.Row];
 

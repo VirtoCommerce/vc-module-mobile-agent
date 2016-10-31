@@ -19,9 +19,18 @@ namespace VirtoCommerce.Mobile.Services
             throw new NotImplementedException();
         }
 
-        public ICollection<Product> GetProducts(int start, int end)
+        public ICollection<Product> GetProducts(int start, int count)
         {
-            throw new NotImplementedException();
+            return new[] {
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 1",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 2",
+                }
+            };
         }
 
         public bool SaveProducts(ICollection<Product> products)
