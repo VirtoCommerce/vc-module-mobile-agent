@@ -25,20 +25,12 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 			this.data = data;
 		}
 
-		#if __UNIFIED__
 		public override nint NumberOfSections (UITableView tableView)
-		#else
-		public override int NumberOfSections (UITableView tableView)
-		#endif
 		{
 			return 1;
 		}
 
-		#if __UNIFIED__
 		public override nint RowsInSection (UITableView tableview, nint section)
-		#else
-		public override int RowsInSection (UITableView tableview, int section)
-		#endif
 		{
 			return data.Count;
 		}
@@ -66,11 +58,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 			return cell;
 		}
 
-		#if __UNIFIED__
 		public override nfloat GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
-		#else
-		public override float GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
-		#endif
 		{
 			return RowHeight;
 		}

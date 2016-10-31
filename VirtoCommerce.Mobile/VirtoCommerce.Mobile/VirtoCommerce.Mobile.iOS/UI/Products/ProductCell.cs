@@ -47,13 +47,18 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 		void InitSubviews()
 		{
 			_modelImageView = new UIImageView(new RectangleF(5, 5, 231, 200));
-			BackgroundView = new UIImageView(new RectangleF(0, 0, 241, 549));
+			BackgroundView = new UIView(new RectangleF(0, 0, 241, 549)) {
+                BackgroundColor = UIColor.Blue
+            };
 			
 			AddSubviews(BackgroundView, _modelImageView);
 			
 			_statusView = new UIView(new RectangleF(0, 213, 241, 71));
-			
-			_titleLabel = new UILabel(new RectangleF(8, 5, 224, 22));
+
+            _titleLabel = new UILabel(new RectangleF(8, 5, 224, 22))
+            {
+                TextColor = UIColor.Black
+            };
 
 			_likesLabel = new UILabel(new RectangleF(182, 42, 21, 21)) {
 				TextColor = UIColor.DarkGray,
@@ -104,13 +109,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
 			_statusView.AddSubviews(_titleLabel, _likesLabel, _commentsLabel, _likeButton, dotLabel, _shareButton, _likesView, _commentsView);
 
-			/*_tableView = new UITableView(new RectangleF(2, 283, 237, 266), UITableViewStyle.Plain) {
+			_tableView = new UITableView(new RectangleF(2, 283, 237, 266), UITableViewStyle.Plain) {
 				SeparatorStyle = UITableViewCellSeparatorStyle.SingleLineEtched,
 				ScrollEnabled = false
 			};
 
 			Add (_statusView);
-			Add (_tableView);*/
+			Add (_tableView);
 		}
 
 		void ApplyStyles()
@@ -125,6 +130,8 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 			this.data = data;
 
 			_titleLabel.Text = data.Name;
+            _likeButton.SetTitle(data.Name, UIControlState.Normal);
+            _shareButton.SetTitle(data.Name, UIControlState.Normal);
 			//_commentsLabel.Text = data.Comments.ToString();
 			//_likesLabel.Text = data.Likes.ToString();
 
@@ -134,11 +141,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-
+            var image = UIImage.FromFile("Default.png");
+            image = image.Scale(new CoreGraphics.CGSize(230, 230));
 			var imageFrame = _modelImageView.Frame;
-			//imageFrame.Size = data.TitleImage.Size;
-			//_modelImageView.Frame = imageFrame;
-			//_modelImageView.Image = data.TitleImage;			
+            
+			imageFrame.Size = image.Size;
+			_modelImageView.Frame = imageFrame;
+			_modelImageView.Image = image;			
 
 			var statusFrame = _statusView.Frame;
 			statusFrame.Y = 2 * imageFrame.Y + imageFrame.Height;

@@ -15,7 +15,7 @@ namespace VirtoCommerce.Mobile.CustomControls
         /// </summary>
         public static readonly BindableProperty ItemsProperty = BindableProperty.Create("Items",
             returnType: typeof(ICollection<Product>), declaringType: typeof(ProductsTableView),
-            defaultValue: null);
+            defaultValue: new Product[0]);
 
         public ICollection<Product> Items
         {

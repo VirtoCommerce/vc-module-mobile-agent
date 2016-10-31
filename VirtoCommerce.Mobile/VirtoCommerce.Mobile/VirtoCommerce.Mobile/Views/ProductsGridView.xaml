@@ -4,9 +4,9 @@
              x:Class="VirtoCommerce.Mobile.Views.ProductsGridView" Title="{Binding Title}"
              xmlns:custom="clr-namespace:VirtoCommerce.Mobile.CustomControls;assembly=VirtoCommerce.Mobile"
               >
-  <ContentPage.Content>
-  <custom:ProductsTableView Items="{Binding Products}"></custom:ProductsTableView>
-    <!--<StackLayout HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsSync}">
+  <ContentPage.Content> 
+  <custom:ProductsTableView Items="{Binding Products}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></custom:ProductsTableView>
+    <!--<StackLayout HorizontalOptions="Center" VerticalOptions="" IsVisible="{Binding IsSync}">
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <ActivityIndicator IsRunning="{Binding IsSync}"/>
             <Label Text="{Binding Status}" />

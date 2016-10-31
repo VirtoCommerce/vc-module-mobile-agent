@@ -23,7 +23,7 @@ namespace VirtoCommerce.Mobile.Services
 
         public void NavigateToMainPage()
         {
-            Application.Current.MainPage = App.UnityContainer.Resolve<MainView>();
+            //Application.Current.MainPage = App.UnityContainer.Resolve<ProductsGridView>();
         }
 
         public async void Pop()

@@ -5,37 +5,34 @@ using System.Drawing;
 using System.Text;
 using UIKit;
 using VirtoCommerce.Mobile.CustomControls;
+using VirtoCommerce.Mobile.iOS.CustomRenderers;
 using VirtoCommerce.Mobile.iOS.UI.Products;
 using VirtoCommerce.Mobile.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Themes;
 
-[assembly:ExportRenderer(typeof(ProductsTableView),typeof(UIView))]
+[assembly:ExportRenderer(typeof(ProductsTableView),typeof(ProductsTableViewRenderer))]
 namespace VirtoCommerce.Mobile.iOS.CustomRenderers
 {
     public class ProductsTableViewRenderer:ViewRenderer<ProductsTableView, UIView>
     {
         private GridView _gridView { set; get; }
 
-        public ProductsTableViewRenderer()
-        {
-
-        }
-
         protected override void OnElementChanged(ElementChangedEventArgs<ProductsTableView> e)
         {
             base.OnElementChanged(e);
-            var rectangle = new RectangleF();
-            rectangle.X = (float)Control.Bounds.X;
-            rectangle.Y = (float)Control.Bounds.Y;
+            var rectangle = new RectangleF(0,0,1024,768);
+            /*rectangle.X = (float)e.NewElement.Bounds.X;
+            rectangle.Y = (float)e.NewElement.Bounds.Y;
             rectangle.Location = new PointF(rectangle.X, rectangle.Y);
-            rectangle.Height = (float)Control.Bounds.Height;
-            rectangle.Width = (float)Control.Bounds.Width;
-            rectangle.Size = new SizeF(rectangle.Width, rectangle.Height);
+            rectangle.Height = (float)e.NewElement.Bounds.Height;
+            rectangle.Width = (float)e.NewElement.Bounds.Width;
+            rectangle.Size = new SizeF(rectangle.Width, rectangle.Height);*/
             _gridView = new GridView(rectangle)
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+                AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
+                BackgroundColor = UIColor.DarkGray
             };
             if (e.NewElement?.Items != null)
             {
@@ -54,12 +51,17 @@ namespace VirtoCommerce.Mobile.iOS.CustomRenderers
         {
             if (products == null)
                 return;
+            _gridView.TileWidth = 241;
             foreach (var product in products)
             {
                 var cell = new ProductCell();
                 cell.Bind(product);
-                _gridView.AddTile(new ProductCell());
+                _gridView.AddTile(cell);
             }
+        }
+        protected override void UpdateNativeWidget()
+        {
+            base.UpdateNativeWidget();
         }
     }
 }

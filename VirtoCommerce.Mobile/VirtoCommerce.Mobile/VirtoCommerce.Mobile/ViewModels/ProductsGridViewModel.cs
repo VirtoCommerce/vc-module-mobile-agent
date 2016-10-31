@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmCross.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class ProductsGridViewModel : ViewModelBase
+    public class ProductsGridViewModel : MvxViewModel
     {
         #region Services
         private readonly INavigationService _navigationService;
@@ -29,7 +30,6 @@ namespace VirtoCommerce.Mobile.ViewModels
         #region Constructor
         public ProductsGridViewModel(INavigationService navigation, ISyncService syncService, IProductStorageService productService)
         {
-            Title = "Products";
             _syncService = syncService;
             _navigationService = navigation;
             _productsStorageService = productService;

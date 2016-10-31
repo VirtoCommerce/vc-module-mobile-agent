@@ -1,4 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
+using MvvmCross.Platform;
+using MvvmCross.Platform.IoC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,67 +12,27 @@ using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile
 {
-    public class App : Application
+    public class App : MvvmCross.Core.ViewModels.MvxApplication
     {
-        public static UnityContainer UnityContainer;
-        public static bool SyncComplete { set; get; }
-        public App()
-        {
-            // The root page of your application
-            InitUnity();
-            if (!UnityContainer.Resolve<IUserManagerService>().IsLogin())
-            {
-                MainPage = UnityContainer.Resolve<LoginView>();
-            }
-            else
-            {
-                MainPage = UnityContainer.Resolve<MainView>(); ;
-            }
-        }
+        public static bool SyncComplete { get; set; }
 
-        protected override void OnStart()
+        public override void Initialize()
         {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
-        /// <summary>
-        /// Resolve DI
-        /// </summary>
-        private void InitUnity()
-        {
-            
-            UnityContainer = new UnityContainer();
-            UnityContainer.RegisterType<IUserManagerService, MockUserManagerService>();
-            //login
-            UnityContainer.RegisterType(typeof(LoginView));
-            UnityContainer.RegisterType(typeof(LoginViewModel));
-            //products
-            UnityContainer.RegisterType(typeof(ProductsGridView));
-            UnityContainer.RegisterType(typeof(ProductsGridViewModel));
-            //main view
-            UnityContainer.RegisterType(typeof(MainView));
-            //root view
-            UnityContainer.RegisterType(typeof(RootView));
-            //menu view
-            UnityContainer.RegisterType(typeof(MenuView));
+           /* CreatableTypes()
+                .EndingWith("Service")
+                .AsInterfaces()
+                .RegisterAsLazySingleton();*/
+            RegisterAppStart<LoginViewModel>();
+            //user manager
+            Mvx.RegisterType<IUserManagerService, MockUserManagerService>();
             //navigation service
-            UnityContainer.RegisterType<INavigationService, NavigationService>();
+            Mvx.RegisterType<INavigationService, NavigationService>();
             //sync service
-            UnityContainer.RegisterType<ISyncService, SyncService>();
+            Mvx.RegisterType<ISyncService, SyncService>();
             //sync server service
-            UnityContainer.RegisterType<ISyncServerService, MockSyncServerService>();
+            Mvx.RegisterType<ISyncServerService, MockSyncServerService>();
             //product storage service
-            UnityContainer.RegisterType<IProductStorageService, ProductStorageService>();
-
+            Mvx.RegisterType<IProductStorageService, ProductStorageService>();
         }
     }
 }

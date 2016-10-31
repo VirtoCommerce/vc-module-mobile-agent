@@ -29,6 +29,29 @@ namespace VirtoCommerce.Mobile.Services
                 new Product {
                     Id = Guid.NewGuid().ToString(),
                     Name= "Prod 2",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 3",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 4",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 5",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 6",
+                },new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 7",
+                },
+                new Product {
+                    Id = Guid.NewGuid().ToString(),
+                    Name= "Prod 8",
                 }
             };
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmCross.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,7 +10,7 @@ using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : MvxViewModel
     {
         private readonly IUserManagerService _userManagerService;
         private readonly INavigationService _navigationService;
@@ -17,17 +18,16 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             _userManagerService = userManagerService;
             _navigationService = navigationService;
-            Title = "Login";
         }
         public string Login { set; get; }
         public string Password { set; get; }
 
-        private Command _loginCommand;
-        public Command LoginCommand
+        private IMvxCommand _loginCommand;
+        public IMvxCommand LoginCommand
         {
             get
             {
-                return _loginCommand ?? (_loginCommand = new Command(() =>
+                return _loginCommand ?? (_loginCommand = new MvxCommand(() =>
                  {
                      if (_userManagerService.Login(Login, Password) != null)
                      {
