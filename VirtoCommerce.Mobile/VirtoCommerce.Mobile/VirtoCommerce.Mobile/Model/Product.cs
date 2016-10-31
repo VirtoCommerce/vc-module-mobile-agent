@@ -11,6 +11,7 @@ namespace VirtoCommerce.Mobile.Model
         public string Id { set; get; }
         public string Name { set; get; }
         public ICollection<byte[]> Images { set; get; }
+        public byte[] TitleImage { set; get; }
         public Price Price { set; get; }
     }
 }

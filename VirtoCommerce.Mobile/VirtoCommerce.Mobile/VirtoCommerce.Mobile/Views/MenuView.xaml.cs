@@ -13,7 +13,7 @@ namespace VirtoCommerce.Mobile.Views
         public MenuView()
         {
             InitializeComponent();
-            Title = "Main menu";
+            Title = "Menu";
         }
     }
 }

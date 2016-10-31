@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="CustomControls\ProductsTableView.cs" />
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\SyncStatus.cs" />
     <Compile Include="Model\Filter.cs" />
