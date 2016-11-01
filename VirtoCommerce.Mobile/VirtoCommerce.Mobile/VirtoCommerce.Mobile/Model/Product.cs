@@ -10,8 +10,9 @@ namespace VirtoCommerce.Mobile.Model
     {
         public string Id { set; get; }
         public string Name { set; get; }
-        public ICollection<byte[]> Images { set; get; }
-        public byte[] TitleImage { set; get; }
+        public string Description { set; get; }
+        public ICollection<string> Images { set; get; }
+        public string TitleImage { set; get; }
         public Price Price { set; get; }
     }
 }

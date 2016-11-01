@@ -14,13 +14,13 @@ using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Products
 {
-	public class FashionSource : UITableViewSource
+	public class ProductSource : UITableViewSource
 	{
 		const float RowHeight = 110f;
 
 		List<KeyValuePair<string, string>> data;
 
-		public FashionSource (List<KeyValuePair<string, string>> data)
+		public ProductSource (List<KeyValuePair<string, string>> data)
 		{
 			this.data = data;
 		}

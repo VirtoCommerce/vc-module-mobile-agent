@@ -2,14 +2,8 @@
 using System;
 using System.Drawing;
 using VirtoCommerce.Mobile.Model;
-
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 
 using Xamarin.Themes;
 
@@ -17,22 +11,14 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 {
 	public class ProductCell : UITableViewCell
 	{
-		private int _dataCount;
-		public const float RowHeight = 110f;
-
 		private UIView _statusView { get; set; }
-		private UIImageView _modelImageView { get; set; }
-		private UIImageView _backgroundImageView { get; set; }		
-		private UITableView _tableView { get; set; }
-		private UILabel _likesLabel { get; set; }
-		private UILabel _commentsLabel { get; set; }
+		private UIImageView _productImage { get; set; }
 		private UILabel _titleLabel { get; set; }
-
-		private UIButton _likeButton { get; set; }
-		private UIButton _shareButton { get; set; }
-
-		private UIImageView _likesView { get; set; }
-		private UIImageView _commentsView { get; set; }
+        private UILabel _descriptionLabel { set; get; }
+        private UIView _actionsView { set; get; }
+        private UILabel _salePriceLable { set; get; }
+        private UILabel _listPriceLable { set; get; }
+        private UIImageView _cartButton { set; get; }
 
 		Product data;
 
@@ -44,125 +30,113 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 			ApplyStyles();
 		}
 
-		void InitSubviews()
-		{
-			_modelImageView = new UIImageView(new RectangleF(5, 5, 231, 200));
-			BackgroundView = new UIView(new RectangleF(0, 0, 241, 549)) {
-                BackgroundColor = UIColor.Blue
+        void InitSubviews()
+        {
+            _productImage = new UIImageView(new RectangleF(5, 5, 231, 200));
+            BackgroundView = new UIView(new RectangleF(0, 0, 241, 1000))
+            {
+                BackgroundColor = UIColor.White
             };
-			
-			AddSubviews(BackgroundView, _modelImageView);
-			
-			_statusView = new UIView(new RectangleF(0, 213, 241, 71));
+
+            AddSubviews(BackgroundView, _productImage);
+
+            _statusView = new UIView(new RectangleF(0, 213, 241, 71));
 
             _titleLabel = new UILabel(new RectangleF(8, 5, 224, 22))
             {
-                TextColor = UIColor.Black
+                TextColor = UIColor.Black,
+                TextAlignment = UITextAlignment.Center,
+                Lines = 0,
+                LineBreakMode = UILineBreakMode.WordWrap
+            };
+            _descriptionLabel = new UILabel(new RectangleF(8, 30, 224, 22))
+            {
+                Font = UIFont.FromName("Helvetica Neue", 14),
+                TextAlignment = UITextAlignment.Center,
+                TextColor = UIColor.Black,
+                Lines = 0,
+                LineBreakMode = UILineBreakMode.WordWrap
             };
 
-			_likesLabel = new UILabel(new RectangleF(182, 42, 21, 21)) {
-				TextColor = UIColor.DarkGray,
-				Font = UIFont.FromName("HelveticaNeue-Medium", 16)				
-			};
-
-			_commentsLabel = new UILabel(new RectangleF(223, 42, 16, 21)) {
-				TextColor = UIColor.DarkGray,
-				Font = UIFont.FromName("HelveticaNeue-Medium", 16)	
-			};
-			
-			var dotLabel = new UILabel(new RectangleF(38, 38, 17, 21)) {
-				Text = ".",
-				Font = UIFont.FromName("HelveticaNeue-CondensedBold", 17),
-				TextAlignment = UITextAlignment.Center,
-				TextColor = UIColor.DarkGray,
-				BaselineAdjustment = UIBaselineAdjustment.AlignCenters
-			};
-			
-			_likeButton = new UIButton() {
-				Frame = new RectangleF(3, 40, 44, 25),
-				Font = UIFont.FromName("HelveticaNeue-Medium", 15)
-			};
-			
-			_likeButton.SetTitle("Like", UIControlState.Normal);
-			_likeButton.SetTitleColor(UIColor.FromRGB(107, 162, 233), UIControlState.Normal);			
-			
-			_shareButton = new UIButton(){
-				Frame = new RectangleF(52, 40, 47, 25),
-				Font = UIFont.FromName("HelveticaNeue-Medium", 15)
-				
-			};
-			
-			_shareButton.SetTitle("Share", UIControlState.Normal);
-			_shareButton.SetTitleColor(UIColor.FromRGB(107, 162, 233), UIControlState.Normal);
-			
-			_likesView = new UIImageView(new RectangleF(155, 40, 25, 25)) {
-				Image = GridlockTheme.SharedTheme.LikesIcon,
-				ContentMode = UIViewContentMode.Center
-			};
-			
-			_commentsView = new UIImageView(new RectangleF(197, 40, 25, 25)) {
-				Image = GridlockTheme.SharedTheme.CommentsIcon,
-				ContentMode = UIViewContentMode.Center
-			};
-
-			_backgroundImageView = new UIImageView(UIImage.FromFile("card-details.png"));
-
-			_statusView.AddSubviews(_titleLabel, _likesLabel, _commentsLabel, _likeButton, dotLabel, _shareButton, _likesView, _commentsView);
-
-			_tableView = new UITableView(new RectangleF(2, 283, 237, 266), UITableViewStyle.Plain) {
-				SeparatorStyle = UITableViewCellSeparatorStyle.SingleLineEtched,
-				ScrollEnabled = false
-			};
-
-			Add (_statusView);
-			Add (_tableView);
-		}
+            _statusView.AddSubviews(_titleLabel, _descriptionLabel);
+            Add(_statusView);
+            _listPriceLable = new UILabel(new RectangleF(8, 5, 50, 30))
+            {
+                TextColor = UIColor.Gray,
+                Font = UIFont.FromName("Helvetica Neue", 17),
+                TextAlignment = UITextAlignment.Center
+            };
+            _salePriceLable = new UILabel(new RectangleF(58, 5, 50, 30))
+            {
+                TextColor = UIColor.Black,
+                Font = UIFont.FromName("Helvetica Neue", 17),
+                TextAlignment = UITextAlignment.Center
+            };
+            _cartButton = new UIImageView(new RectangleF(200, 0, 30, 30))
+            {
+                Image = UIImage.FromFile("cart.png")
+            };
+            _actionsView = new UIView(new RectangleF(5, 10, 241, 30));
+            _actionsView.AddSubviews(_listPriceLable, _salePriceLable, _cartButton);
+            Add(_actionsView);
+        }
 
 		void ApplyStyles()
 		{
 			BackgroundColor = UIColor.White;
 		}
 
-		public void Bind(Product data)
-		{
-			//_dataCount = data.Mentions.Count;
+        public void Bind(Product data)
+        {
 
-			this.data = data;
-
-			_titleLabel.Text = data.Name;
-            _likeButton.SetTitle(data.Name, UIControlState.Normal);
-            _shareButton.SetTitle(data.Name, UIControlState.Normal);
-			//_commentsLabel.Text = data.Comments.ToString();
-			//_likesLabel.Text = data.Likes.ToString();
-
-			//_tableView.Source = new FashionSource(data.Mentions);
-		}
+            this.data = data;
+            _titleLabel.Text = data.Name;
+            _descriptionLabel.Text = data.Description;
+            var listPrice = (data.Price?.List) ?? 0;
+            if (listPrice != 0)
+            {
+                var attrString = new NSMutableAttributedString(string.Format("{0:#0.00}", listPrice));
+                attrString.AddAttribute(
+                    UIStringAttributeKey.StrikethroughStyle,
+                    NSNumber.FromInt32((int)NSUnderlineStyle.Single),
+                    new NSRange(0, attrString.Length));
+                _listPriceLable.AttributedText = attrString;
+            }
+            _salePriceLable.Text =  string.Format("{0:#0.00}", (data.Price?.Sale) ?? 0);
+        }
 
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-            var image = UIImage.FromFile("Default.png");
-            image = image.Scale(new CoreGraphics.CGSize(230, 230));
-			var imageFrame = _modelImageView.Frame;
+            var image = UIImage.FromFile($"{data.Id}.png");
+            var scale = 230 / image.Size.Width;
+            image = image.Scale(new CoreGraphics.CGSize(image.Size.Width * scale, image.Size.Height * scale));
+			var imageFrame = _productImage.Frame;
             
 			imageFrame.Size = image.Size;
-			_modelImageView.Frame = imageFrame;
-			_modelImageView.Image = image;			
-
+			_productImage.Frame = imageFrame;
+			_productImage.Image = image;
+            //
+            _descriptionLabel.SizeToFit();
+            _statusView.SizeToFit();
 			var statusFrame = _statusView.Frame;
 			statusFrame.Y = 2 * imageFrame.Y + imageFrame.Height;
+            statusFrame.Height = _descriptionLabel.Frame.Height + _titleLabel.Frame.Height + 16;
 			_statusView.Frame = Rectangle.Round((RectangleF)statusFrame);
-
-			_tableView.ReloadData();
-
-			var tableFrame = _tableView.Frame;
-			tableFrame.Y = statusFrame.Y + statusFrame.Height;
-			tableFrame.Height = _dataCount * RowHeight;
-			_tableView.Frame = Rectangle.Round((RectangleF)tableFrame);
+            //
+            _listPriceLable.SizeToFit();
+            _salePriceLable.SizeToFit();
+            var actionFrame = _actionsView.Frame;
+            actionFrame.Y = statusFrame.Y + statusFrame.Height + 8;
+            _actionsView.Frame = actionFrame;
+            var saleFrame = _salePriceLable.Frame;
+            saleFrame.X = _listPriceLable.Frame.Width + _listPriceLable.Frame.X + 3;
+            _salePriceLable.Frame = saleFrame;
+            //
 
 			var cellFrame = Frame;
-			cellFrame.Height = tableFrame.Y + tableFrame.Height + (tableFrame.Height > 0 ? 5 : 2);
 			cellFrame.Width = 241;
+            cellFrame.Height = _productImage.Frame.Y + _productImage.Frame.Height + statusFrame.Height + 15 + actionFrame.Height;
 			Frame = Rectangle.Round((RectangleF)cellFrame);
 
 			Superview.Superview.LayoutSubviews();

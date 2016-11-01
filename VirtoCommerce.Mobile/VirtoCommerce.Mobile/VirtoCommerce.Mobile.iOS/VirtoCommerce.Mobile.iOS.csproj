@@ -100,7 +100,6 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CustomRenderers\ProductsTableViewRenderer.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
@@ -109,18 +108,13 @@
     <Compile Include="UI\Products\ProductSource.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
     <Compile Include="Views\LoginView.cs" />
-    <Compile Include="Views\LoginView.designer.cs">
-      <DependentUpon>LoginView.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Views\ProductsGridView.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />
     <None Include="packages.config" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
-    <InterfaceDefinition Include="Views\LoginView.xib">
-      <SubType>Designer</SubType>
-    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -206,7 +200,37 @@
     <BundleResource Include="Resources\card-details%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppDelegate.cs.txt" />
+    <BundleResource Include="Resources\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cart%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cart%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 using System;
@@ -18,11 +19,11 @@ namespace VirtoCommerce.Mobile
 
         public override void Initialize()
         {
-           /* CreatableTypes()
-                .EndingWith("Service")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();*/
-            RegisterAppStart<LoginViewModel>();
+            /* CreatableTypes()
+                 .EndingWith("Service")
+                 .AsInterfaces()
+                 .RegisterAsLazySingleton();*/
+            Mvx.RegisterType<IMvxAppStart, AppStart>();
             //user manager
             Mvx.RegisterType<IUserManagerService, MockUserManagerService>();
             //navigation service

@@ -14,13 +14,62 @@ namespace VirtoCommerce.Mobile.ViewModels
     {
         private readonly IUserManagerService _userManagerService;
         private readonly INavigationService _navigationService;
+        private bool _isError;
+        private string _message;
+        private string _login;
+        private string _pass;
         public LoginViewModel(IUserManagerService userManagerService, INavigationService navigationService)
         {
             _userManagerService = userManagerService;
             _navigationService = navigationService;
         }
-        public string Login { set; get; }
-        public string Password { set; get; }
+       
+        public string Login
+        {
+            set
+            {
+                _login = value;
+                HideShowError = true;
+                RaisePropertyChanged();
+            }
+            get { return _login; }
+        }
+        public string Password
+        {
+            set
+            {
+                _pass = value;
+                HideShowError = true;
+                RaisePropertyChanged();
+            }
+            get
+            {
+                return _pass;
+            }
+        }
+
+        public bool HideShowError
+        {
+            set
+            {
+                _isError = !value;
+                RaisePropertyChanged();
+            }
+            get
+            {
+                return !_isError;
+            }
+        }
+
+        public string Message
+        {
+            set
+            {
+                _message = value;
+                RaisePropertyChanged();
+            }
+            get { return _message; }
+        }
 
         private IMvxCommand _loginCommand;
         public IMvxCommand LoginCommand
@@ -31,7 +80,12 @@ namespace VirtoCommerce.Mobile.ViewModels
                  {
                      if (_userManagerService.Login(Login, Password) != null)
                      {
-                         _navigationService.NavigateToMainPage();
+                         ShowViewModel<ProductsGridViewModel>();
+                     }
+                     else
+                     {
+                         HideShowError = false;
+                         Message = "Incorrect login or password";
                      }
                  }));
             }

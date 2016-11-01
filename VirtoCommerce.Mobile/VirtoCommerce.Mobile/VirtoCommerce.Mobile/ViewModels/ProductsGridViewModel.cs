@@ -22,7 +22,7 @@ namespace VirtoCommerce.Mobile.ViewModels
         private readonly ISyncService _syncService;
         private string _status = "";
         private bool _isSync;
-        private bool _displayTable = true;
+        private bool _hideBusy = true;
         private int _countProductPerPage = 20;
         private ICollection<Product> _products = new Product[0];
         #endregion
@@ -50,14 +50,19 @@ namespace VirtoCommerce.Mobile.ViewModels
             set { _status = value; RaisePropertyChanged(); }
             get { return _status; }
         }
-        public bool DisplayTable {
-            get { return _displayTable; }
-            set { _displayTable = value; RaisePropertyChanged(); }
+        public bool HideBusy {
+            get { return _hideBusy; }
+            set { _hideBusy = value; RaisePropertyChanged(); }
         }
         public bool IsSync
         {
             get { return _isSync; }
-            set { _isSync = value; _displayTable = !_isSync; RaisePropertyChanged(); }
+            set
+            {
+                _isSync = value;
+                HideBusy = !_isSync;
+                RaisePropertyChanged();
+            }
         }
 
         public ICollection<Product> Products

@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="AppStart.cs" />
+    <Compile Include="Command\ClearHistoryPresentationHint.cs" />
     <Compile Include="CustomControls\ProductsTableView.cs" />
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\SyncStatus.cs" />
@@ -113,9 +115,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Command\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Views\LoginView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
