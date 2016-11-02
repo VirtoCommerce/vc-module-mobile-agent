@@ -16,7 +16,7 @@ using MvvmCross.Binding.BindingContext;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
-    public class ProductsGridView : MvxViewController
+    public class ProductsGridView : MvxViewController, IGridViewDelegate
     {
 
         private IDisposable _subscribeProductListChange;
@@ -54,10 +54,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private void UpdateListProducts()
         {
             if (_listProducts != null)
-                View.WillRemoveSubview(_listProducts);
+                _listProducts.RemoveFromSuperview();
             _listProducts = new GridView((RectangleF)View.Bounds)
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+                AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
+                Delegate = this
             };
             Add(_listProducts);
             foreach (var product in ((ProductsGridViewModel)ViewModel).Products)
@@ -77,7 +78,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 _subscribeProductListChange = null;
             }
         }
-
+        public void TileSelected(GridView gridView, int index)
+        {
+            ((ProductsGridViewModel)ViewModel).ShowProductDetail(index);
+        }
         #region View
         private GridView _listProducts;
         private UIActivityIndicatorView _busy;

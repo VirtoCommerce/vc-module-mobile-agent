@@ -60,6 +60,7 @@
     <Compile Include="Services\MockSyncServerService.cs" />
     <Compile Include="Services\ProductStorageService.cs" />
     <Compile Include="Services\SyncService.cs" />
+    <Compile Include="ViewModels\DetailProductViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProductsGridViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">

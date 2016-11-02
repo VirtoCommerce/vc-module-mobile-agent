@@ -51,7 +51,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             };
             _descriptionLabel = new UILabel(new RectangleF(8, 30, 224, 22))
             {
-                Font = UIFont.FromName("Helvetica Neue", 14),
+                Font = UIFont.FromName("Helvetica Neue", 12),
                 TextAlignment = UITextAlignment.Center,
                 TextColor = UIColor.Black,
                 Lines = 0,
@@ -63,13 +63,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             _listPriceLable = new UILabel(new RectangleF(8, 5, 50, 30))
             {
                 TextColor = UIColor.Gray,
-                Font = UIFont.FromName("Helvetica Neue", 17),
+                Font = UIFont.FromName("Helvetica Neue", 20),
                 TextAlignment = UITextAlignment.Center
             };
             _salePriceLable = new UILabel(new RectangleF(58, 5, 50, 30))
             {
                 TextColor = UIColor.Black,
-                Font = UIFont.FromName("Helvetica Neue", 17),
+                Font = UIFont.FromName("Helvetica Neue", 20),
                 TextAlignment = UITextAlignment.Center
             };
             _cartButton = new UIImageView(new RectangleF(200, 0, 30, 30))
@@ -92,17 +92,17 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             this.data = data;
             _titleLabel.Text = data.Name;
             _descriptionLabel.Text = data.Description;
-            var listPrice = (data.Price?.List) ?? 0;
-            if (listPrice != 0)
+            var listPrice = data.Price.FormattedListPrice;
+            if (!string.IsNullOrEmpty(listPrice))
             {
-                var attrString = new NSMutableAttributedString(string.Format("{0:#0.00}", listPrice));
+                var attrString = new NSMutableAttributedString(listPrice);
                 attrString.AddAttribute(
                     UIStringAttributeKey.StrikethroughStyle,
                     NSNumber.FromInt32((int)NSUnderlineStyle.Single),
                     new NSRange(0, attrString.Length));
                 _listPriceLable.AttributedText = attrString;
             }
-            _salePriceLable.Text =  string.Format("{0:#0.00}", (data.Price?.Sale) ?? 0);
+            _salePriceLable.Text =  data.Price.FormattedSalePrice;
         }
 
 		public override void LayoutSubviews ()

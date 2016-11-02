@@ -1,4 +1,6 @@
 ﻿using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +85,11 @@ namespace VirtoCommerce.Mobile.ViewModels
         public void GetProducts(int start, int count)
         {
             Products = _productsStorageService.GetProducts(start, count);
+        }
+
+        public void ShowProductDetail(int index)
+        {
+            ShowViewModel<DetailProductViewModel>(new { id = Products.ElementAt(index).Id });
         }
         #endregion
 

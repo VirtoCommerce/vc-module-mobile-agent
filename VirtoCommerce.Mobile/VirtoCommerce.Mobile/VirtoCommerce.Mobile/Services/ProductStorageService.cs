@@ -14,9 +14,9 @@ namespace VirtoCommerce.Mobile.Services
             throw new NotImplementedException();
         }
 
-        public ICollection<Product> GetProduct(string id)
+        public Product GetProduct(string id)
         {
-            throw new NotImplementedException();
+            return GetProducts(0, 100).First(x => x.Id == id);
         }
 
         public ICollection<Product> GetProducts(int start, int count)
@@ -25,12 +25,20 @@ namespace VirtoCommerce.Mobile.Services
                 new Product {
                     Id = "1",
                     Name= "Prod 1",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
+                    Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
+                        List  = 1,
+                        Sale = 1
+                    }
                 },
                 new Product {
                     Id = "2",
                     Name= "Prod 2",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(25.50),
                         Sale = 20
                     }
@@ -40,6 +48,8 @@ namespace VirtoCommerce.Mobile.Services
                     Name= "Prod 3",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(15.30),
                         Sale = 40
                     }
@@ -49,6 +59,8 @@ namespace VirtoCommerce.Mobile.Services
                     Name= "Prod 4",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(1025.15),
                         Sale = 1000
                     }
@@ -58,6 +70,8 @@ namespace VirtoCommerce.Mobile.Services
                     Name= "Prod 5",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(10000),
                         Sale = 5000
                     }
@@ -67,6 +81,8 @@ namespace VirtoCommerce.Mobile.Services
                     Name= "Prod 6",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(25.50),
                         Sale = 20
                     }
@@ -75,6 +91,8 @@ namespace VirtoCommerce.Mobile.Services
                     Name= "Prod 7",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
                         List = Convert.ToDecimal(325.01),
                         Sale = Convert.ToDecimal(200.2)
                     }
@@ -82,7 +100,13 @@ namespace VirtoCommerce.Mobile.Services
                 new Product {
                     Id = "8",
                     Name= "Prod 8",
-                    Description = "Lorem ipsum dolor sit amet"
+                    Description = "Lorem ipsum dolor sit amet",
+                    Price = new Price {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
+                        Sale = 10
+                    }
+                    
                 }
             };
         }

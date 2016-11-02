@@ -104,9 +104,10 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="NativConvertors\StrikeTextConvertor.cs" />
     <Compile Include="Setup.cs" />
-    <Compile Include="UI\Products\ProductSource.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
+    <Compile Include="Views\DetailProductView.cs" />
     <Compile Include="Views\LoginView.cs" />
     <Compile Include="Views\ProductsGridView.cs" />
     <None Include="Entitlements.plist" />
@@ -135,6 +136,7 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Binding.4.2.2\lib\Xamarin.iOS10\MvvmCross.Binding.dll</HintPath>
       <Private>True</Private>
