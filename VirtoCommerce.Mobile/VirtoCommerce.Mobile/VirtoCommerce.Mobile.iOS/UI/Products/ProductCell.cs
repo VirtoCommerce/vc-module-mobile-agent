@@ -18,14 +18,15 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
         private UIView _actionsView { set; get; }
         private UILabel _salePriceLable { set; get; }
         private UILabel _listPriceLable { set; get; }
-        private UIImageView _cartButton { set; get; }
-
-		Product data;
+        private UIButton _cartButton { set; get; }
+        private Action<Product> _cartTouch { set; get; }
+		Product _data;
 
 		public static readonly NSString Key = new NSString ("ProductCell");
 		
-		public ProductCell() : base (UITableViewCellStyle.Default, Key)
+		public ProductCell(Action<Product> cartTouch) : base (UITableViewCellStyle.Default, Key)
 		{
+            _cartTouch = cartTouch;
 			InitSubviews();
 			ApplyStyles();
 		}
@@ -72,16 +73,26 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
                 Font = UIFont.FromName("Helvetica Neue", 20),
                 TextAlignment = UITextAlignment.Center
             };
-            _cartButton = new UIImageView(new RectangleF(200, 0, 30, 30))
-            {
-                Image = UIImage.FromFile("cart.png")
-            };
+            _cartButton = new UIButton(new RectangleF(200, 0, 30, 30));
+            _cartButton.TouchDown += TouchCart;
+            _cartButton.SetImage(UIImage.FromFile("cart.png"), UIControlState.Normal);
             _actionsView = new UIView(new RectangleF(5, 10, 241, 30));
             _actionsView.AddSubviews(_listPriceLable, _salePriceLable, _cartButton);
             Add(_actionsView);
         }
 
-		void ApplyStyles()
+        private void TouchCart(object s, EventArgs e)
+        {
+            _cartTouch?.Invoke(_data);
+        } 
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _cartButton.AllTouchEvents -= TouchCart;
+        }
+
+        void ApplyStyles()
 		{
 			BackgroundColor = UIColor.White;
 		}
@@ -89,7 +100,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
         public void Bind(Product data)
         {
 
-            this.data = data;
+            _data = data;
             _titleLabel.Text = data.Name;
             _descriptionLabel.Text = data.Description;
             var listPrice = data.Price.FormattedListPrice;
@@ -108,7 +119,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-            var image = UIImage.FromFile($"{data.Id}.png");
+            var image = UIImage.FromFile($"{_data.Id}.png");
             var scale = 230 / image.Size.Width;
             image = image.Scale(new CoreGraphics.CGSize(image.Size.Width * scale, image.Size.Height * scale));
 			var imageFrame = _productImage.Frame;

@@ -35,6 +35,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
             set.Bind(_listPriceLable).For(x => x.AttributedText).To(x => x.Product.Price.FormattedListPrice).WithConversion(new NativConvertors.StrikeTextConvertor());
             set.Apply();
         }
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            NavigationController.NavigationBarHidden = false;
+        }
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();

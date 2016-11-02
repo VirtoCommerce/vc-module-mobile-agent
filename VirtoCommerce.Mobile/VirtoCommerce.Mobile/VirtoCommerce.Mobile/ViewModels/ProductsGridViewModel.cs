@@ -3,6 +3,7 @@ using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,8 @@ namespace VirtoCommerce.Mobile.ViewModels
     public class ProductsGridViewModel : MvxViewModel
     {
         #region Services
-        private readonly INavigationService _navigationService;
         private readonly IProductStorageService _productsStorageService;
-        public INavigationService NavigationService { get { return _navigationService; } }
+        private readonly ICartService _cartService;
         #endregion
 
         #region Private field
@@ -30,19 +30,20 @@ namespace VirtoCommerce.Mobile.ViewModels
         #endregion
 
         #region Constructor
-        public ProductsGridViewModel(INavigationService navigation, ISyncService syncService, IProductStorageService productService)
+        public ProductsGridViewModel(ISyncService syncService, IProductStorageService productService, ICartService cartService)
         {
             _syncService = syncService;
-            _navigationService = navigation;
             _productsStorageService = productService;
-            if (!App.SyncComplete)
+            _cartService = cartService;
+           /* if (!App.SyncComplete)
             {
                 RunSync();
             }
             else
             {
                 GetProducts(0, _countProductPerPage);
-            }
+            }*/
+            GetProducts(0, _countProductPerPage);
         }
         #endregion
 
@@ -90,6 +91,11 @@ namespace VirtoCommerce.Mobile.ViewModels
         public void ShowProductDetail(int index)
         {
             ShowViewModel<DetailProductViewModel>(new { id = Products.ElementAt(index).Id });
+        }
+
+        public void AddToCart(Product product)
+        {
+            _cartService.AddToCart(product.Id);
         }
         #endregion
 

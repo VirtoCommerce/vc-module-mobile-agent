@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VirtoCommerce.Mobile.Services;
-using VirtoCommerce.Mobile.ViewModels;
-using VirtoCommerce.Mobile.Views;
-using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile
 {
@@ -26,14 +23,14 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IMvxAppStart, AppStart>();
             //user manager
             Mvx.RegisterType<IUserManagerService, MockUserManagerService>();
-            //navigation service
-            Mvx.RegisterType<INavigationService, NavigationService>();
             //sync service
             Mvx.RegisterType<ISyncService, SyncService>();
             //sync server service
             Mvx.RegisterType<ISyncServerService, MockSyncServerService>();
             //product storage service
             Mvx.RegisterType<IProductStorageService, ProductStorageService>();
+            //cart service
+            Mvx.RegisterType<ICartService, CartService>();
         }
     }
 }

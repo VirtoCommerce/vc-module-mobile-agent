@@ -13,15 +13,13 @@ namespace VirtoCommerce.Mobile.ViewModels
     public class LoginViewModel : MvxViewModel
     {
         private readonly IUserManagerService _userManagerService;
-        private readonly INavigationService _navigationService;
         private bool _isError;
         private string _message;
         private string _login;
         private string _pass;
-        public LoginViewModel(IUserManagerService userManagerService, INavigationService navigationService)
+        public LoginViewModel(IUserManagerService userManagerService)
         {
             _userManagerService = userManagerService;
-            _navigationService = navigationService;
         }
        
         public string Login
@@ -80,7 +78,7 @@ namespace VirtoCommerce.Mobile.ViewModels
                  {
                      if (_userManagerService.Login(Login, Password) != null)
                      {
-                         ShowViewModel<ProductsGridViewModel>();
+                         ShowViewModel<MainViewModel>();
                      }
                      else
                      {

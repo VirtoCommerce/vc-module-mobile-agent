@@ -28,11 +28,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         }
         public override void ViewDidLoad()
         {
-            var navControoler = UIApplication.SharedApplication.KeyWindow.RootViewController as UINavigationController;
-            if (navControoler != null)
-            {
-                navControoler.SetViewControllers(new[] { this }, false);
-            }
+            
             base.ViewDidLoad();
             CreateView();
             var set = this.CreateBindingSet<ProductsGridView, ProductsGridViewModel>();
@@ -48,7 +44,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
-
+            UpdateListProducts();
         }
 
         private void UpdateListProducts()
@@ -63,7 +59,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             Add(_listProducts);
             foreach (var product in ((ProductsGridViewModel)ViewModel).Products)
             {
-                var cell = new ProductCell();
+                var cell = new ProductCell(CartAdd);
                 cell.Bind(product);
                 _listProducts.AddTile(cell);
             }
@@ -82,6 +78,12 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             ((ProductsGridViewModel)ViewModel).ShowProductDetail(index);
         }
+        private void CartAdd(Product product)
+        {
+            ((ProductsGridViewModel)ViewModel).AddToCart(product);
+        }
+
+
         #region View
         private GridView _listProducts;
         private UIActivityIndicatorView _busy;

@@ -22,7 +22,7 @@ namespace VirtoCommerce.Mobile
         {
             if (_userManager.IsLogin())
             {
-                ShowViewModel<ProductsGridViewModel>();
+                ShowViewModel<MainViewModel>();
             }
             else
             {
