@@ -24,7 +24,7 @@ namespace VirtoCommerce.Mobile.Services
             return new[] {
                 new Product {
                     Id = "1",
-                    Name= "Prod 1",
+                    Name= "Lorem ipsum dolor sit amet 1",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
                     Price = new Price {
                         CurrencyCode = "USD",
@@ -35,7 +35,7 @@ namespace VirtoCommerce.Mobile.Services
                 },
                 new Product {
                     Id = "2",
-                    Name= "Prod 2",
+                    Name= "Lorem ipsum dolor sit amet, consectetur adipisicing elit 2",
                     Price = new Price {
                         CurrencyCode = "USD",
                         CurrencySymbol = "$",
@@ -45,7 +45,7 @@ namespace VirtoCommerce.Mobile.Services
                 },
                 new Product {
                     Id = "3",
-                    Name= "Prod 3",
+                    Name= "Incididunt ut labore et dolore 3",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
                     Price = new Price {
                         CurrencyCode = "USD",
@@ -56,7 +56,7 @@ namespace VirtoCommerce.Mobile.Services
                 },
                 new Product {
                     Id = "4",
-                    Name= "Prod 4",
+                    Name= "It, sed do eiusmod tempor incididunt ut labore et dolore magna  4",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
                     Price = new Price {
                         CurrencyCode = "USD",
@@ -78,7 +78,8 @@ namespace VirtoCommerce.Mobile.Services
                 },
                 new Product {
                     Id = "6",
-                    Name= "Prod 6",
+                    Name= "Lorem ipsum dolor sit amet 6",
+                    Manufacture = "Polaroid",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
                     Price = new Price {
                         CurrencyCode = "USD",

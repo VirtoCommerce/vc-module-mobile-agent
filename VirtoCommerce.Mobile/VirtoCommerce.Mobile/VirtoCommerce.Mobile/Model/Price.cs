@@ -13,6 +13,29 @@ namespace VirtoCommerce.Mobile.Model
         public string CurrencyCode { set; get; }
         public string CurrencySymbol { set; get; }
 
+        public string FormattedSalePriceFull
+        {
+            get
+            {
+                if (Sale == 0)
+                {
+                    return string.Empty;
+                }
+                return string.Format("{0}{1:#0.00}", CurrencySymbol, Sale);
+            }
+        }
+        public string FormattedListPriceFull
+        {
+            get
+            {
+                if ((List ?? 0) == 0 || List == Sale)
+                {
+                    return string.Empty;
+                }
+                return string.Format("{0}{1:#0.00}", CurrencySymbol, List);
+            }
+        }
+
         public string FormattedSalePrice
         {
             get
@@ -21,7 +44,7 @@ namespace VirtoCommerce.Mobile.Model
                 {
                     return string.Empty;
                 }
-                return string.Format("{0}{1:#0}", CurrencySymbol, Sale);
+                return string.Format("{0}{1:#0}", CurrencySymbol, (int)Sale);
             }
         }
         public string FormattedListPrice
@@ -32,7 +55,7 @@ namespace VirtoCommerce.Mobile.Model
                 {
                     return string.Empty;
                 }
-                return string.Format("{0}{1:#0}", CurrencySymbol, List);
+                return string.Format("{0}{1:#0}", CurrencySymbol, (int)List);
             }
         }
     }

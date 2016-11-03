@@ -11,14 +11,18 @@ using VirtoCommerce.Mobile.ViewModels;
 using CoreGraphics;
 using MvvmCross.Binding.BindingContext;
 using System.Drawing;
+using VirtoCommerce.Mobile.iOS.UI;
+using VirtoCommerce.Mobile.iOS.UI.ProductDetail.RowsData;
+using VirtoCommerce.Mobile.iOS.UI.ProductDetail;
+using VirtoCommerce.Mobile.iOS.NativConvertors;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
-    
-    public class DetailProductView: MvxViewController
+
+    public class DetailProductView : MvxViewController
     {
         public const int Padding = 10;
-        public DetailProductView(): base(null,null)
+        public DetailProductView() : base(null, null)
         {
             
         }
@@ -26,13 +30,16 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            
             CreateView();
             var set = this.CreateBindingSet<DetailProductView, DetailProductViewModel>();
             set.Bind(_titleLabel).To(x => x.Product.Name);
             set.Bind(_descriptionLabel).To(x => x.Product.Description);
-            set.Bind(_salePriceLable).To(x => x.Product.Price.FormattedSalePrice);
+            set.Bind(_salePriceLable).To(x => x.Product.Price.FormattedSalePriceFull);
             set.Bind(NavigationItem).For(x => x.Title).To(x => x.Product.Name);
-            set.Bind(_listPriceLable).For(x => x.AttributedText).To(x => x.Product.Price.FormattedListPrice).WithConversion(new NativConvertors.StrikeTextConvertor());
+            set.Bind(_listPriceLable).For(x => x.Text).To(x => x.Product.Price.FormattedListPriceFull);
+            set.Bind(_manufactureLabel).For(x => x.Text).To(x => x.Product.Manufacture);
+            set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
             set.Apply();
         }
         public override void ViewWillAppear(bool animated)
@@ -43,31 +50,88 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-            var f = _productImage.Frame;
-            f.Width = View.Bounds.Width - Padding * 2;
-            f.Width = View.Bounds.Height / 2;
-            
-            UIImage img = UIImage.FromFile(((DetailProductViewModel)ViewModel).Product.Id + ".png");
-            img = img.Scale(new CGSize(f.Width, f.Height));
-            _productImage.Image = img;
-            _productImage.Frame = f;
-            ResizeText();
-            ResizePrice();
-            _cartButton.Center = new CGPoint(View.Bounds.Width / 2, _priceView.Frame.Y + _salePriceLable.Frame.Height + 30);
-        }
+            //var tableFrame = _tableView.Frame;
+            //tableFrame.Width = View.Frame.Width;
+            //tableFrame.Height = View.Frame.Height;
+            //var source = _tableView.Source as ProductDetailTableSource;
+            //source.CellsData[0].Height = 50;
+            //source.CellsData[1].Height = _tableVi
+            //_tableView.Frame = tableFrame;
 
+            //set main views frames
+
+            PrepareMainInfo();
+            //
+            var detailViewFrame = _detailView.Frame;
+            detailViewFrame.Width = (View.Frame.Width / 2) - Padding;
+            detailViewFrame.Height = View.Frame.Height;
+            detailViewFrame.X = (View.Frame.Width / 2) + Padding;
+            _detailView.Frame = detailViewFrame;
+            /*var f = _imageSlider.Frame;
+            f.Width = View.Bounds.Width - Padding * 2;
+            f.Height = View.Bounds.Height / 2;
+            _imageSlider.Frame = f;
+            _imageSlider.Draw(f);
+            ResizeText();
+            ResizePrice();*/
+        }
         #region View
 
-        private UIImageView _productImage { get; set; }
+        // private UIImageView _productImage { get; set; }
+        private UILabel _manufactureLabel { set; get; }
+        private UIView _mainInfo { set; get; }
+        private UIView _detailView { set; get; }
         private UILabel _titleLabel { get; set; }
         private UILabel _descriptionLabel { set; get; }
         private UIView _priceView { set; get; }
         private UILabel _salePriceLable { set; get; }
         private UILabel _listPriceLable { set; get; }
-        private UIImageView _cartButton { set; get; }
-        private UIView _textView { set; get; }
+        private UILabel _profitPriceLabel { set; get; }
+        private UIButton _cartButton { set; get; }
+        private UIView _profitView { set; get; }
+        private UIView _saleView { set; get; }
+        private ImageSlider _imageSlider { set; get; }
+        //private UITableView _tableView { set; get; }
+
+
+        //private List<RowInfo> CreateDataCells()
+        //{
+        //    var result = new List<RowInfo>();
+        //    var product = (ViewModel as DetailProductViewModel).Product;
+        //    var titleRow = new RowInfo("TableCell")
+        //    {
+        //        FontSize = 20,
+        //        Text = product.Name,
+        //        TextColor = UIColor.Black
+        //    };
+        //    result.Add(titleRow);
+        //    //slider
+        //    var images = new List<UIImage>();
+        //    UIImage img = UIImage.FromFile(product.Id + ".png");
+        //    images.Add(img);
+        //    img = UIImage.FromFile("2.png");
+        //    images.Add(img);
+        //    result.Add(new RowDataSlider(images, SliderCell.CellId));
+        //    //props
+        //    result.Add(new RowDataInfo("Old price:", product.Price?.FormattedListPrice, UIColor.Black, UIColor.Black, 20, InfoCell.CellId));
+        //    result.Add(new RowDataInfo("Price:", product.Price?.FormattedSalePrice, UIColor.Red, UIColor.Red, 25, InfoCell.CellId));
+        //    //
+        //    return result;
+        //}
         private void CreateView()
         {
+            //_tableView = new UITableView(View.Bounds, UITableViewStyle.Plain);
+            //_tableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+            //_tableView.RegisterClassForCellReuse(typeof(InfoCell), InfoCell.CellId);
+            //_tableView.RegisterClassForCellReuse(typeof(SliderCell), SliderCell.CellId);
+            //_tableView.RegisterClassForCellReuse(typeof(UITableViewCell), "TableCell");
+            //var data = CreateDataCells();
+            //_tableView.Source = new ProductDetailTableSource(data);
+            //_tableView.RowHeight = UITableView.AutomaticDimension;
+            //_tableView.EstimatedRowHeight = 150f;
+            //Add(_tableView);
+            //_tableView.ReloadData();
+
 
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
@@ -76,88 +140,184 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
                 AutosizesSubviews = true
             };
-            _productImage = new UIImageView(new RectangleF(0, 0, 231, 200));
-            _textView = new UIView(new CGRect(0, 300, 300, 250));
+
+            #region main info
+            _mainInfo = new UIView();
+            //manufacture
+            _manufactureLabel = new UILabel()
+            {
+                TextColor = UIColor.FromRGB(170, 170, 170),
+                Font = UIFont.FromName("Helvetica Neue", 20),
+                TextAlignment = UITextAlignment.Left,
+                Lines = 0,
+                LineBreakMode = UILineBreakMode.WordWrap,
+            };
+            _mainInfo.Add(_manufactureLabel);
+            //title
             _titleLabel = new UILabel(new CGRect(0, 5, 295, 40))
             {
-                TextColor = UIColor.Black,
-                Font = UIFont.FromName("Helvetica Neue", 25),
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Font = UIFont.FromName("Helvetica Neue", 30),
                 TextAlignment = UITextAlignment.Center,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
             };
-            _descriptionLabel = new UILabel(new RectangleF(0, 45, 295, 200))
-            {
-                Font = UIFont.FromName("Helvetica Neue", 17),
-                TextAlignment = UITextAlignment.Center,
-                TextColor = UIColor.Black,
-                Lines = 0,
-                LineBreakMode = UILineBreakMode.WordWrap,
-            };
-            _textView.AddSubviews(_descriptionLabel, _titleLabel);
-            View.AddSubviews(_productImage, _textView);
+            _mainInfo.AddSubview(_titleLabel);
+            //slider
+            _imageSlider = new ImageSlider();
+            UIImage img = UIImage.FromFile(((DetailProductViewModel)ViewModel).Product.Id + ".png");
+            _imageSlider.AddImage(img);
+            img = UIImage.FromFile("2.png");
+            _imageSlider.AddImage(img);
+            _mainInfo.Add(_imageSlider);
+            //price
+            _priceView = new UIView();
             _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = UIColor.Gray,
-                Font = UIFont.FromName("Helvetica Neue", 30),
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Font = UIFont.FromName("Helvetica Neue", 25),
                 TextAlignment = UITextAlignment.Center,
             };
+            _priceView.Add(_listPriceLable);
+            _priceView.Add(new UILabel(new CGRect(0, 0, 100, 45)) {
+                Text = "Price:",
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Font = UIFont.FromName("Helvetica Neue", 25),
+            });
+            _mainInfo.AddSubview(_priceView);
+            //profit price
+            _profitView = new UIView();
+            _profitPriceLabel = new UILabel(new RectangleF(0, 5, 50, 30))
+            {
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Font = UIFont.FromName("Helvetica Neue", 25),
+                TextAlignment = UITextAlignment.Center,
+            };
+            _profitView.Add(_profitPriceLabel);
+            _profitView.Add(new UILabel(new CGRect(0, 0, 300, 45))
+            {
+                Text = "Instant Saving:",
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Font = UIFont.FromName("Helvetica Neue", 25),
+            });
+            _mainInfo.AddSubview(_profitView);
+            //sale price
+            _saleView = new UIView();
             _salePriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = UIColor.Black,
-                Font = UIFont.FromName("Helvetica Neue", 30),
+                TextColor = UIColor.FromRGB(189, 13, 13),
+                Font = UIFont.FromName("Helvetica Neue", 35),
                 TextAlignment = UITextAlignment.Center,
             };
-            
-            _priceView = new UIView(new RectangleF(0, 10, 295, 30));
-            _priceView.AddSubviews(_listPriceLable, _salePriceLable);
-            Add(_priceView);
-            _cartButton = new UIImageView(new RectangleF(0, 0, 50, 50))
+           
+            _saleView.Add(_salePriceLable);
+            _saleView.Add(new UILabel(new CGRect(0, 0, 300, 45))
             {
-                Image = UIImage.FromFile("cart.png"),
-            };
-            Add(_cartButton);
-        }
-
-        private void ResizeText()
-        {
-            var f = _descriptionLabel.Frame;
-            f.Width = View.Bounds.Width - Padding * 2;
-            _descriptionLabel.Frame = f;
-            f = _titleLabel.Frame;
-            f.Width = View.Bounds.Width - Padding * 2;
-            _titleLabel.Frame = f;
-            _descriptionLabel.SizeToFit();
-            var textViewFrame = _textView.Frame;
-            textViewFrame.Width = View.Bounds.Width - Padding * 2;
-            textViewFrame.Y = View.Bounds.Height / 2;
-            textViewFrame.X = Padding * 2;
-            textViewFrame.Height = _titleLabel.Frame.Height + _descriptionLabel.Frame.Height + 10;
-            _textView.Frame = textViewFrame;
-        }
-
-        private void ResizePrice()
-        {
-            _salePriceLable.SizeToFit();
-            _listPriceLable.SizeToFit();
-            var f = _listPriceLable.Frame;
-            if (_listPriceLable.Frame.Width != 0)
-            {
-                f.Width = (View.Bounds.Width - Padding) / 2;
-                f.X = Padding;
-            }
-            _listPriceLable.Frame = f;
+                Text = "You Pay:",
+                TextColor = UIColor.FromRGB(189,13,13),
+                Font = UIFont.FromName("Helvetica Neue", 35),
+            });
+            _mainInfo.AddSubview(_saleView);
+            //add to cart item
+            _cartButton = new UIButton(new RectangleF(0, 0, 100, 100));
+            _cartButton.SetImage(UIImage.FromFile("like.png"), UIControlState.Normal);
+            _cartButton.SetTitleColor(UIColor.FromRGB(4, 86, 151), UIControlState.Normal);
+            _cartButton.SetTitle("Like", UIControlState.Normal);
+            _mainInfo.AddSubview(_cartButton);
             //
-            f = _salePriceLable.Frame;
-            f.Width = (View.Bounds.Width - Padding) / (_listPriceLable.Frame.Width == 0 ? 1 : 2);
-            f.X = Padding +  _listPriceLable.Frame.Width;
-            _salePriceLable.Frame = f;
+            #endregion
 
-            var textViewFrame = _textView.Frame;
-            var actionViewsFrame = _priceView.Frame;
-            actionViewsFrame.Y = textViewFrame.Y + textViewFrame.Height;
-            actionViewsFrame.Width = View.Bounds.Width;
-            _priceView.Frame = actionViewsFrame;
+            #region Detail info
+            _detailView = new UIView();
+            //description
+            _descriptionLabel = new UILabel(new RectangleF(0, 0, 295, 200))
+            {
+                Font = UIFont.FromName("Helvetica Neue", 17),
+                TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.FromRGB(105, 105, 105),
+                Lines = 0,
+                LineBreakMode = UILineBreakMode.WordWrap,
+            };
+            _detailView.AddSubview(_descriptionLabel);
+            //
+            #endregion
+
+            View.AddSubviews(_mainInfo, _detailView);
+
+        }
+
+        private void PrepareMainInfo()
+        {
+            var mainViewFrame = _mainInfo.Frame;
+            mainViewFrame.Width = (View.Frame.Width / 2) - Padding;
+            mainViewFrame.Height = View.Frame.Height;
+            mainViewFrame.X = Padding;
+            _mainInfo.Frame = mainViewFrame;
+            //prepare manufacture
+            _manufactureLabel.SizeToFit();
+            var manufFrame = _manufactureLabel.Frame;
+            manufFrame.Width = _mainInfo.Frame.Width;
+            manufFrame.X = 0;
+            manufFrame.Y = Padding;
+            _manufactureLabel.Frame = manufFrame;
+            //prepare title
+            _titleLabel.SizeToFit();
+            var titleFrame = _titleLabel.Frame;
+            titleFrame.Width = _mainInfo.Frame.Width;
+            titleFrame.X = Padding;
+            titleFrame.Y = Padding + manufFrame.Height;
+            _titleLabel.Frame = titleFrame;
+            //prepare slider
+            var sliderFrame = _imageSlider.Frame;
+            sliderFrame.Width = mainViewFrame.Width;
+            sliderFrame.Y = titleFrame.Y + titleFrame.Height + Padding;
+            sliderFrame.Height = 400;
+            _imageSlider.Frame = sliderFrame;
+            _imageSlider.Draw(_imageSlider.Frame);
+            //prepare Price
+            //view
+            _listPriceLable.SizeToFit();
+            var priceViewFrame = _priceView.Frame;
+            priceViewFrame.Width = mainViewFrame.Width;
+            priceViewFrame.Height = _listPriceLable.Frame.Height;
+            priceViewFrame.Y = sliderFrame.Y + sliderFrame.Height + Padding;
+            _priceView.Frame = priceViewFrame;
+            //price
+            var listPriceFrame = _listPriceLable.Frame;
+            listPriceFrame.X = mainViewFrame.Width - _listPriceLable.Frame.Width - Padding;
+            listPriceFrame.Y = 0;
+            _listPriceLable.Frame = listPriceFrame;
+            //prepare profit
+            //view
+            _profitPriceLabel.SizeToFit();
+            var profitViewFrame = _profitView.Frame;
+            profitViewFrame.Width = mainViewFrame.Width;
+            profitViewFrame.Height = _listPriceLable.Frame.Height;
+            profitViewFrame.Y = priceViewFrame.Y + priceViewFrame.Height + Padding;
+            _profitView.Frame = profitViewFrame;
+            //profit
+            var profitPriceFrame = _profitPriceLabel.Frame;
+            profitPriceFrame.X = mainViewFrame.Width - _profitPriceLabel.Frame.Width - Padding;
+            profitPriceFrame.Y = 0;
+            _profitPriceLabel.Frame = profitPriceFrame;
+            //prepare profit
+            //view
+            _salePriceLable.SizeToFit();
+            var saleViewFrame = _saleView.Frame;
+            saleViewFrame.Width = mainViewFrame.Width;
+            saleViewFrame.Height = _salePriceLable.Frame.Height;
+            saleViewFrame.Y = profitViewFrame.Y + profitViewFrame.Height + Padding;
+            _saleView.Frame = saleViewFrame;
+            //profit
+            var salePriceFrame = _salePriceLable.Frame;
+            salePriceFrame.X = mainViewFrame.Width - _salePriceLable.Frame.Width - Padding;
+            salePriceFrame.Y = 0;
+            _salePriceLable.Frame = salePriceFrame;
+            //add to cart
+            var addCartFrame = _cartButton.Frame;
+            addCartFrame.X = mainViewFrame.Width - addCartFrame.Width - Padding;
+            addCartFrame.Y = saleViewFrame.Height + saleViewFrame.Y + Padding;
+            _cartButton.Frame = addCartFrame;
         }
         #endregion
     }

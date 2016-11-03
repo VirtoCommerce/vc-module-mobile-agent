@@ -104,9 +104,18 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="NativConvertors\ProfitConvertor.cs" />
     <Compile Include="NativConvertors\StrikeTextConvertor.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="UI\ProductDetail\InfoCell.cs" />
+    <Compile Include="UI\ProductDetail\ProductDetailTableSource.cs" />
+    <Compile Include="UI\ProductDetail\RowsData\RowDataInfo.cs" />
+    <Compile Include="UI\ProductDetail\RowsData\RowDataSlider.cs" />
+    <Compile Include="UI\ProductDetail\RowsData\RowInfo.cs" />
+    <Compile Include="UI\ProductDetail\SliderCell.cs" />
+    <Compile Include="UI\ProductDetail\TextCell.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
+    <Compile Include="UI\ImageSlider.cs" />
     <Compile Include="Views\CartView.cs" />
     <Compile Include="Views\DetailProductView.cs" />
     <Compile Include="Views\LoginView.cs" />
@@ -241,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\cart_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\like.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

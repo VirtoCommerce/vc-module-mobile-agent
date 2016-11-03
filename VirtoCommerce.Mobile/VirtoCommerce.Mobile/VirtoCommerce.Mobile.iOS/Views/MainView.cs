@@ -33,7 +33,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 return;
             var viewControllers = new UIViewController[] {
                 CreateTabFor("Products","home", MainViewModel.ProductsGridViewModel),
-                CreateTabFor("Cart","home", MainViewModel.CartViewModel),
+                CreateTabFor("Cart","cart_menu", MainViewModel.CartViewModel),
             };
             ViewControllers = viewControllers;
             SelectedViewController = viewControllers[0];
