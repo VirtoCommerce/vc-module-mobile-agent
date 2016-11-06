@@ -15,5 +15,6 @@ namespace VirtoCommerce.Mobile.Model
         public string TitleImage { set; get; }
         public Price Price { set; get; }
         public string Manufacture { set; get; }
+        public ICollection<ProductProperty> Properties { set; get; }
     }
 }

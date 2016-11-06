@@ -40,40 +40,21 @@ namespace VirtoCommerce.Mobile.iOS.Views
             set.Bind(_listPriceLable).For(x => x.Text).To(x => x.Product.Price.FormattedListPriceFull);
             set.Bind(_manufactureLabel).For(x => x.Text).To(x => x.Product.Manufacture);
             set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
+            set.Bind(_descriptionLabel).For(x => x.Hidden).To(x => x.HideDescription);
             set.Apply();
         }
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
             NavigationController.NavigationBarHidden = false;
+            _segmentControl.SelectedSegment = 0;
         }
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-            //var tableFrame = _tableView.Frame;
-            //tableFrame.Width = View.Frame.Width;
-            //tableFrame.Height = View.Frame.Height;
-            //var source = _tableView.Source as ProductDetailTableSource;
-            //source.CellsData[0].Height = 50;
-            //source.CellsData[1].Height = _tableVi
-            //_tableView.Frame = tableFrame;
-
-            //set main views frames
-
             PrepareMainInfo();
             //
-            var detailViewFrame = _detailView.Frame;
-            detailViewFrame.Width = (View.Frame.Width / 2) - Padding;
-            detailViewFrame.Height = View.Frame.Height;
-            detailViewFrame.X = (View.Frame.Width / 2) + Padding;
-            _detailView.Frame = detailViewFrame;
-            /*var f = _imageSlider.Frame;
-            f.Width = View.Bounds.Width - Padding * 2;
-            f.Height = View.Bounds.Height / 2;
-            _imageSlider.Frame = f;
-            _imageSlider.Draw(f);
-            ResizeText();
-            ResizePrice();*/
+            PrepareDetailInfo();
         }
         #region View
 
@@ -91,48 +72,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UIView _profitView { set; get; }
         private UIView _saleView { set; get; }
         private ImageSlider _imageSlider { set; get; }
-        //private UITableView _tableView { set; get; }
+        private UITableView _propertiesTable { set; get; }
+        private UISegmentedControl _segmentControl { set; get; }
 
-
-        //private List<RowInfo> CreateDataCells()
-        //{
-        //    var result = new List<RowInfo>();
-        //    var product = (ViewModel as DetailProductViewModel).Product;
-        //    var titleRow = new RowInfo("TableCell")
-        //    {
-        //        FontSize = 20,
-        //        Text = product.Name,
-        //        TextColor = UIColor.Black
-        //    };
-        //    result.Add(titleRow);
-        //    //slider
-        //    var images = new List<UIImage>();
-        //    UIImage img = UIImage.FromFile(product.Id + ".png");
-        //    images.Add(img);
-        //    img = UIImage.FromFile("2.png");
-        //    images.Add(img);
-        //    result.Add(new RowDataSlider(images, SliderCell.CellId));
-        //    //props
-        //    result.Add(new RowDataInfo("Old price:", product.Price?.FormattedListPrice, UIColor.Black, UIColor.Black, 20, InfoCell.CellId));
-        //    result.Add(new RowDataInfo("Price:", product.Price?.FormattedSalePrice, UIColor.Red, UIColor.Red, 25, InfoCell.CellId));
-        //    //
-        //    return result;
-        //}
         private void CreateView()
         {
-            //_tableView = new UITableView(View.Bounds, UITableViewStyle.Plain);
-            //_tableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-            //_tableView.RegisterClassForCellReuse(typeof(InfoCell), InfoCell.CellId);
-            //_tableView.RegisterClassForCellReuse(typeof(SliderCell), SliderCell.CellId);
-            //_tableView.RegisterClassForCellReuse(typeof(UITableViewCell), "TableCell");
-            //var data = CreateDataCells();
-            //_tableView.Source = new ProductDetailTableSource(data);
-            //_tableView.RowHeight = UITableView.AutomaticDimension;
-            //_tableView.EstimatedRowHeight = 150f;
-            //Add(_tableView);
-            //_tableView.ReloadData();
-
-
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
                 BackgroundColor = UIColor.White,
@@ -219,9 +163,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
             });
             _mainInfo.AddSubview(_saleView);
             //add to cart item
-            _cartButton = new UIButton(new RectangleF(0, 0, 100, 100));
-            _cartButton.SetImage(UIImage.FromFile("like.png"), UIControlState.Normal);
-            _cartButton.SetTitleColor(UIColor.FromRGB(4, 86, 151), UIControlState.Normal);
+            _cartButton = UIButton.FromType(UIButtonType.RoundedRect);//new UIButton(new RectangleF(0, 0, 100, 100));
+            //_cartButton.SetImage(UIImage.FromFile("like.png"), UIControlState.Normal);
+            _cartButton.BackgroundColor = UIColor.FromRGB(4, 86, 151);
+            _cartButton.Layer.CornerRadius = 10;
+            _cartButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
             _cartButton.SetTitle("Like", UIControlState.Normal);
             _mainInfo.AddSubview(_cartButton);
             //
@@ -229,6 +175,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
             #region Detail info
             _detailView = new UIView();
+        
             //description
             _descriptionLabel = new UILabel(new RectangleF(0, 0, 295, 200))
             {
@@ -239,11 +186,28 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 LineBreakMode = UILineBreakMode.WordWrap,
             };
             _detailView.AddSubview(_descriptionLabel);
+
+            _segmentControl = new UISegmentedControl(new CGRect(0, 0, 250, 50));
+            _segmentControl.InsertSegment("Properties", 0, true);
+            _segmentControl.InsertSegment("Description", 1, true);
+            _segmentControl.ValueChanged += ChangeSegment;
+            _detailView.AddSubviews(_segmentControl);
             //
             #endregion
 
             View.AddSubviews(_mainInfo, _detailView);
 
+        }
+
+        private void ChangeSegment(object o, EventArgs e)
+        {
+            ((DetailProductViewModel)ViewModel).SetSegment((int)_segmentControl.SelectedSegment);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _segmentControl.ValueChanged -= ChangeSegment;
         }
 
         private void PrepareMainInfo()
@@ -317,7 +281,31 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var addCartFrame = _cartButton.Frame;
             addCartFrame.X = mainViewFrame.Width - addCartFrame.Width - Padding;
             addCartFrame.Y = saleViewFrame.Height + saleViewFrame.Y + Padding;
+            addCartFrame.Width = 60;
+            addCartFrame.Height = 60;
             _cartButton.Frame = addCartFrame;
+        }
+
+        private void PrepareDetailInfo()
+        {
+            var detailViewFrame = _detailView.Frame;
+            detailViewFrame.Width = (View.Frame.Width / 2) - Padding;
+            detailViewFrame.Height = View.Frame.Height;
+            detailViewFrame.X = (View.Frame.Width / 2) + Padding;
+            _detailView.Frame = detailViewFrame;
+            //segment control
+            _segmentControl.SizeToFit();
+            var segmentFrame = _segmentControl.Frame;
+            segmentFrame.X = detailViewFrame.Width / 2 - segmentFrame.Width / 2;
+            segmentFrame.Y = Padding;
+            _segmentControl.Frame = segmentFrame;
+            //description
+            _descriptionLabel.SizeToFit();
+            var descriptionFrame = _descriptionLabel.Frame;
+            descriptionFrame.Width = detailViewFrame.Width - Padding;
+            descriptionFrame.X = Padding;
+            descriptionFrame.Y = _segmentControl.Frame.Y + _segmentControl.Frame.Height + Padding;
+            _descriptionLabel.Frame = descriptionFrame;
         }
         #endregion
     }

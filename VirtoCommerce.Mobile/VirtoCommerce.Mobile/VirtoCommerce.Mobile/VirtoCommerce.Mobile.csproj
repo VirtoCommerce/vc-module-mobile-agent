@@ -45,6 +45,7 @@
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\ProductProperty.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\ServerResponse.cs" />
     <Compile Include="Responses\ServerResponseCollection.cs" />

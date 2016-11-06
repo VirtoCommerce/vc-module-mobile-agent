@@ -86,6 +86,12 @@ namespace VirtoCommerce.Mobile.Services
                         CurrencySymbol = "$",
                         List = Convert.ToDecimal(25.50),
                         Sale = 20
+                    },
+                    Properties = new [] {
+                        new ProductProperty {
+                            Name = "Prop 1",
+                            Value = "Value 1"
+                        }
                     }
                 },new Product {
                     Id = "7",
