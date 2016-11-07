@@ -42,6 +42,8 @@
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\SyncStatus.cs" />
     <Compile Include="Model\Cart.cs" />
+    <Compile Include="Model\CartItem.cs" />
+    <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\Product.cs" />

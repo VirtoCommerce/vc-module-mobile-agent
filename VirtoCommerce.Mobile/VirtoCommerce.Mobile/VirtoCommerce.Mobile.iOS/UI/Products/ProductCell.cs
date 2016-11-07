@@ -52,7 +52,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             };
             _descriptionLabel = new UILabel(new RectangleF(8, 30, 224, 22))
             {
-                Font = UIFont.FromName("Helvetica Neue", 12),
+                Font = UIFont.FromName(Consts.FontNameRegular, 12),
                 TextAlignment = UITextAlignment.Center,
                 TextColor = UIColor.Black,
                 Lines = 0,
@@ -64,13 +64,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             _listPriceLable = new UILabel(new RectangleF(8, 5, 50, 30))
             {
                 TextColor = UIColor.Gray,
-                Font = UIFont.FromName("Helvetica Neue", 20),
+                Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Center
             };
             _salePriceLable = new UILabel(new RectangleF(58, 5, 50, 30))
             {
                 TextColor = UIColor.Black,
-                Font = UIFont.FromName("Helvetica Neue", 20),
+                Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Center
             };
             _cartButton = new UIButton(new RectangleF(200, 0, 30, 30));

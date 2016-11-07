@@ -12,7 +12,6 @@ using CoreGraphics;
 using MvvmCross.Binding.BindingContext;
 using System.Drawing;
 using VirtoCommerce.Mobile.iOS.UI;
-using VirtoCommerce.Mobile.iOS.UI.ProductDetail.RowsData;
 using VirtoCommerce.Mobile.iOS.UI.ProductDetail;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
 
@@ -21,6 +20,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
     public class DetailProductView : MvxViewController
     {
+
+        public DetailProductViewModel DetailViewModel { get { return (DetailProductViewModel)ViewModel; } }
+
         public const int Padding = 10;
         public DetailProductView() : base(null, null)
         {
@@ -41,6 +43,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             set.Bind(_manufactureLabel).For(x => x.Text).To(x => x.Product.Manufacture);
             set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
             set.Bind(_descriptionLabel).For(x => x.Hidden).To(x => x.HideDescription);
+            set.Bind(_propertiesTable).For(x => x.Hidden).To(x => x.HideProperties);
             set.Apply();
         }
         public override void ViewWillAppear(bool animated)
@@ -56,6 +59,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //
             PrepareDetailInfo();
         }
+
         #region View
 
         // private UIImageView _productImage { get; set; }
@@ -91,7 +95,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _manufactureLabel = new UILabel()
             {
                 TextColor = UIColor.FromRGB(170, 170, 170),
-                Font = UIFont.FromName("Helvetica Neue", 20),
+                Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Left,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
@@ -101,7 +105,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _titleLabel = new UILabel(new CGRect(0, 5, 295, 40))
             {
                 TextColor = UIColor.FromRGB(105, 105, 105),
-                Font = UIFont.FromName("Helvetica Neue", 30),
+                Font = UIFont.FromName(Consts.FontNameRegular, 30),
                 TextAlignment = UITextAlignment.Center,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
@@ -119,14 +123,15 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
                 TextColor = UIColor.FromRGB(105, 105, 105),
-                Font = UIFont.FromName("Helvetica Neue", 25),
+                Font = UIFont.FromName(Consts.FontNameRegular, 25),
                 TextAlignment = UITextAlignment.Center,
             };
             _priceView.Add(_listPriceLable);
-            _priceView.Add(new UILabel(new CGRect(0, 0, 100, 45)) {
+            _priceView.Add(new UILabel(new CGRect(0, 0, 100, 45))
+            {
                 Text = "Price:",
                 TextColor = UIColor.FromRGB(105, 105, 105),
-                Font = UIFont.FromName("Helvetica Neue", 25),
+                Font = UIFont.FromName(Consts.FontNameRegular, 25),
             });
             _mainInfo.AddSubview(_priceView);
             //profit price
@@ -134,7 +139,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _profitPriceLabel = new UILabel(new RectangleF(0, 5, 50, 30))
             {
                 TextColor = UIColor.FromRGB(105, 105, 105),
-                Font = UIFont.FromName("Helvetica Neue", 25),
+                Font = UIFont.FromName(Consts.FontNameRegular, 25),
                 TextAlignment = UITextAlignment.Center,
             };
             _profitView.Add(_profitPriceLabel);
@@ -142,7 +147,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 Text = "Instant Saving:",
                 TextColor = UIColor.FromRGB(105, 105, 105),
-                Font = UIFont.FromName("Helvetica Neue", 25),
+                Font = UIFont.FromName(Consts.FontNameRegular, 25),
             });
             _mainInfo.AddSubview(_profitView);
             //sale price
@@ -150,49 +155,60 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _salePriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
                 TextColor = UIColor.FromRGB(189, 13, 13),
-                Font = UIFont.FromName("Helvetica Neue", 35),
+                Font = UIFont.FromName(Consts.FontNameRegular, 35),
                 TextAlignment = UITextAlignment.Center,
             };
-           
+
             _saleView.Add(_salePriceLable);
             _saleView.Add(new UILabel(new CGRect(0, 0, 300, 45))
             {
                 Text = "You Pay:",
-                TextColor = UIColor.FromRGB(189,13,13),
-                Font = UIFont.FromName("Helvetica Neue", 35),
+                TextColor = UIColor.FromRGB(189, 13, 13),
+                Font = UIFont.FromName(Consts.FontNameRegular, 35),
             });
             _mainInfo.AddSubview(_saleView);
-            //add to cart item
-            _cartButton = UIButton.FromType(UIButtonType.RoundedRect);//new UIButton(new RectangleF(0, 0, 100, 100));
-            //_cartButton.SetImage(UIImage.FromFile("like.png"), UIControlState.Normal);
-            _cartButton.BackgroundColor = UIColor.FromRGB(4, 86, 151);
-            _cartButton.Layer.CornerRadius = 10;
-            _cartButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
-            _cartButton.SetTitle("Like", UIControlState.Normal);
-            _mainInfo.AddSubview(_cartButton);
             //
             #endregion
 
             #region Detail info
             _detailView = new UIView();
-        
+
             //description
             _descriptionLabel = new UILabel(new RectangleF(0, 0, 295, 200))
             {
-                Font = UIFont.FromName("Helvetica Neue", 17),
+                Font = UIFont.FromName(Consts.FontNameRegular, 17),
                 TextAlignment = UITextAlignment.Left,
                 TextColor = UIColor.FromRGB(105, 105, 105),
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
             };
             _detailView.AddSubview(_descriptionLabel);
-
+            //tabbed
             _segmentControl = new UISegmentedControl(new CGRect(0, 0, 250, 50));
             _segmentControl.InsertSegment("Properties", 0, true);
             _segmentControl.InsertSegment("Description", 1, true);
             _segmentControl.ValueChanged += ChangeSegment;
             _detailView.AddSubviews(_segmentControl);
-            //
+            //properties
+            _propertiesTable = new UITableView();
+            _propertiesTable.ScrollEnabled = true;
+            _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
+            _propertiesTable.RowHeight = 25;
+            _propertiesTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+            _propertiesTable.ReloadData();
+            _detailView.AddSubview(_propertiesTable);
+            //add to cart item
+            _cartButton = UIButton.FromType(UIButtonType.RoundedRect);//new UIButton(new RectangleF(0, 0, 100, 100));
+            _cartButton.BackgroundColor = UIColor.FromRGB(4, 86, 151);
+            _cartButton.Layer.CornerRadius = 10;
+            _cartButton.SetTitleColor(UIColor.White, UIControlState.Normal);
+            _cartButton.SetTitle("Like", UIControlState.Normal);
+            _cartButton.TitleLabel.Font = UIFont.FromName(Consts.FontNameBold, 17);
+            _cartButton.SetImage(UIImage.FromFile("like.png").Scale(new CGSize(40, 40)), UIControlState.Normal);
+            _cartButton.TitleEdgeInsets = new UIEdgeInsets(0, 25, 0, 0);
+            _cartButton.ImageEdgeInsets = new UIEdgeInsets(-5, 0, 0, 0);
+            _cartButton.TintColor = UIColor.White;
+            _detailView.AddSubview(_cartButton);
             #endregion
 
             View.AddSubviews(_mainInfo, _detailView);
@@ -277,13 +293,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             salePriceFrame.X = mainViewFrame.Width - _salePriceLable.Frame.Width - Padding;
             salePriceFrame.Y = 0;
             _salePriceLable.Frame = salePriceFrame;
-            //add to cart
-            var addCartFrame = _cartButton.Frame;
-            addCartFrame.X = mainViewFrame.Width - addCartFrame.Width - Padding;
-            addCartFrame.Y = saleViewFrame.Height + saleViewFrame.Y + Padding;
-            addCartFrame.Width = 60;
-            addCartFrame.Height = 60;
-            _cartButton.Frame = addCartFrame;
+            
         }
 
         private void PrepareDetailInfo()
@@ -306,7 +316,23 @@ namespace VirtoCommerce.Mobile.iOS.Views
             descriptionFrame.X = Padding;
             descriptionFrame.Y = _segmentControl.Frame.Y + _segmentControl.Frame.Height + Padding;
             _descriptionLabel.Frame = descriptionFrame;
+            //properties
+            var propertiesTableFrame = _propertiesTable.Frame;
+            propertiesTableFrame.Width = detailViewFrame.Width - Padding;
+            propertiesTableFrame.X = Padding;
+            propertiesTableFrame.Y = segmentFrame.Y + segmentFrame.Height + Padding;
+            propertiesTableFrame.Height = detailViewFrame.Height - (segmentFrame.Y + segmentFrame.Height + Padding + 80);
+            _propertiesTable.Frame = propertiesTableFrame;
+            _propertiesTable.ReloadData();
+            //add to cart
+            var addCartFrame = _cartButton.Frame;
+            addCartFrame.X = detailViewFrame.Width - addCartFrame.Width - Padding;
+            addCartFrame.Y = propertiesTableFrame.Height + propertiesTableFrame.Y + Padding;
+            addCartFrame.Width = 150;
+            addCartFrame.Height = 60;
+            _cartButton.Frame = addCartFrame;
         }
+
         #endregion
     }
 }

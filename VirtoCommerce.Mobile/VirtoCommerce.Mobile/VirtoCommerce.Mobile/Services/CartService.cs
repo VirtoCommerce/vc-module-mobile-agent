@@ -9,19 +9,143 @@ namespace VirtoCommerce.Mobile.Services
 {
     public class CartService : ICartService
     {
-        public void AddToCart(string id)
+        private readonly IProductStorageService _productService;
+        public CartService(IProductStorageService productService)
         {
-            
+            _productService = productService;
         }
 
         public Cart GetCart()
         {
-            return new Cart();
+            var prods = _productService.GetProducts(0, int.MaxValue);
+            return new Cart()
+            {
+                SubTotal = 25,
+                Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                CartItems = new List<CartItem> {
+                    new CartItem {
+                        Product = prods.ElementAt(6),
+                        Quantity = 1,
+                        SubTotal = 10,
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },new CartItem {
+                        Product = prods.ElementAt(3),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },new CartItem {
+                        Product = prods.ElementAt(5),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },
+                    new CartItem {
+                        Product = prods.ElementAt(2),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },
+                    new CartItem {
+                        Product = prods.ElementAt(2),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                },
+                        Quantity = 1
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Quantity = 1,
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Quantity = 1,Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Quantity = 1,
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Quantity = 1,
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },new CartItem {
+                        Product = prods.ElementAt(2),
+                        Quantity = 1,
+                        Currency = new Currency
+                {
+                    CurrencySymbol = "$"
+                }
+                    },
+                }
+            };
         }
 
-        public void RemoveFromCart(string id)
+
+        public Cart UpdateCartItem(CartItem cartItem)
         {
-            
+            var cart = GetCart();
+            var item = cart.CartItems.FirstOrDefault(x => x.Product.Id == cartItem.Product.Id);
+            if (item != null)
+            {
+                if (cartItem.Quantity == 0)
+                {
+                    cart.CartItems.Remove(item);
+                }
+                else
+                {
+                    item.Quantity = cartItem.Quantity;
+                    item.SubTotal = (cartItem.Product.Price?.Sale * item.Quantity) ?? 0;
+                }
+            }
+            cart.SubTotal = new Random().Next();
+            return cart;
+        }
+
+        Cart ICartService.AddToCart(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Cart ICartService.RemoveFromCart(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -83,6 +83,21 @@ namespace VirtoCommerce.Mobile.iOS.Views
             ((ProductsGridViewModel)ViewModel).AddToCart(product);
         }
 
+        public override void ViewDidLayoutSubviews()
+        {
+            base.ViewDidLayoutSubviews();
+            if (_listProducts != null)
+            {
+
+                var tabSupperView = ((UINavigationController)ParentViewController).ParentViewController as UITabBarController;
+                if (tabSupperView != null)
+                {
+                    var frame = _listProducts.Frame;
+                    frame.Height = View.Frame.Height - tabSupperView.TabBar.Frame.Height;
+                    _listProducts.Frame = frame;
+                }
+            }
+        }
 
         #region View
         private GridView _listProducts;

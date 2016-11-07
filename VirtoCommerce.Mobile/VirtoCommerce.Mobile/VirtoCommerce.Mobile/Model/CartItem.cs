@@ -6,23 +6,18 @@ using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.Model
 {
-    public class Cart
+    public class CartItem
     {
-        public Cart()
-        {
-            CartItems = new List<CartItem>();
-        }
-        public List<CartItem> CartItems { set; get; }
-
-        public decimal SubTotal { set; get; }
-
+        public string Id { set; get; }
+        public Product Product { set; get; }
+        public int Quantity { set; get; }
         public Currency Currency { set; get; }
-
+        public decimal SubTotal { set; get; }
         public string FormattedSubTotal
         {
             get
             {
-                return string.Format("{0} {1:#0.00}",Currency?.CurrencySymbol, SubTotal);
+                return string.Format("{0} {1:#0.00}", Currency?.CurrencySymbol, SubTotal);
             }
         }
     }

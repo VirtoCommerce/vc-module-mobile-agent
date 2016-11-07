@@ -9,9 +9,12 @@ namespace VirtoCommerce.Mobile.Services
 {
     public interface ICartService
     {
-        void AddToCart(string id);
-        void RemoveFromCart(string id);
+        Cart AddToCart(string id);
+        Cart RemoveFromCart(string id);
         Cart GetCart();
+        Cart UpdateCartItem(CartItem cartItem);
+
+        
 
     }
 }
