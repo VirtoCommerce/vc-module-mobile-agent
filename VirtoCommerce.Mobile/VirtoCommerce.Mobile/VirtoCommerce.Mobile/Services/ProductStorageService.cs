@@ -21,7 +21,7 @@ namespace VirtoCommerce.Mobile.Services
 
         public ICollection<Product> GetProducts(int start, int count)
         {
-            return new[] {
+            var products = new List<Product> {
                 new Product {
                     Id = "1",
                     TitleImage = "1.png",
@@ -160,6 +160,11 @@ namespace VirtoCommerce.Mobile.Services
                     
                 }
             };
+            for (var i = 0; i < 50; i++)
+            {
+                products.Add(products[0]);
+            }
+            return products;
         }
 
         public bool SaveProducts(ICollection<Product> products)

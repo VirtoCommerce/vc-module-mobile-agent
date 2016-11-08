@@ -18,7 +18,7 @@ namespace VirtoCommerce.Mobile.Services
         public Cart GetCart()
         {
             var prods = _productService.GetProducts(0, int.MaxValue);
-            return new Cart()
+            var cart = new Cart()
             {
                 SubTotal = 25,
                 Currency = new Currency
@@ -115,6 +115,11 @@ namespace VirtoCommerce.Mobile.Services
                     },
                 }
             };
+            for (var i = 0; i < 250; i++)
+            {
+                cart.CartItems.Add(cart.CartItems[0]);
+            }
+            return cart;
         }
 
 

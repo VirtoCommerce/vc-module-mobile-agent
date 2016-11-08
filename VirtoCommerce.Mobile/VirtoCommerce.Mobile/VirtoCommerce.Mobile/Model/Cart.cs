@@ -16,7 +16,17 @@ namespace VirtoCommerce.Mobile.Model
 
         public decimal SubTotal { set; get; }
 
+        public decimal Total { set; get; }
+
         public Currency Currency { set; get; }
+
+        public string FormattedTotal
+        {
+            get
+            {
+                return string.Format("{0} {1:#0.00}", Currency?.CurrencySymbol, Total);
+            }
+        }
 
         public string FormattedSubTotal
         {

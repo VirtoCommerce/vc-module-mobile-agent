@@ -13,6 +13,7 @@ namespace VirtoCommerce.Mobile.ViewModels
     {
         private ICartService _cartService;
         private Cart _cart;
+        private MvxCommand _toCheckoutCommand;
         public CartViewModel(ICartService cartService)
         {
             _cartService = cartService;
@@ -37,5 +38,8 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             Cart = _cartService.UpdateCartItem(cartItem);
         }
+
+
+        public MvxCommand ToCheckoutCommand { get { return _toCheckoutCommand ?? (_toCheckoutCommand = new MvxCommand(()=> { ShowViewModel<CheckoutViewModel>(); })); } }
     }
 }

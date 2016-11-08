@@ -45,7 +45,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
             _titleLabel = new UILabel(new RectangleF(8, 5, 224, 22))
             {
-                TextColor = UIColor.Black,
+                TextColor = Consts.ColorBlack,
                 TextAlignment = UITextAlignment.Center,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap
@@ -54,7 +54,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             {
                 Font = UIFont.FromName(Consts.FontNameRegular, 12),
                 TextAlignment = UITextAlignment.Center,
-                TextColor = UIColor.Black,
+                TextColor = Consts.ColorBlack,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap
             };
@@ -69,7 +69,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             };
             _salePriceLable = new UILabel(new RectangleF(58, 5, 50, 30))
             {
-                TextColor = UIColor.Black,
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Center
             };

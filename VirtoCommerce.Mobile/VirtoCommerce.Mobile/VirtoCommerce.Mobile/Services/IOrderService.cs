@@ -7,11 +7,9 @@ using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.Services
 {
-    public interface ICartService
+    public interface IOrderService
     {
-        Cart AddToCart(string id);
-        Cart RemoveFromCart(string id);
-        Cart GetCart();
-        Cart UpdateCartItem(CartItem cartItem);
+        Order CreateOreder();
+        ICollection<PaymentMethod> PaymentMethods();
     }
 }

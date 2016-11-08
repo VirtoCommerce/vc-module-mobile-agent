@@ -14,6 +14,7 @@ using System.Drawing;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.UI.ProductDetail;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
+using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -26,6 +27,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public const int Padding = 10;
         public DetailProductView() : base(null, null)
         {
+
             
         }
 
@@ -83,7 +85,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
-                BackgroundColor = UIColor.White,
+                BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground),
                 ContentMode = UIViewContentMode.ScaleToFill,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
                 AutosizesSubviews = true
@@ -94,7 +96,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //manufacture
             _manufactureLabel = new UILabel()
             {
-                TextColor = UIColor.FromRGB(170, 170, 170),
+                TextColor = Consts.ColorGray,
                 Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Left,
                 Lines = 0,
@@ -104,7 +106,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //title
             _titleLabel = new UILabel(new CGRect(0, 5, 295, 40))
             {
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 30),
                 TextAlignment = UITextAlignment.Center,
                 Lines = 0,
@@ -122,7 +124,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _priceView = new UIView();
             _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 25),
                 TextAlignment = UITextAlignment.Center,
             };
@@ -130,7 +132,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _priceView.Add(new UILabel(new CGRect(0, 0, 100, 45))
             {
                 Text = "Price:",
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 25),
             });
             _mainInfo.AddSubview(_priceView);
@@ -138,7 +140,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _profitView = new UIView();
             _profitPriceLabel = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 25),
                 TextAlignment = UITextAlignment.Center,
             };
@@ -146,7 +148,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _profitView.Add(new UILabel(new CGRect(0, 0, 300, 45))
             {
                 Text = "Instant Saving:",
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 25),
             });
             _mainInfo.AddSubview(_profitView);
@@ -178,7 +180,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 Font = UIFont.FromName(Consts.FontNameRegular, 17),
                 TextAlignment = UITextAlignment.Left,
-                TextColor = UIColor.FromRGB(105, 105, 105),
+                TextColor = Consts.ColorBlack,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
             };
@@ -191,6 +193,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _detailView.AddSubviews(_segmentControl);
             //properties
             _propertiesTable = new UITableView();
+            _propertiesTable.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
             _propertiesTable.ScrollEnabled = true;
             _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
             _propertiesTable.RowHeight = 25;
@@ -198,16 +201,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _propertiesTable.ReloadData();
             _detailView.AddSubview(_propertiesTable);
             //add to cart item
-            _cartButton = UIButton.FromType(UIButtonType.RoundedRect);//new UIButton(new RectangleF(0, 0, 100, 100));
-            _cartButton.BackgroundColor = UIColor.FromRGB(4, 86, 151);
-            _cartButton.Layer.CornerRadius = 10;
-            _cartButton.SetTitleColor(UIColor.White, UIControlState.Normal);
-            _cartButton.SetTitle("Like", UIControlState.Normal);
-            _cartButton.TitleLabel.Font = UIFont.FromName(Consts.FontNameBold, 17);
-            _cartButton.SetImage(UIImage.FromFile("like.png").Scale(new CGSize(40, 40)), UIControlState.Normal);
-            _cartButton.TitleEdgeInsets = new UIEdgeInsets(0, 25, 0, 0);
-            _cartButton.ImageEdgeInsets = new UIEdgeInsets(-5, 0, 0, 0);
-            _cartButton.TintColor = UIColor.White;
+            _cartButton =  Helpers.UICreator.CreateImageButtonWithText("Like", "Like.png");
             _detailView.AddSubview(_cartButton);
             #endregion
 

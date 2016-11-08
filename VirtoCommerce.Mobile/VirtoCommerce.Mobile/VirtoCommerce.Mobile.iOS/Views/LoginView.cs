@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UIKit;
+using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.ViewModels;
+using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -14,7 +16,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
     {
         public LoginView() : base(null, null)
         {
-
+            View.BackgroundColor= UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
         }
 
         public override void ViewDidLoad()
@@ -30,6 +32,12 @@ namespace VirtoCommerce.Mobile.iOS.Views
             set.Apply();
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            NavigationController.NavigationBarHidden = true;
+        }
+
         #region View
 
         private UITextField _login;
@@ -41,7 +49,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             View = new UIView()
             {
-                BackgroundColor = UIColor.White
+                BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground)
             };
             _container = new UIView(new CGRect(0, 0, 211, 152));
             _login = new UITextField(new CGRect(0, 0, 211, 30))
@@ -60,7 +68,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _loginButton.SetTitle("Login", UIControlState.Normal);
             _message = new UILabel(new CGRect(0, 114, 211, 30))
             {
-                TextColor = UIColor.FromRGB(255, 59, 48)
+                TextColor = Consts.ColorRed
             };
             _showKbNotification = UIKeyboard.Notifications.ObserveDidShow(DidShowKeyboard);
             _hideKbNotification = UIKeyboard.Notifications.ObserveDidHide(DidHideKeyboard);

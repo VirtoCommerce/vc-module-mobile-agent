@@ -16,10 +16,6 @@ namespace VirtoCommerce.Mobile
 
         public override void Initialize()
         {
-            /* CreatableTypes()
-                 .EndingWith("Service")
-                 .AsInterfaces()
-                 .RegisterAsLazySingleton();*/
             Mvx.RegisterType<IMvxAppStart, AppStart>();
             //user manager
             Mvx.RegisterType<IUserManagerService, MockUserManagerService>();
@@ -31,6 +27,8 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IProductStorageService, ProductStorageService>();
             //cart service
             Mvx.RegisterType<ICartService, CartService>();
+            //order service
+            Mvx.RegisterType<IOrderService, OrderService>();
         }
     }
 }

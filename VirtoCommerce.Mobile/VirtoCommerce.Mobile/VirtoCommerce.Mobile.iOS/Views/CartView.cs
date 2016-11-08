@@ -1,4 +1,5 @@
-﻿using MvvmCross.Binding.BindingContext;
+﻿using Foundation;
+using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using MvvmCross.Platform.WeakSubscription;
 using System;
@@ -12,6 +13,7 @@ using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.UI.Cart;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.ViewModels;
+using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -23,7 +25,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public CartView() : base(null, null)
         {
             Title = "Cart";
-            View.BackgroundColor = UIColor.White;
+            View.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
         }
 
         public override void ViewDidLoad()
@@ -32,6 +34,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             CreateView();
             var bindingSet = this.CreateBindingSet<CartView, CartViewModel>();
             bindingSet.Bind(_subTotal).For(x => x.Text).To(x => x.FormattedSubTotal).WithConversion(new SubtotalConvertor());
+            bindingSet.Bind(_toCheckOutButton).To(x => x.ToCheckoutCommand);
             bindingSet.Apply();
             _subscribeCartChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<Cart>("Cart", (s, e) =>
             {
@@ -78,7 +81,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //items
             var cartItemsFrame = _cartItems.Frame;
             cartItemsFrame.Width = View.Frame.Width - _padding * 2;
-            cartItemsFrame.Height = View.Frame.Height - (View.Frame.Height - checkoutBtnFrame.Y) - _subTotal.Frame.Height;
+            cartItemsFrame.Height = View.Frame.Height - (View.Frame.Height - checkoutBtnFrame.Y) - _subTotal.Frame.Height - _padding;
             cartItemsFrame.X = _padding;
             cartItemsFrame.Y = _padding;
             _cartItems.Frame = cartItemsFrame;
@@ -108,17 +111,12 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _subTotal = new UILabel()
             {
                 Font = UIFont.FromName(Consts.FontNameRegular, 30),
-                TextColor = UIColor.FromRGB(255, 59, 48),
+                TextColor = Consts.ColorRed,
                 TextAlignment = UITextAlignment.Center
             };
             Add(_subTotal);
             //to checkout
-            _toCheckOutButton = new UIButton(UIButtonType.RoundedRect);
-            _toCheckOutButton.SetTitle("Checkout", UIControlState.Normal);
-            _toCheckOutButton.SetTitleColor(UIColor.White, UIControlState.Normal);
-            _toCheckOutButton.TitleLabel.Font =  UIFont.FromName(Consts.FontNameBold, 17);
-            _toCheckOutButton.BackgroundColor = UIColor.FromRGB(4, 86, 151);
-            _toCheckOutButton.Layer.CornerRadius = 10;
+            _toCheckOutButton = Helpers.UICreator.CreateSimpleButton("Checkout");
             Add(_toCheckOutButton);
         }
         #endregion

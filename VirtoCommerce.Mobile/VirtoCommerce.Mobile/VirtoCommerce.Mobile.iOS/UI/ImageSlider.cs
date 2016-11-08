@@ -7,6 +7,7 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using CoreGraphics;
+using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI
 {
@@ -58,15 +59,15 @@ namespace VirtoCommerce.Mobile.iOS.UI
             {
                 _scrollView = new UIScrollView()
                 {
-                    BackgroundColor = UIColor.White
+                    BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground)
                 };
                 _scrollView.Scrolled += Scroll;
                 _scrollView.ShowsHorizontalScrollIndicator = false;
                 _pageControl = new UIPageControl()
                 {
-                    BackgroundColor = UIColor.White,
+                    BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground),
                     CurrentPageIndicatorTintColor = UIColor.Blue,
-                    PageIndicatorTintColor = UIColor.Black,
+                    PageIndicatorTintColor = Consts.ColorBlack,
                 };
                 _pageControl.ValueChanged += SetManualPage;
                 AddSubviews(_scrollView, _pageControl);

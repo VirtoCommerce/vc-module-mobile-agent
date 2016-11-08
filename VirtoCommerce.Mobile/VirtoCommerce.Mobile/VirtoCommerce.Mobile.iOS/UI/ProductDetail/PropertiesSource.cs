@@ -5,6 +5,7 @@ using System.Text;
 
 using Foundation;
 using UIKit;
+using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI.ProductDetail
 {
@@ -38,6 +39,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.ProductDetail
             cell.DetailTextLabel.SizeToFit();
             //
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
+            cell.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground); 
             return cell;
         }
 

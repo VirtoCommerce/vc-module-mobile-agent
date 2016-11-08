@@ -8,6 +8,10 @@ namespace VirtoCommerce.Mobile.Model
 {
     public class Product
     {
+        public Product()
+        {
+            Properties = new ProductProperty[0];
+        }
         public string Id { set; get; }
         public string Name { set; get; }
         public string Description { set; get; }

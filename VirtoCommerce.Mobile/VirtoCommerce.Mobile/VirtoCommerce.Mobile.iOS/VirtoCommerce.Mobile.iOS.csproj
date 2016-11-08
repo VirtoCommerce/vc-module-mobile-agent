@@ -100,25 +100,32 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\UISimpleRadioButtonControl.cs" />
     <Compile Include="DebugTrace.cs" />
+    <Compile Include="Helpers\UICreator.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="NativConvertors\SubtotalConvertor.cs" />
     <Compile Include="NativConvertors\ProfitConvertor.cs" />
     <Compile Include="NativConvertors\StrikeTextConvertor.cs" />
+    <Compile Include="NativConvertors\TotalConvertor.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="UI\Cart\CartCell.cs" />
     <Compile Include="UI\Cart\CartSource.cs" />
     <Compile Include="UI\Consts.cs" />
+    <Compile Include="UI\Order\PaymentCell.cs" />
+    <Compile Include="UI\Order\PaymentSource.cs" />
     <Compile Include="UI\ProductDetail\PropertiesSource.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
     <Compile Include="UI\ImageSlider.cs" />
     <Compile Include="Views\CartView.cs" />
+    <Compile Include="Views\CheckoutView.cs" />
     <Compile Include="Views\DetailProductView.cs" />
     <Compile Include="Views\LoginView.cs" />
     <Compile Include="Views\ProductsGridView.cs" />
     <Compile Include="Views\MainView.cs" />
+    <Compile Include="Views\ThanksView.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +258,12 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\like.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\unchecked.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
