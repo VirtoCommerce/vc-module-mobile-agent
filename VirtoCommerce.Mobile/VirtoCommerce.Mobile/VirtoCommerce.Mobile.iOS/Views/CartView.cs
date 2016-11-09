@@ -34,7 +34,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
             CreateView();
             var bindingSet = this.CreateBindingSet<CartView, CartViewModel>();
             bindingSet.Bind(_subTotal).For(x => x.Text).To(x => x.FormattedSubTotal).WithConversion(new SubtotalConvertor());
+            bindingSet.Bind(_subTotal).For(x => x.Hidden).To(x => x.HideProductList).WithConversion(new SubtotalConvertor());
             bindingSet.Bind(_toCheckOutButton).To(x => x.ToCheckoutCommand);
+            bindingSet.Bind(_cartItems).For(x => x.Hidden).To(x => x.HideProductList);
+            bindingSet.Bind(_emptyMessageLabel).For(x => x.Hidden).To(x => x.HideEmptyMessage);
             bindingSet.Apply();
             _subscribeCartChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<Cart>("Cart", (s, e) =>
             {
@@ -85,6 +88,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
             cartItemsFrame.X = _padding;
             cartItemsFrame.Y = _padding;
             _cartItems.Frame = cartItemsFrame;
+            //empty message
+            _emptyMessageLabel.SizeToFit();
+            _emptyMessageLabel.Center = new CoreGraphics.CGPoint(View.Frame.Width / 2, View.Frame.Height / 2);
         }
 
         protected override void Dispose(bool disposing)
@@ -97,6 +103,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UITableView _cartItems;
         private UIButton _toCheckOutButton;
         private UILabel _subTotal;
+        private UILabel _emptyMessageLabel;
 
         private void CreateView()
         {
@@ -118,6 +125,14 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //to checkout
             _toCheckOutButton = Helpers.UICreator.CreateSimpleButton("Checkout");
             Add(_toCheckOutButton);
+            //empty message
+            _emptyMessageLabel = new UILabel()
+            {
+                Text = "Cart is empty",
+                TextColor = Consts.ColorMain,
+                Font = UIFont.FromName(Consts.FontNameRegular, 30)
+            };
+            Add(_emptyMessageLabel);
         }
         #endregion
     }

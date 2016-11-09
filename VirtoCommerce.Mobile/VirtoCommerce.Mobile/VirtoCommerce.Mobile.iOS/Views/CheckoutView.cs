@@ -27,6 +27,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var bindingSet = this.CreateBindingSet<CheckoutView, CheckoutViewModel>();
             bindingSet.Bind(_totalLabel).For(x => x.Text).To(x => x.Cart.FormattedSubTotal).WithConversion(new TotalConvertor());
             bindingSet.Bind(_createOrderButton).To(x => x.CreateOrderCommand);
+            bindingSet.Bind(_createOrderButton).For(x=>x.Enabled).To(x => x.CanCreateOrder);
             bindingSet.Apply();
         }
 

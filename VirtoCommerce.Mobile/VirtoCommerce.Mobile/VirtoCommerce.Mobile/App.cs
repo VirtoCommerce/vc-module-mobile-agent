@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VirtoCommerce.Mobile.Repositories;
 using VirtoCommerce.Mobile.Services;
 
 namespace VirtoCommerce.Mobile
@@ -29,6 +30,10 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<ICartService, CartService>();
             //order service
             Mvx.RegisterType<IOrderService, OrderService>();
+            //filter service
+            Mvx.RegisterType<IFilterService, FilterService>();
+            //product repository
+            Mvx.RegisterType<ISqlLiteProductRepository, SqlLiteProductRepository>();
         }
     }
 }

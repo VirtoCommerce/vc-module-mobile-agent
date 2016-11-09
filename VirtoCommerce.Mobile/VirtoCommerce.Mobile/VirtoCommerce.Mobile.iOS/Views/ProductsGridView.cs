@@ -15,6 +15,7 @@ using System.Drawing;
 using MvvmCross.Binding.BindingContext;
 using Foundation;
 using VirtoCommerce.Mobile.iOS.UI;
+using VirtoCommerce.Mobile.iOS.Helpers;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -22,6 +23,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
     {
 
         private IDisposable _subscribeProductListChange;
+        private bool _showFilters = false;
 
         public ProductsGridView() : base(null, null)
         {
@@ -99,6 +101,17 @@ namespace VirtoCommerce.Mobile.iOS.Views
                     _listProducts.Frame = frame;
                 }
             }
+            //filter size
+            var filtesViewFrame = _filterView.Frame;
+            filtesViewFrame.Width = 300;
+            filtesViewFrame.Height = View.Frame.Height;
+            filtesViewFrame.Y = 0;
+            filtesViewFrame.X = View.Frame.Width - filtesViewFrame.Width;
+            _filterView.Frame = filtesViewFrame;
+            //overlay
+            var overlayFrame = View.Frame;
+            overlayFrame.Y = 0;
+            _overlayView.Frame = overlayFrame;
         }
 
         #region View
@@ -106,6 +119,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UIActivityIndicatorView _busy;
         private UIView _busyContainer;
         private UILabel _busyLabel;
+        private UIView _filterView;
+        private UIView _overlayView;
         private void CreateView()
         {
             View = new UIView(new CGRect(0, 0, 600, 600))
@@ -114,6 +129,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 BackgroundColor = Consts.ColorMainBg,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
             };
+            
             _busyContainer = new UIView(new CGRect(0, 0, 600, 600))
             {
                 BackgroundColor = UIColor.FromRGBA(0, 0, 0, 127),
@@ -136,7 +152,33 @@ namespace VirtoCommerce.Mobile.iOS.Views
             };
             _busyContainer.AddSubviews(_busy, _busyLabel);
             Add(_busyContainer);
-            View.BackgroundColor = Consts.ColorMainBg;
+            //filter
+            _filterView = new UIView()
+            {
+                BackgroundColor = UIColor.White,
+            };
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem("Filters", UIBarButtonItemStyle.Plain, ShowHideFilter);
+            //overlay
+            _overlayView = new UIView()
+            {
+                BackgroundColor = UIColor.FromRGBA(0, 0, 0, 150)
+            };
+
+        }
+        private void ShowHideFilter(object s, EventArgs e)
+        {
+            if (_showFilters)
+            {
+                
+                _filterView.SlideHorizontalyRight(false, onFinished: () => { _filterView.RemoveFromSuperview(); _overlayView.RemoveFromSuperview(); });
+            }
+            else
+            {
+                Add(_overlayView);
+                Add(_filterView);
+                _filterView.SlideHorizontalyRight(true);
+            }
+            _showFilters = !_showFilters;
         }
         #endregion
     }

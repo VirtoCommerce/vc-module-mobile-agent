@@ -9,11 +9,18 @@ using VirtoCommerce.Mobile.Services;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class CheckoutViewModel:MvxViewModel
+    public class CheckoutViewModel : MvxViewModel
     {
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
         private MvxCommand _createOrderCommand;
+        private bool _canCreateOrder;
+
+        public bool CanCreateOrder
+        {
+            set { _canCreateOrder = value; RaisePropertyChanged(); }
+            get { return _canCreateOrder; }
+        }
 
         public MvxCommand CreateOrderCommand
         {
@@ -23,7 +30,8 @@ namespace VirtoCommerce.Mobile.ViewModels
                 {
                     _orderService.CreateOreder();
                     ShowViewModel<ThanksViewModel>();
-                }));
+                },
+                () => CanCreateOrder = PaymentMethods.Any(x => x.IsSelect)));
             }
         }
         public Cart Cart { set; get; }
@@ -34,7 +42,7 @@ namespace VirtoCommerce.Mobile.ViewModels
             _cartService = cartService;
             _orderService = orderService;
             Cart = _cartService.GetCart();
-            PaymentMethods = _orderService.PaymentMethods().Select(x=>new PaymnetMethodViewModel(x)).ToArray();
+            PaymentMethods = _orderService.PaymentMethods().Select(x => new PaymnetMethodViewModel(x, CreateOrderCommand)).ToArray();
         }
     }
 }

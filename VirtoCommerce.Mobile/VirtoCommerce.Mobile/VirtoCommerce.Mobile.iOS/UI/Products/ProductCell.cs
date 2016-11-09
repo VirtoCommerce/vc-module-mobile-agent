@@ -9,7 +9,7 @@ using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Products
 {
-	public class ProductCell : UITableViewCell
+	public class ProductCell : UIView
 	{
 		private UIView _statusView { get; set; }
 		private UIImageView _productImage { get; set; }
@@ -24,25 +24,23 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
 		public static readonly NSString Key = new NSString ("ProductCell");
 		
-		public ProductCell(Action<Product> cartTouch) : base (UITableViewCellStyle.Default, Key)
+		public ProductCell(Action<Product> cartTouch) //: base (UITableViewCellStyle.Default, Key)
 		{
             _cartTouch = cartTouch;
+            this.Frame = new CoreGraphics.CGRect(0, 0, 241, 1000);
 			InitSubviews();
 			ApplyStyles();
 		}
 
         void InitSubviews()
         {
+            BackgroundColor = UIColor.White;
             _productImage = new UIImageView(new RectangleF(5, 5, 231, 200));
-            BackgroundView = new UIView(new RectangleF(0, 0, 241, 1000))
-            {
-                BackgroundColor = UIColor.White
-            };
-
-            AddSubviews(BackgroundView, _productImage);
-
+            
+            AddSubviews(_productImage);
+            //
             _statusView = new UIView(new RectangleF(0, 213, 241, 71));
-
+            //
             _titleLabel = new UILabel(new RectangleF(8, 5, 224, 22))
             {
                 TextColor = Consts.ColorBlack,
@@ -50,6 +48,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap
             };
+            //
             _descriptionLabel = new UILabel(new RectangleF(8, 30, 224, 22))
             {
                 Font = UIFont.FromName(Consts.FontNameRegular, 12),
@@ -61,23 +60,27 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
             _statusView.AddSubviews(_titleLabel, _descriptionLabel);
             Add(_statusView);
+            //
             _listPriceLable = new UILabel(new RectangleF(8, 5, 50, 30))
             {
-                TextColor = UIColor.Gray,
+                TextColor = Consts.ColorGray,
                 Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Center
             };
+            //
             _salePriceLable = new UILabel(new RectangleF(58, 5, 50, 30))
             {
                 TextColor = Consts.ColorBlack,
                 Font = UIFont.FromName(Consts.FontNameRegular, 20),
                 TextAlignment = UITextAlignment.Center
             };
+            //
             _cartButton = new UIButton(new RectangleF(200, 0, 30, 30));
             _cartButton.TouchDown += TouchCart;
             _cartButton.SetImage(UIImage.FromFile("cart.png"), UIControlState.Normal);
             _actionsView = new UIView(new RectangleF(5, 10, 241, 30));
             _actionsView.AddSubviews(_listPriceLable, _salePriceLable, _cartButton);
+            //
             Add(_actionsView);
         }
 
@@ -114,24 +117,26 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
                 _listPriceLable.AttributedText = attrString;
             }
             _salePriceLable.Text =  data.Price.FormattedSalePrice;
+            var image = UIImage.FromFile(_data.TitleImage);
+            var scale = 230 / image.Size.Width;
+            image = image.Scale(new CoreGraphics.CGSize(image.Size.Width * scale, image.Size.Height * scale));
+            _productImage.Image = image;
+            var imageFrame = _productImage.Frame;
+            imageFrame.Size = image.Size;
+            _productImage.Frame = imageFrame;
+            _productImage.Image = image;
         }
 
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-            var image = UIImage.FromFile($"{_data.Id}.png");
-            var scale = 230 / image.Size.Width;
-            image = image.Scale(new CoreGraphics.CGSize(image.Size.Width * scale, image.Size.Height * scale));
-			var imageFrame = _productImage.Frame;
             
-			imageFrame.Size = image.Size;
-			_productImage.Frame = imageFrame;
-			_productImage.Image = image;
+			
             //
             _descriptionLabel.SizeToFit();
             _statusView.SizeToFit();
 			var statusFrame = _statusView.Frame;
-			statusFrame.Y = 2 * imageFrame.Y + imageFrame.Height;
+			statusFrame.Y = 2 * _productImage.Frame.Y + _productImage.Frame.Height;
             statusFrame.Height = _descriptionLabel.Frame.Height + _titleLabel.Frame.Height + 16;
 			_statusView.Frame = Rectangle.Round((RectangleF)statusFrame);
             //
@@ -150,7 +155,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             cellFrame.Height = _productImage.Frame.Y + _productImage.Frame.Height + statusFrame.Height + 15 + actionFrame.Height;
 			Frame = Rectangle.Round((RectangleF)cellFrame);
 
-			Superview.Superview.LayoutSubviews();
+			//Superview.Superview.LayoutSubviews();
 		}
 	}
 }

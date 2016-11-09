@@ -33,7 +33,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
 
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return Cart.CartItems.Count;
+            return Cart?.CartItems.Count ?? 0;
         }
     }
 }

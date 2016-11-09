@@ -119,7 +119,7 @@ namespace VirtoCommerce.Mobile.Services
             {
                 cart.CartItems.Add(cart.CartItems[0]);
             }
-            return cart;
+            return null;
         }
 
 

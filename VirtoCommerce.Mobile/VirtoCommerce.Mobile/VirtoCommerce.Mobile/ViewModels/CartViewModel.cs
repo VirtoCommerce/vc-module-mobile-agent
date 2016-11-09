@@ -11,14 +11,24 @@ namespace VirtoCommerce.Mobile.ViewModels
 {
     public class CartViewModel : MvxViewModel
     {
+        #region Services
         private ICartService _cartService;
+        #endregion
+
+        #region Fields
         private Cart _cart;
         private MvxCommand _toCheckoutCommand;
+        #endregion
+
+        #region Constructor
         public CartViewModel(ICartService cartService)
         {
             _cartService = cartService;
             Cart = _cartService.GetCart();
         }
+        #endregion
+
+        #region Properties
         public Cart Cart
         {
             set
@@ -33,13 +43,22 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             get { return Cart?.FormattedSubTotal; }
         }
+        public MvxCommand ToCheckoutCommand
+        {
+            get
+            {
+                return _toCheckoutCommand ?? (_toCheckoutCommand = new MvxCommand(() => { ShowViewModel<CheckoutViewModel>(); }, () => Cart != null));
+            }
+        }
+        public bool HideEmptyMessage { get { return Cart != null; } }
+        public bool HideProductList { get { return Cart == null; } }
+        #endregion
 
+        #region Methods
         public void UpdateCart(CartItem cartItem)
         {
             Cart = _cartService.UpdateCartItem(cartItem);
         }
-
-
-        public MvxCommand ToCheckoutCommand { get { return _toCheckoutCommand ?? (_toCheckoutCommand = new MvxCommand(()=> { ShowViewModel<CheckoutViewModel>(); })); } }
+        #endregion
     }
 }

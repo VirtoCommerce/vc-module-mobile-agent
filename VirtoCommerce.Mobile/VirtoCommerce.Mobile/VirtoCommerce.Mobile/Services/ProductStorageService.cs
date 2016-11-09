@@ -160,7 +160,7 @@ namespace VirtoCommerce.Mobile.Services
                     
                 }
             };
-            /*for (var i = 0; i < 50; i++)
+            /*for (var i = 0; i < 1000; i++)
             {
                 products.Add(products[0]);
             }*/

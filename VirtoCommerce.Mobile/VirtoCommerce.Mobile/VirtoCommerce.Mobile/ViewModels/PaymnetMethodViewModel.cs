@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmCross.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,15 @@ using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class PaymnetMethodViewModel
+    public class PaymnetMethodViewModel:MvxViewModel
     {
         private PaymentMethod _paymentMethod;
         private bool _isSelect;
-        public PaymnetMethodViewModel(PaymentMethod method)
+        private MvxCommand _commandCheck;
+        public PaymnetMethodViewModel(PaymentMethod method, MvxCommand commandCheck)
         {
             _paymentMethod = method;
+            _commandCheck = commandCheck;
         }
         public PaymentMethod PaymentMethod
         {
@@ -28,7 +31,13 @@ namespace VirtoCommerce.Mobile.ViewModels
         public Action NotificationSelectChange { set; get; }
         public bool IsSelect
         {
-            set { _isSelect = value; NotificationSelectChange?.Invoke(); }
+            set
+            {
+                _isSelect = value;
+                NotificationSelectChange?.Invoke();
+                _commandCheck?.CanExecute();
+                RaisePropertyChanged();
+            }
             get { return _isSelect; }
         }
     }
