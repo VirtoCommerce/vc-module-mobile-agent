@@ -19,15 +19,22 @@ namespace VirtoCommerce.Mobile.iOS.Helpers
             button.SetTitle(title, UIControlState.Normal);
             button.SetTitleColor(UIColor.White, UIControlState.Normal);
             button.TitleLabel.Font = UIFont.FromName(Consts.FontNameBold, Consts.ButtonFontSize);
-            button.BackgroundColor = Consts.ButtonBgColor;
+            button.BackgroundColor = Consts.ColorMain;
             button.Layer.CornerRadius = Consts.ButtonCornerRadius;
             return button;
         }
-
+        public static UIButton CreateSimpleButtonWithoutBg(string title)
+        {
+            var button = new UIButton(UIButtonType.System);
+            button.SetTitle(title, UIControlState.Normal);
+            button.SetTitleColor(Consts.ColorMain, UIControlState.Normal);
+            button.TitleLabel.Font = UIFont.FromName(Consts.FontNameBold, Consts.ButtonFontSize);
+            return button;
+        }
         public static UIButton CreateImageButtonWithText(string title, string image)
         {
             var button = new UIButton(UIButtonType.RoundedRect);
-            button.BackgroundColor = Consts.ButtonBgColor;
+            button.BackgroundColor = Consts.ColorMain;
             button.Layer.CornerRadius = Consts.ButtonCornerRadius;
             button.SetTitleColor(Consts.ButtonTextColor, UIControlState.Normal);
             button.SetTitle(title, UIControlState.Normal);

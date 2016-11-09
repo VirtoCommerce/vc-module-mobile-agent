@@ -14,6 +14,7 @@ using CoreGraphics;
 using System.Drawing;
 using MvvmCross.Binding.BindingContext;
 using Foundation;
+using VirtoCommerce.Mobile.iOS.UI;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -110,7 +111,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
                 ContentMode = UIViewContentMode.ScaleToFill,
-                BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground),
+                BackgroundColor = Consts.ColorMainBg,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
             };
             _busyContainer = new UIView(new CGRect(0, 0, 600, 600))
@@ -135,7 +136,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             };
             _busyContainer.AddSubviews(_busy, _busyLabel);
             Add(_busyContainer);
-            View.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            View.BackgroundColor = Consts.ColorMainBg;
         }
         #endregion
     }

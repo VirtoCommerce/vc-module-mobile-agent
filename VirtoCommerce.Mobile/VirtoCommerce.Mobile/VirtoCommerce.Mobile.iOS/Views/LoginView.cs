@@ -16,7 +16,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
     {
         public LoginView() : base(null, null)
         {
-            View.BackgroundColor= UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            View.BackgroundColor = Consts.ColorMainBg;
         }
 
         public override void ViewDidLoad()
@@ -49,23 +49,22 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             View = new UIView()
             {
-                BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground)
+                BackgroundColor = Consts.ColorMainBg
             };
             _container = new UIView(new CGRect(0, 0, 211, 152));
             _login = new UITextField(new CGRect(0, 0, 211, 30))
             {
                 Placeholder = "Login",
-                BorderStyle = UITextBorderStyle.RoundedRect
+                BorderStyle = UITextBorderStyle.Bezel
             };
             _pass = new UITextField(new CGRect(0, 38, 211, 30))
             {
                 SecureTextEntry = true,
                 Placeholder = "Password",
-                BorderStyle = UITextBorderStyle.RoundedRect
+                BorderStyle = UITextBorderStyle.Bezel
             };
-            _loginButton = new UIButton(new CGRect(83, 76, 46, 30));
-            _loginButton.SetTitleColor(UIColor.FromRGB(90, 200, 250), UIControlState.Normal);
-            _loginButton.SetTitle("Login", UIControlState.Normal);
+            _loginButton = Helpers.UICreator.CreateSimpleButton("Login");// new UIButton();
+            _loginButton.Frame = new CGRect(0, 76, 211, 30);
             _message = new UILabel(new CGRect(0, 114, 211, 30))
             {
                 TextColor = Consts.ColorRed
@@ -82,7 +81,6 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-
             _container.Center = new CGPoint(View.Frame.Size.Width / 2, View.Frame.Size.Height / 2);
         }
 

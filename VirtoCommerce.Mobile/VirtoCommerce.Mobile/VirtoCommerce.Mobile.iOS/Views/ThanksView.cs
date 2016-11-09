@@ -20,7 +20,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public ThanksView() : base(null, null)
         {
             Title = "Thanks";
-            View.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground); 
+            View.BackgroundColor = Consts.ColorMainBg;  
             CreateView();
             var bindingSet = this.CreateBindingSet<ThanksView, ThanksViewModel>();
             bindingSet.Bind(_continueButton).To(x => x.GoToMainCommand);

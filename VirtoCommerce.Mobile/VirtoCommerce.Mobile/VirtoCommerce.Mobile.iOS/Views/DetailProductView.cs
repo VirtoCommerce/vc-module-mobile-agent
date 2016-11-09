@@ -57,6 +57,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
+            /*var mainFrame = View.Frame;
+            mainFrame.Y = NavigationController.NavigationBar.Frame.Height + UIApplication.SharedApplication.StatusBarFrame.Height;
+            mainFrame.Height = mainFrame.Height - mainFrame.Y;
+            View.Frame = mainFrame;*/
             PrepareMainInfo();
             //
             PrepareDetailInfo();
@@ -85,8 +89,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
-                BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground),
-                ContentMode = UIViewContentMode.ScaleToFill,
+                BackgroundColor = Consts.ColorMainBg,
+            ContentMode = UIViewContentMode.ScaleToFill,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
                 AutosizesSubviews = true
             };
@@ -193,7 +197,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _detailView.AddSubviews(_segmentControl);
             //properties
             _propertiesTable = new UITableView();
-            _propertiesTable.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            _propertiesTable.BackgroundColor = Consts.ColorMainBg;
             _propertiesTable.ScrollEnabled = true;
             _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
             _propertiesTable.RowHeight = 25;

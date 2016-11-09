@@ -27,7 +27,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             var cell = tableView.DequeueReusableCell(CartCell.CellId, indexPath) as CartCell;
             cell.UpdateCell(Cart.CartItems.ElementAt(indexPath.Row), _updateCartItem, _isEdit);
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            cell.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            cell.BackgroundColor = Consts.ColorMainBg;
             return cell;
         }
 

@@ -25,7 +25,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public CartView() : base(null, null)
         {
             Title = "Cart";
-            View.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            View.BackgroundColor = Consts.ColorMainBg;
         }
 
         public override void ViewDidLoad()
@@ -64,11 +64,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var tabSupperView = ((UINavigationController)ParentViewController).ParentViewController as UITabBarController;
             if (tabSupperView != null)
             {
-                checkoutBtnFrame.Y = View.Frame.Height - tabSupperView.TabBar.Frame.Height - checkoutBtnFrame.Height;
+                checkoutBtnFrame.Y = View.Frame.Height - tabSupperView.TabBar.Frame.Height - checkoutBtnFrame.Height - _padding;
             }
             else
             {
-                checkoutBtnFrame.Y = View.Frame.Height - checkoutBtnFrame.Height;
+                checkoutBtnFrame.Y = View.Frame.Height - checkoutBtnFrame.Height - _padding;
             }
             checkoutBtnFrame.X = _padding;
             _toCheckOutButton.Frame = checkoutBtnFrame;

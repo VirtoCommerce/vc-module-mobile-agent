@@ -26,7 +26,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
             var cell = tableView.DequeueReusableCell(PaymentCell.CellId) as PaymentCell;
             cell.UpdateCell(_methods.ElementAt(indexPath.Row));
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            cell.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            cell.BackgroundColor = Consts.ColorMainBg;
             return cell;
         }
 

@@ -59,14 +59,14 @@ namespace VirtoCommerce.Mobile.iOS.UI
             {
                 _scrollView = new UIScrollView()
                 {
-                    BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground)
-                };
+                    BackgroundColor = Consts.ColorMainBg
+            };
                 _scrollView.Scrolled += Scroll;
                 _scrollView.ShowsHorizontalScrollIndicator = false;
                 _pageControl = new UIPageControl()
                 {
-                    BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground),
-                    CurrentPageIndicatorTintColor = UIColor.Blue,
+                    BackgroundColor = Consts.ColorMainBg,
+                CurrentPageIndicatorTintColor = UIColor.Blue,
                     PageIndicatorTintColor = Consts.ColorBlack,
                 };
                 _pageControl.ValueChanged += SetManualPage;

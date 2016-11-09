@@ -31,6 +31,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.ProductDetail
             cell.TextLabel.Text = cellData.Key+":";
             cell.TextLabel.Lines = 0;
             cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
+            cell.TextLabel.TextColor = UI.Consts.ColorMain;
             cell.TextLabel.SizeToFit();
             //
             cell.DetailTextLabel.Text = cellData.Value;
@@ -39,7 +40,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.ProductDetail
             cell.DetailTextLabel.SizeToFit();
             //
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            cell.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground); 
+            cell.BackgroundColor = Consts.ColorMainBg;
             return cell;
         }
 

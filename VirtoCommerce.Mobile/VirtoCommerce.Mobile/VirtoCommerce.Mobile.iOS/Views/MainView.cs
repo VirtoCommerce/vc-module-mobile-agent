@@ -36,6 +36,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 CreateTabFor("Cart","cart_menu", MainViewModel.CartViewModel),
             };
             ViewControllers = viewControllers;
+            TabBar.TintColor = UI.Consts.ColorMain;
             SelectedViewController = viewControllers[0];
         }
         public override void ViewWillAppear(bool animated)

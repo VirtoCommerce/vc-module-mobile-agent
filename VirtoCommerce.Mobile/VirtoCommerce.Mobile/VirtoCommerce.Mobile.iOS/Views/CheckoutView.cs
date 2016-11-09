@@ -22,7 +22,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public CheckoutView() : base(null, null)
         {
             Title = "Order";
-            View.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            View.BackgroundColor = Consts.ColorMainBg;
             CreateView();
             var bindingSet = this.CreateBindingSet<CheckoutView, CheckoutViewModel>();
             bindingSet.Bind(_totalLabel).For(x => x.Text).To(x => x.Cart.FormattedSubTotal).WithConversion(new TotalConvertor());
@@ -108,7 +108,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _infoView.Add(_totalLabel);
             //payment methods
             _paymentMethods = new UITableView(new RectangleF(0, 0, 250, 250), UITableViewStyle.Grouped);
-            _paymentMethods.BackgroundColor = UIColor.FromPatternImage(GridlockTheme.SharedTheme.ViewBackground);
+            _paymentMethods.BackgroundColor = Consts.ColorMainBg;
             _paymentMethods.Source = new PaymentSource(_paymentMethods, CheckoutViewModel.PaymentMethods);
             _paymentMethods.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _paymentMethods.RowHeight = UITableView.AutomaticDimension;
