@@ -18,22 +18,30 @@ namespace VirtoCommerce.Mobile.Model
 
         public decimal Total { set; get; }
 
+        public decimal Taxes { set; get; }
+
+        public decimal Discount { set; get; }
+
         public Currency Currency { set; get; }
 
         public string FormattedTotal
         {
-            get
-            {
-                return string.Format("{0} {1:#0.00}", Currency?.CurrencySymbol, Total);
-            }
+            get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Total); }
         }
 
         public string FormattedSubTotal
         {
-            get
-            {
-                return string.Format("{0} {1:#0.00}",Currency?.CurrencySymbol, SubTotal);
-            }
+            get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, SubTotal); }
+        }
+
+        public string FormattedTaxes
+        {
+            get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Taxes); }
+        }
+
+        public string FormattedDiscount
+        {
+            get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Discount); }
         }
     }
 }

@@ -17,8 +17,9 @@ namespace VirtoCommerce.Mobile.iOS.NativConvertors
         {
             var vl = value as Price;
             if (vl == null || vl.List == null)
-                return "0";
-            return $"-{vl.CurrencySymbol}{Math.Abs(vl.Sale - vl.List ??0)}";
+                return "0.00";
+            var profit = Math.Abs(vl.Sale - vl.List ?? 0);
+            return string.Format("-{0}{1:#0.00}", vl.Currency.Symbol, profit);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

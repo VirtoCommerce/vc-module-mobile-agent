@@ -84,6 +84,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private ImageSlider _imageSlider { set; get; }
         private UITableView _propertiesTable { set; get; }
         private UISegmentedControl _segmentControl { set; get; }
+        private UIView _borderView { set; get; }
 
         private void CreateView()
         {
@@ -118,7 +119,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
             };
             _mainInfo.AddSubview(_titleLabel);
             //slider
-            _imageSlider = new ImageSlider();
+            _imageSlider = new ImageSlider()
+            {
+                BackgroundColor = Consts.ColorMainBg
+            };
             UIImage img = UIImage.FromFile(((DetailProductViewModel)ViewModel).Product.Id + ".png");
             _imageSlider.AddImage(img);
             img = UIImage.FromFile("2.png");
@@ -200,13 +204,19 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _propertiesTable.BackgroundColor = Consts.ColorMainBg;
             _propertiesTable.ScrollEnabled = true;
             _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
-            _propertiesTable.RowHeight = 25;
+            _propertiesTable.RowHeight = 30;
             _propertiesTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _propertiesTable.ReloadData();
             _detailView.AddSubview(_propertiesTable);
             //add to cart item
-            _cartButton =  Helpers.UICreator.CreateImageButtonWithText("Like", "Like.png");
+            _cartButton =  Helpers.UICreator.CreateImageButtonWithText("Add to cart", "cart.png");
             _detailView.AddSubview(_cartButton);
+            //border view
+            _borderView = new UIView
+            {
+               BackgroundColor = Consts.ColorGray
+            };
+            Add(_borderView);
             #endregion
 
             View.AddSubviews(_mainInfo, _detailView);
@@ -301,6 +311,13 @@ namespace VirtoCommerce.Mobile.iOS.Views
             detailViewFrame.Height = View.Frame.Height;
             detailViewFrame.X = (View.Frame.Width / 2) + Padding;
             _detailView.Frame = detailViewFrame;
+
+            //border
+            var borderFrame = _borderView.Frame;
+            borderFrame.X = detailViewFrame.X;
+            borderFrame.Height = detailViewFrame.Height;
+            borderFrame.Width = 1;
+            _borderView.Frame = borderFrame;
             //segment control
             _segmentControl.SizeToFit();
             var segmentFrame = _segmentControl.Frame;
@@ -326,7 +343,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var addCartFrame = _cartButton.Frame;
             addCartFrame.X = detailViewFrame.Width - addCartFrame.Width - Padding;
             addCartFrame.Y = propertiesTableFrame.Height + propertiesTableFrame.Y + Padding;
-            addCartFrame.Width = 150;
+            addCartFrame.Width = 200;
             addCartFrame.Height = 60;
             _cartButton.Frame = addCartFrame;
         }

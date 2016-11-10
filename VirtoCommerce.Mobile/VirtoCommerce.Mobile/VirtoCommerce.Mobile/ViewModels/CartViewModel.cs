@@ -12,19 +12,24 @@ namespace VirtoCommerce.Mobile.ViewModels
     public class CartViewModel : MvxViewModel
     {
         #region Services
-        private ICartService _cartService;
+        private readonly ICartService _cartService;
+        private readonly IOrderService _orderService;
         #endregion
 
         #region Fields
         private Cart _cart;
-        private MvxCommand _toCheckoutCommand;
+        private MvxCommand _createOrderCommand;
+        private bool _canCreateOrder;
+        public ICollection<PaymnetMethodViewModel> PaymentMethods { set; get; }
         #endregion
 
         #region Constructor
-        public CartViewModel(ICartService cartService)
+        public CartViewModel(ICartService cartService, IOrderService orderService)
         {
             _cartService = cartService;
+            _orderService = orderService;
             Cart = _cartService.GetCart();
+            PaymentMethods = _orderService.PaymentMethods().Select(x => new PaymnetMethodViewModel(x, CreateOrderCommand)).ToArray();
         }
         #endregion
 
@@ -43,15 +48,28 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             get { return Cart?.FormattedSubTotal; }
         }
-        public MvxCommand ToCheckoutCommand
+
+        public bool HideEmptyMessage { get { return Cart != null; } }
+        public bool HideProductList { get { return Cart == null; } }
+
+        public bool CanCreateOrder
+        {
+            set { _canCreateOrder = value; RaisePropertyChanged(); }
+            get { return _canCreateOrder; }
+        }
+
+        public MvxCommand CreateOrderCommand
         {
             get
             {
-                return _toCheckoutCommand ?? (_toCheckoutCommand = new MvxCommand(() => { ShowViewModel<CheckoutViewModel>(); }, () => Cart != null));
+                return _createOrderCommand ?? (_createOrderCommand = new MvxCommand(() =>
+                {
+                    _orderService.CreateOreder();
+                    ShowViewModel<ThanksViewModel>();
+                },
+                () => CanCreateOrder = PaymentMethods.Any(x => x.IsSelect)));
             }
         }
-        public bool HideEmptyMessage { get { return Cart != null; } }
-        public bool HideProductList { get { return Cart == null; } }
         #endregion
 
         #region Methods
@@ -60,5 +78,9 @@ namespace VirtoCommerce.Mobile.ViewModels
             Cart = _cartService.UpdateCartItem(cartItem);
         }
         #endregion
+
+        
+
+        
     }
 }

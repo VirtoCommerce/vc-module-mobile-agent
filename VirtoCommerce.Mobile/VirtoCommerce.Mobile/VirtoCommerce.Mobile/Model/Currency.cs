@@ -9,7 +9,7 @@ namespace VirtoCommerce.Mobile.Model
     public class Currency
     {
         public string Id { set; get; }
-        public string CurrencyCode { set; get; }
-        public string CurrencySymbol { set; get; }
+        public string Code { set; get; }
+        public string Symbol { set; get; }
     }
 }

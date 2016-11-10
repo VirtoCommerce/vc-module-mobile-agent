@@ -46,7 +46,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
         }
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return _methods.Count;
+            return _methods?.Count ?? 0;
         }
     }
 }

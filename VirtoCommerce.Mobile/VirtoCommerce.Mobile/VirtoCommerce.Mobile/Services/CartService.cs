@@ -21,9 +21,12 @@ namespace VirtoCommerce.Mobile.Services
             var cart = new Cart()
             {
                 SubTotal = 25,
+                Discount = 5,
+                Taxes = 5,
+                Total = 25,
                 Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                 CartItems = new List<CartItem> {
                     new CartItem {
@@ -32,20 +35,20 @@ namespace VirtoCommerce.Mobile.Services
                         SubTotal = 10,
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },new CartItem {
                         Product = prods.ElementAt(3),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },new CartItem {
                         Product = prods.ElementAt(5),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },
@@ -53,7 +56,7 @@ namespace VirtoCommerce.Mobile.Services
                         Product = prods.ElementAt(2),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },
@@ -61,21 +64,21 @@ namespace VirtoCommerce.Mobile.Services
                         Product = prods.ElementAt(2),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 },
                         Quantity = 1
                     },new CartItem {
@@ -83,43 +86,43 @@ namespace VirtoCommerce.Mobile.Services
                         Quantity = 1,
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Quantity = 1,Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Quantity = 1,
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Quantity = 1,
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },new CartItem {
                         Product = prods.ElementAt(2),
                         Quantity = 1,
                         Currency = new Currency
                 {
-                    CurrencySymbol = "$"
+                    Symbol = "$"
                 }
                     },
                 }
             };
-            for (var i = 0; i < 250; i++)
-            {
-                cart.CartItems.Add(cart.CartItems[0]);
-            }
-            return null;
+            //for (var i = 0; i < 250; i++)
+            //{
+            //    cart.CartItems.Add(cart.CartItems[0]);
+            //}
+            return cart;
         }
 
 

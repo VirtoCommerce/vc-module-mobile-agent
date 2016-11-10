@@ -159,7 +159,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             _subTotalLabel.Frame = subTotalFrame;
             //title
             var titleFrame = _title.Frame;
-            titleFrame.Width = ContentView.Frame.Width - _iconImage.Frame.Width - _padding - stepperFrame.Width;
+            titleFrame.Width = ContentView.Frame.Width - _iconImage.Frame.Width - _padding * 3 - stepperFrame.Width;
             titleFrame.Height = 40;
             titleFrame.X = _iconImage.Frame.Width + _iconImage.Frame.X + _padding;
             titleFrame.Y = _padding;

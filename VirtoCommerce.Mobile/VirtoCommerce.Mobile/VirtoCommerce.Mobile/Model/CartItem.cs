@@ -17,7 +17,7 @@ namespace VirtoCommerce.Mobile.Model
         {
             get
             {
-                return string.Format("{0} {1:#0.00}", Currency?.CurrencySymbol, SubTotal);
+                return string.Format("{0}{1:#0.00}", Currency?.Symbol, SubTotal);
             }
         }
     }

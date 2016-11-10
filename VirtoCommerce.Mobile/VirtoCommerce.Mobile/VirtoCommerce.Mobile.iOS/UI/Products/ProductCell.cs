@@ -34,7 +34,6 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
         void InitSubviews()
         {
-            BackgroundColor = UIColor.White;
             _productImage = new UIImageView(new RectangleF(5, 5, 231, 200));
             
             AddSubviews(_productImage);
@@ -97,7 +96,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
         void ApplyStyles()
 		{
-			BackgroundColor = UIColor.White;
+            BackgroundColor = UIColor.White;
 		}
 
         public void Bind(Product data)

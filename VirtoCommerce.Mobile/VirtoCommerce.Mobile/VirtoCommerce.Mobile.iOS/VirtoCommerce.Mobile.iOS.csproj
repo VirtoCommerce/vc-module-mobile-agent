@@ -115,6 +115,8 @@
     <Compile Include="Shared\SqlLite.cs" />
     <Compile Include="UI\Cart\CartCell.cs" />
     <Compile Include="UI\Cart\CartSource.cs" />
+    <Compile Include="UI\Cart\TotalRowData.cs" />
+    <Compile Include="UI\Cart\TotalSource.cs" />
     <Compile Include="UI\Consts.cs" />
     <Compile Include="UI\Order\PaymentCell.cs" />
     <Compile Include="UI\Order\PaymentSource.cs" />

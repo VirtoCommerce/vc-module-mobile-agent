@@ -58,7 +58,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _listProducts = new GridView((RectangleF)View.Bounds)
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
-                Delegate = this
+                Delegate = this,
+                BackgroundColor = Consts.ColorGrayLight
             };
             Add(_listProducts);
             foreach (var product in ((ProductsGridViewModel)ViewModel).Products)
@@ -90,10 +91,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
+            var tabSupperView = ((UINavigationController)ParentViewController).ParentViewController as UITabBarController;
             if (_listProducts != null)
             {
-
-                var tabSupperView = ((UINavigationController)ParentViewController).ParentViewController as UITabBarController;
                 if (tabSupperView != null)
                 {
                     var frame = _listProducts.Frame;
@@ -104,7 +104,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //filter size
             var filtesViewFrame = _filterView.Frame;
             filtesViewFrame.Width = 300;
-            filtesViewFrame.Height = View.Frame.Height;
+            filtesViewFrame.Height = tabSupperView != null ? View.Frame.Height - tabSupperView.TabBar.Frame.Height : View.Frame.Height;
             filtesViewFrame.Y = 0;
             filtesViewFrame.X = View.Frame.Width - filtesViewFrame.Width;
             _filterView.Frame = filtesViewFrame;
@@ -163,7 +163,6 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 BackgroundColor = UIColor.FromRGBA(0, 0, 0, 150)
             };
-
         }
         private void ShowHideFilter(object s, EventArgs e)
         {
