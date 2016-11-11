@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Mobile.iOS", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Mobile", "VirtoCommerce.Mobile\VirtoCommerce.Mobile\VirtoCommerce.Mobile.csproj", "{FAE727E5-5166-43FD-A9F4-F53159D638EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Api.Client", "VirtoCommerce.Api.Client\VirtoCommerce.Api.Client.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Mobile.ApiClient", "VirtoCommerce.Mobile.ApiClient\VirtoCommerce.Mobile.ApiClient.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
