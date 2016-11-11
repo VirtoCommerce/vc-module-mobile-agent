@@ -164,6 +164,11 @@ Currency = currency,
             return products;
         }
 
+        public int GetProductsCount()
+        {
+            return 1;
+        }
+
         public bool SaveProducts(ICollection<Product> products)
         {
             return true;

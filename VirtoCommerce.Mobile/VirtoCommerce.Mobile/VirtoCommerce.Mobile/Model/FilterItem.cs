@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.Model
 {
-    public class Filter
+    public class FilterItem
     {
-        public string Header { set; get; }
-        public ICollection<FilterItem> Items { set; get; }
+        public string Name { set; get; }
+        public string Value { set; get; }
     }
 }

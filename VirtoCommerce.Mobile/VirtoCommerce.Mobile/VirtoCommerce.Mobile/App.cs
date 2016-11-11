@@ -13,7 +13,6 @@ namespace VirtoCommerce.Mobile
 {
     public class App : MvvmCross.Core.ViewModels.MvxApplication
     {
-        public static bool SyncComplete { get; set; }
 
         public override void Initialize()
         {
@@ -34,6 +33,8 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IFilterService, FilterService>();
             //product repository
             Mvx.RegisterType<ISqlLiteProductRepository, SqlLiteProductRepository>();
+            //global eventor
+            Mvx.RegisterSingleton<IGlobalEventor>(new GlobalEventor());
         }
     }
 }

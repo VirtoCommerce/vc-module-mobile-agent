@@ -14,6 +14,7 @@ using VirtoCommerce.Mobile.iOS.UI.Cart;
 using VirtoCommerce.Mobile.iOS.UI.Order;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.ViewModels;
+using System.Linq;
 using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
@@ -33,6 +34,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             bindingSet.Bind(_cartItems).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Bind(_infoView).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Bind(_emptyMessageLabel).For(x => x.Hidden).To(x => x.HideEmptyMessage);
+            bindingSet.Bind(_borderView).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Apply();
         }
 
@@ -43,6 +45,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //
             ((TotalSource)_totalView.Source).Data = GetTotalData();
             _totalView.ReloadData();
+            //
+
         }
 
         private void UpdateCart(CartItem cartItem)
@@ -132,6 +136,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
             borderViewFrame.X = cartItemsFrame.Width + cartItemsFrame.X;
             borderViewFrame.Y = 0;
             _borderView.Frame = borderViewFrame;
+            //empty message
+            _emptyMessageLabel.SizeToFit();
+            _emptyMessageLabel.Center = new CoreGraphics.CGPoint(View.Frame.Width / 2, View.Frame.Height / 2);
         }
 
         #region View
@@ -187,7 +194,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 Font = UIFont.FromName(Consts.FontNameRegular, 30)
             };
             Add(_emptyMessageLabel);
-
+            //
         }
         #endregion
 

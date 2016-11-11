@@ -16,6 +16,8 @@ using MvvmCross.Binding.BindingContext;
 using Foundation;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.Helpers;
+using VirtoCommerce.Mobile.iOS.UI.Filters;
+using VirtoCommerce.Mobile.Classes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -24,7 +26,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
         private IDisposable _subscribeProductListChange;
         private bool _showFilters = false;
-
+        private int _padding = 10;
+        public ProductsGridViewModel ProductsGridViewModel { get { return ViewModel as ProductsGridViewModel; } }
         public ProductsGridView() : base(null, null)
         {
             Title = "Products";
@@ -32,23 +35,25 @@ namespace VirtoCommerce.Mobile.iOS.Views
         }
         public override void ViewDidLoad()
         {
-            
             base.ViewDidLoad();
             CreateView();
             var set = this.CreateBindingSet<ProductsGridView, ProductsGridViewModel>();
             set.Bind(_busyContainer).For(x => x.Hidden).To(x => x.HideBusy);
             set.Bind(_busyLabel).For(x=>x.Text).To(x => x.Status);
-            set.Apply();
             _subscribeProductListChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<ICollection<Product>>("Products", (s, e) =>
             {
                 UpdateListProducts();
             });
+            set.Apply();
         }
 
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
-            UpdateListProducts();
+            if (ProductsGridViewModel.Products?.Count > 0)
+            {
+                UpdateListProducts();
+            }
         }
 
         private void UpdateListProducts()
@@ -78,14 +83,16 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 _subscribeProductListChange.Dispose();
                 _subscribeProductListChange = null;
             }
+            _clearAll.TouchDown -= ClearAllFilters;
+            _applyFilters.TouchDown -= ApplyFilters;
         }
         public void TileSelected(GridView gridView, int index)
         {
-            ((ProductsGridViewModel)ViewModel).ShowProductDetail(index);
+            ProductsGridViewModel.ShowProductDetail(index);
         }
         private void CartAdd(Product product)
         {
-            ((ProductsGridViewModel)ViewModel).AddToCart(product);
+            ProductsGridViewModel.AddToCart(product);
         }
 
         public override void ViewDidLayoutSubviews()
@@ -108,11 +115,41 @@ namespace VirtoCommerce.Mobile.iOS.Views
             filtesViewFrame.Y = 0;
             filtesViewFrame.X = View.Frame.Width - filtesViewFrame.Width;
             _filterView.Frame = filtesViewFrame;
+            //clear all
+            var clearAllFrame = _clearAll.Frame;
+            clearAllFrame.Width = 120;
+            clearAllFrame.Height = 25;
+            _clearAll.Frame = clearAllFrame;
+            _clearAll.Center = new CGPoint(filtesViewFrame.Width / 2 - _padding / 2 - clearAllFrame.Width/2, filtesViewFrame.Height - clearAllFrame.Height / 2 - _padding);
+            //apply button
+            var applyButtonFrame = _applyFilters.Frame;
+            applyButtonFrame.Width = 120;
+            applyButtonFrame.Height = 25;
+            _applyFilters.Frame = applyButtonFrame;
+            _applyFilters.Center = new CGPoint(filtesViewFrame.Width / 2 + _padding / 2 + applyButtonFrame.Width/2, filtesViewFrame.Height - applyButtonFrame.Height / 2 - _padding);
+            //filter items 
+            var filterListFrame = filtesViewFrame;
+            filterListFrame.X = 0;
+            filtesViewFrame.Height = filtesViewFrame.Height - clearAllFrame.Height - _padding * 2;
+            _filtersList.Frame = filterListFrame;
             //overlay
             var overlayFrame = View.Frame;
             overlayFrame.Y = 0;
             _overlayView.Frame = overlayFrame;
         }
+
+        private Dictionary<string, List<FilterItemViewModel>> GetFilters()
+        {
+            var result = new Dictionary<string, List<FilterItemViewModel>>();
+            var filters = ProductsGridViewModel.GetFilters();
+            foreach (var filter in filters)
+            {
+                result.Add(filter.Header, filter.Items.Select(x => new FilterItemViewModel { FilterItem = x }).ToList());
+            }
+            return result;
+        }
+
+        
 
         #region View
         private GridView _listProducts;
@@ -121,6 +158,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UILabel _busyLabel;
         private UIView _filterView;
         private UIView _overlayView;
+        private UITableView _filtersList;
+        private UIButton _clearAll;
+        private UIButton _applyFilters;
+        private UIBarButtonItem _filterOpenButton;
+
         private void CreateView()
         {
             View = new UIView(new CGRect(0, 0, 600, 600))
@@ -157,15 +199,57 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 BackgroundColor = UIColor.White,
             };
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem("Filters", UIBarButtonItemStyle.Plain, ShowHideFilter);
+            _filterOpenButton = new UIBarButtonItem("Filters", UIBarButtonItemStyle.Bordered, ShowHideFilter);
+            NavigationItem.RightBarButtonItem = _filterOpenButton;
             //overlay
             _overlayView = new UIView()
             {
                 BackgroundColor = UIColor.FromRGBA(0, 0, 0, 150)
             };
+            //table filters
+            _filtersList = new UITableView(new RectangleF(0, 0, 25, 25), UITableViewStyle.Grouped);
+            _filtersList.Source = new FilterSource(GetFilters());
+            _filtersList.RowHeight = FilterCell.CellHeight;
+            _filtersList.BackgroundColor = Consts.ColorMainBg;
+            _filtersList.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+            _filtersList.ScrollEnabled = true;
+            _filterView.Add(_filtersList);
+            //clear all filters
+            _clearAll = UICreator.CreateSimpleButton("Clear all");
+            _clearAll.TouchDown += ClearAllFilters;
+            _filterView.Add(_clearAll);
+            //apply filters
+            _applyFilters = UICreator.CreateSimpleButton("Done");
+            _applyFilters.TouchDown += ShowHideFilter;
+            _filterView.Add(_applyFilters);
         }
+
+        #region Events
+        private void ClearAllFilters(object sender, EventArgs e)
+        {
+            var source = _filtersList.Source as FilterSource;
+            if (source == null)
+                return;
+            foreach (var key in source.Data.Keys)
+            {
+                foreach (var item in source.Data[key])
+                {
+                    item.IsSelect = false;
+                }
+            }
+            _filtersList.ReloadData();
+        }
+
         private void ShowHideFilter(object s, EventArgs e)
         {
+            if (!_showFilters)
+            {
+                NavigationItem.RightBarButtonItem = null;
+            }
+            else
+            {
+                NavigationItem.RightBarButtonItem = _filterOpenButton;
+            }
             if (_showFilters)
             {
                 
@@ -179,6 +263,13 @@ namespace VirtoCommerce.Mobile.iOS.Views
             }
             _showFilters = !_showFilters;
         }
+
+        private void ApplyFilters(object s, EventArgs e)
+        {
+            //TODO: Call apply filters in VM
+            ShowHideFilter(s, e);
+        }
+        #endregion
         #endregion
     }
 

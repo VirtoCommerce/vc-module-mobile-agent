@@ -10,8 +10,10 @@ namespace VirtoCommerce.Mobile.Services
     public class CartService : ICartService
     {
         private readonly IProductStorageService _productService;
-        public CartService(IProductStorageService productService)
+        private readonly IGlobalEventor _eventor;
+        public CartService(IProductStorageService productService, IGlobalEventor eventor)
         {
+            _eventor = eventor;
             _productService = productService;
         }
 
@@ -122,9 +124,8 @@ namespace VirtoCommerce.Mobile.Services
             //{
             //    cart.CartItems.Add(cart.CartItems[0]);
             //}
-            return cart;
+            return null;
         }
-
 
         public Cart UpdateCartItem(CartItem cartItem)
         {
@@ -143,6 +144,7 @@ namespace VirtoCommerce.Mobile.Services
                 }
             }
             cart.SubTotal = new Random().Next();
+            _eventor.Publish(typeof(Events.CartChangeEvent));
             return cart;
         }
 

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VirtoCommerce.Mobile.Classes;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 using Xamarin.Forms;
@@ -18,6 +19,7 @@ namespace VirtoCommerce.Mobile.ViewModels
         #region Services
         private readonly IProductStorageService _productsStorageService;
         private readonly ICartService _cartService;
+        private readonly IFilterService _filterService;
         #endregion
 
         #region Private field
@@ -30,21 +32,23 @@ namespace VirtoCommerce.Mobile.ViewModels
         #endregion
 
         #region Constructor
-        public ProductsGridViewModel(ISyncService syncService, IProductStorageService productService, ICartService cartService)
+        public ProductsGridViewModel(ISyncService syncService, IProductStorageService productService, ICartService cartService, IFilterService filterService)
         {
             _syncService = syncService;
             _productsStorageService = productService;
             _cartService = cartService;
-           /* if (!App.SyncComplete)
+            _filterService = filterService;
+            if (!SyncManager.SyncComplete && _productsStorageService.GetProductsCount() == 0)
             {
                 RunSync();
             }
             else
             {
                 GetProducts(0, _countProductPerPage);
-            }*/
-            GetProducts(0, _countProductPerPage);
+                RunBackgroundAsync();
+            }
         }
+        
         #endregion
 
         #region Public properties
@@ -97,6 +101,11 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             _cartService.AddToCart(product.Id);
         }
+
+        public ICollection<Filter> GetFilters()
+        {
+           return _filterService.GetProductFilters();
+        }
         #endregion
 
         #region Private methods
@@ -106,14 +115,17 @@ namespace VirtoCommerce.Mobile.ViewModels
         private async void RunSync()
         {
             IsSync = true;
-            Status = "Sync filter";
-            await _syncService.SyncFilters();
-            Status = "Sync products";
-            await _syncService.SyncProducts();
-            Status = "";
-            App.SyncComplete = true;
+            Status = "Sync";
+            await SyncManager.Sync();
             IsSync = false;
             GetProducts(0, _countProductPerPage);
+        }
+        /// <summary>
+        /// Run sync in background
+        /// </summary>
+        private async void RunBackgroundAsync()
+        {
+            await SyncManager.Sync();
         }
         #endregion
     }
