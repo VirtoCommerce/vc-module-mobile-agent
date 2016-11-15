@@ -29,6 +29,6 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// Save products in LocalStorage
         /// </summary>
-        bool SaveProducts(ICollection<Product> products);
+        bool SaveProducts(ICollection<ApiClient.Models.Product> products);
     }
 }

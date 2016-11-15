@@ -12,16 +12,34 @@ namespace VirtoCommerce.Mobile.ViewModels
 {
     public class LoginViewModel : MvxViewModel
     {
+        #region services
         private readonly IUserManagerService _userManagerService;
+        #endregion
+
+        #region Private fields
         private bool _isError;
         private string _message;
         private string _login;
         private string _pass;
+        private IMvxCommand _loginCommand;
+        private bool _isBusy;
+        #endregion
+
+        #region Constructor
         public LoginViewModel(IUserManagerService userManagerService)
         {
             _userManagerService = userManagerService;
         }
-       
+        #endregion
+
+        #region Public properties
+
+        public bool IsBusy
+        {
+            set { _isBusy = value; RaisePropertyChanged(); }
+            get { return _isBusy; }
+        }
+
         public string Login
         {
             set
@@ -69,14 +87,15 @@ namespace VirtoCommerce.Mobile.ViewModels
             get { return _message; }
         }
 
-        private IMvxCommand _loginCommand;
         public IMvxCommand LoginCommand
         {
             get
             {
-                return _loginCommand ?? (_loginCommand = new MvxCommand(() =>
+                return _loginCommand ?? (_loginCommand = new MvxCommand(async () =>
                  {
-                     if (_userManagerService.Login(Login, Password) != null)
+                     HideShowError = true;
+                     IsBusy = true;
+                     if (await _userManagerService.LoginAsync(Login, Password) != null)
                      {
                          ShowViewModel<MainViewModel>();
                      }
@@ -85,8 +104,10 @@ namespace VirtoCommerce.Mobile.ViewModels
                          HideShowError = false;
                          Message = "Incorrect login or password";
                      }
+                     IsBusy = false;
                  }));
             }
         }
+        #endregion
     }
 }

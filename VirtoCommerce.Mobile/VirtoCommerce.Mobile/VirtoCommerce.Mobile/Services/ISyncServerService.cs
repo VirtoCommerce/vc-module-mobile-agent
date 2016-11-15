@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VirtoCommerce.Mobile.Entities;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Responses;
 
@@ -13,7 +14,7 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// Get list products
         /// </summary>
-        Task<ServerResponseCollection<Product>> GetProducts();
+        Task<ServerResponseCollection<ApiClient.Models.Product>> GetProducts();
         /// <summary>
         /// Get list filters
         /// </summary>

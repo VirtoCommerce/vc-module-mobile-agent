@@ -37,9 +37,13 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
-    <Compile Include="Classes\SyncManager.cs" />
-    <Compile Include="Command\ClearHistoryPresentationHint.cs" />
-    <Compile Include="CustomControls\ProductsTableView.cs" />
+    <Compile Include="Convertors\ApiProductToProductEntity.cs" />
+    <Compile Include="Entities\PriceEntity.cs" />
+    <Compile Include="Entities\ReviewEntity.cs" />
+    <Compile Include="Events\BaseEvent.cs" />
+    <Compile Include="Events\SyncEvent.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\SyncManager.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\ImageEntity.cs" />
     <Compile Include="Entities\ProductEntity.cs" />
@@ -53,13 +57,16 @@
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\FilterItem.cs" />
+    <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductProperty.cs" />
-    <Compile Include="Repositories\ISqlLiteProductRepository.cs" />
+    <Compile Include="Repositories\IProductRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\SqlLiteProductRepository.cs" />
+    <Compile Include="Repositories\PreferencesUserRepository.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\ServerResponse.cs" />
     <Compile Include="Responses\ServerResponseCollection.cs" />
@@ -71,14 +78,15 @@
     <Compile Include="Services\ICartService.cs" />
     <Compile Include="Services\IFilterService.cs" />
     <Compile Include="Services\IGlobalEventor.cs" />
+    <Compile Include="Services\ILocalStorageImageService.cs" />
     <Compile Include="Services\IOrderService.cs" />
     <Compile Include="Services\IProductStorageService.cs" />
     <Compile Include="Services\ISyncServerService.cs" />
     <Compile Include="Services\ISyncService.cs" />
     <Compile Include="Services\IUserManagerService.cs" />
     <Compile Include="Services\CartService.cs" />
-    <Compile Include="Services\MockUserManagerService.cs" />
-    <Compile Include="Services\MockSyncServerService.cs" />
+    <Compile Include="Services\UserManagerService.cs" />
+    <Compile Include="Services\SyncServerService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductStorageService.cs" />
     <Compile Include="Services\SyncService.cs" />
@@ -115,6 +123,26 @@
     </Reference>
     <Reference Include="MvvmCross.Platform, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Platform.4.2.2\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Connectivity, Version=2.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.2.12\lib\portable-net45+wp80+wp81+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+Xamarin.Mac20+UAP10\Plugin.Connectivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Connectivity.Abstractions, Version=2.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.2.12\lib\portable-net45+wp80+wp81+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+Xamarin.Mac20+UAP10\Plugin.Connectivity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Settings, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Settings.2.5.1.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Settings.Abstractions, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Settings.2.5.1.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">

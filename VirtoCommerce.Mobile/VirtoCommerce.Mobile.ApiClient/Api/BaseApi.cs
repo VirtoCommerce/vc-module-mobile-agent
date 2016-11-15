@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.ApiClient.Api
 {
-    public class LoginApiClient : BaseClient
+    public class BaseApi
     {
-        public LoginApiClient(string baseUrl) : base(baseUrl)
-        {
-        }
+        protected BaseApiClient Client { set; get; }
 
-        //public 
+        public BaseApi(BaseApiClient client)
+        {
+            Client = client;
+        }
     }
 }

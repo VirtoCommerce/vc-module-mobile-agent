@@ -12,6 +12,7 @@ namespace VirtoCommerce.Mobile.ViewModels
     public class MainViewModel: MvxViewModel
     {
         private CartViewModel _cartViewModel;
+        private ProductsGridViewModel _productsGridViewModel;
         private readonly IGlobalEventor _eventor;
         private readonly ICartService _cartService;
 
@@ -24,9 +25,7 @@ namespace VirtoCommerce.Mobile.ViewModels
             set { _cartViewModel = value; RaisePropertyChanged(); }
             get { return _cartViewModel; }
         }
-
-        private ProductsGridViewModel _productsGridViewModel;
-
+        
         public ProductsGridViewModel ProductsGridViewModel
         {
             set { _productsGridViewModel = value; RaisePropertyChanged(); }

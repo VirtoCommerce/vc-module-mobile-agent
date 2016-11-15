@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.Events
 {
-    public class CartChangeEvent
+    public class CartChangeEvent:BaseEvent
     {
     }
 }

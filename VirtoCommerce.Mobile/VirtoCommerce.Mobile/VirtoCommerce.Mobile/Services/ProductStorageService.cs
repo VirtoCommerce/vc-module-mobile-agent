@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
+using VirtoCommerce.Mobile.Repositories;
+using VirtoCommerce.Mobile.Convertors;
+using VirtoCommerce.Mobile.Entities;
+using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.Services
 {
     public class ProductStorageService : IProductStorageService
     {
+        private readonly IProductRepository _productRepository;
+        private readonly ILocalStorageImageService _imageService;
+        public ProductStorageService(IProductRepository productRepository)
+        {
+            _imageService = DependencyService.Get<ILocalStorageImageService>();
+            _productRepository = productRepository;
+        }
         public ICollection<Product> GetAllProducts()
         {
             throw new NotImplementedException();
@@ -169,8 +180,51 @@ Currency = currency,
             return 1;
         }
 
-        public bool SaveProducts(ICollection<Product> products)
+        public bool SaveProducts(ICollection<ApiClient.Models.Product> products)
         {
+            try
+            {
+                _productRepository.StartTransaction();
+                foreach (var prod in products)
+                {
+                    //save main product
+                    if (!_productRepository.SaveProduct(prod.ToProductEntity()))
+                    {
+                        continue;
+                    }
+                    //save images for product
+                    foreach (var image in prod.Images)
+                    {
+                        var imgEntity = new ImageEntity
+                        {
+                            Id = image.Id,
+                            ProductId = prod.Id,
+                            PhysicalPath = _imageService.SaveImage(new Model.Image
+                            {
+                                Name = image.Name,
+                                Path = image.Url
+                            }, prod.Id)
+                        };
+                        _productRepository.SaveImage(imgEntity);
+                    }
+                    //save reviews 
+                    foreach (var review in prod.Reviews)
+                    {
+                        var reviewEntity = new ReviewEntity
+                        {
+                            Id = review.Id,
+                            Content = review.Content,
+                            ReviewType = review.ReviewType,
+                            LanguageCode = review.LanguageCode
+                        };
+                    }
+                }
+                _productRepository.EndTransaction();
+            }
+            catch {
+                _productRepository.RollBackTransaction();
+                return false;
+            }
             return true;
         }
     }

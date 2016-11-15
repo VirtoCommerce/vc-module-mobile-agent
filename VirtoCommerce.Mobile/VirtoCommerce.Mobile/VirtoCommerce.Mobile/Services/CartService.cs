@@ -144,7 +144,7 @@ namespace VirtoCommerce.Mobile.Services
                 }
             }
             cart.SubTotal = new Random().Next();
-            _eventor.Publish(typeof(Events.CartChangeEvent));
+            _eventor.Publish(new Events.CartChangeEvent());
             return cart;
         }
 

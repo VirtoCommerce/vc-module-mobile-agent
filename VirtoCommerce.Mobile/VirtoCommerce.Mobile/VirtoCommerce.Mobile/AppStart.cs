@@ -27,6 +27,7 @@ namespace VirtoCommerce.Mobile
             else
             {
                 ShowViewModel<LoginViewModel>();
+
             }
         }
     }

@@ -12,10 +12,15 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// User authentication on the server
         /// </summary>
-        User Login(string userName, string password);
+        Task<User> LoginAsync(string userName, string password);
         /// <summary>
-        /// Check user is authentication
+        /// Check user is authentication async
+        /// </summary>
+        Task<bool> IsLoginAsync();
+        /// <summary>
+        /// Check user is authentication sync
         /// </summary>
         bool IsLogin();
+
     }
 }

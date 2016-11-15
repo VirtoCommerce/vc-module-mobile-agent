@@ -3,6 +3,8 @@ using MvvmCross.iOS.Platform;
 using MvvmCross.Platform;
 using Foundation;
 using UIKit;
+using VirtoCommerce.Mobile.Services;
+using ToastIOS;
 
 namespace VirtoCommerce.Mobile.iOS
 {
@@ -35,11 +37,32 @@ namespace VirtoCommerce.Mobile.iOS
             var setup = new Setup(this, Window);
             setup.Initialize();
             var startup = Mvx.Resolve<IMvxAppStart>();
+            Mvx.Resolve<IGlobalEventor>().Subscribe<Events.SyncEvent>(SetSyncIndicator);
             startup.Start();
 
             Window.MakeKeyAndVisible();
 
             return true;
+        }
+        private void SetSyncIndicator(Events.SyncEvent eventArgs)
+        {
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = !eventArgs.IsEnd;
+            if (eventArgs.IsEnd)
+            {
+                Mvx.Resolve<IGlobalEventor>().UnSubcribe<Events.SyncEvent>(SetSyncIndicator);
+                var toaster = Toast.MakeText(string.IsNullOrEmpty(eventArgs.Message) ? "Sync complete" : eventArgs.Message).SetDuration(1500).SetCornerRadius(0).SetBgAlpha(1).SetGravity(ToastGravity.Center);
+                if (eventArgs.IsError)
+                {
+                    toaster.Show(ToastType.Error);
+                }
+                else if (eventArgs.IsWarning)
+                {
+                    toaster.Show(ToastType.Warning);
+                }
+                else {
+                    toaster.Show(ToastType.Info);
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ using Foundation;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.Helpers;
 using VirtoCommerce.Mobile.iOS.UI.Filters;
-using VirtoCommerce.Mobile.Classes;
+using VirtoCommerce.Mobile.Helpers;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {

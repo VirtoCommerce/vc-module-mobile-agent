@@ -1,46 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using VirtoCommerce.Mobile.Events;
 
 namespace VirtoCommerce.Mobile.Services
 {
     public class GlobalEventor : IGlobalEventor
     {
-        private Dictionary<string, List<Action>> _events = new Dictionary<string, List<Action>>();
-        public void Publish(Type eventType)
+        private Dictionary<string, List<object>> _events = new Dictionary<string, List<object>>();
+        public void Publish<TParam>(TParam param) where TParam : BaseEvent
         {
+            var t = param.GetType();
             foreach (var e in _events.Keys)
             {
-                if (e == eventType.FullName)
+                if (e == t.FullName)
                 {
-                    foreach (var act in _events[e])
+                    foreach (var act in _events[e].ToList())
                     {
-                        act?.Invoke();
+                        (act as Action<TParam>)?.Invoke(param);
                     }
                     break;
                 }
             }
         }
 
-        public void Subscribe(Type eventType, Action action)
+        public void Subscribe<T>(Action<T> action) where T : BaseEvent
         {
-            if (_events.ContainsKey(eventType.FullName))
+            var t = typeof(T);
+            if (_events.ContainsKey(t.FullName))
             {
-                _events[eventType.FullName].Add(action);
+                _events[t.FullName].Add(action);
             }
             else
             {
-                _events.Add(eventType.FullName, new List<Action>() { action });
+                _events.Add(t.FullName, new List<object>() { action });
             }
         }
 
-        public void UnSubcribe(Type eventType, Action action)
+        public void UnSubcribe<T>(Action<T> action) where T : BaseEvent
         {
-            if (_events.ContainsKey(eventType.FullName))
+            var t = typeof(T);
+            if (_events.ContainsKey(t.FullName))
             {
-                _events[eventType.FullName].Remove(action);
+                _events[t.FullName].Remove(action);
             }
         }
     }

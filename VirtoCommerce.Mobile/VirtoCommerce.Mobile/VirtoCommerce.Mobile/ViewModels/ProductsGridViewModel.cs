@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VirtoCommerce.Mobile.Classes;
+using VirtoCommerce.Mobile.Helpers;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 using Xamarin.Forms;

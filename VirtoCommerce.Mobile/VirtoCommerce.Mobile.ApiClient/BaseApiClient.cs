@@ -1,0 +1,131 @@
+﻿using Newtonsoft.Json;
+using Plugin.Connectivity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using VirtoCommerce.Mobile.ApiClient.Exceptions;
+using Xamarin.Forms;
+using VirtoCommerce.Mobile.ApiClient.Models;
+
+namespace VirtoCommerce.Mobile.ApiClient
+{
+    public abstract class BaseApiClient
+    {
+        protected HttpClient Client { set; get; }
+        private string _subFolder = "";
+        public BaseApiClient(string baseUrl, string subFolder = "")
+        {
+            Client = new HttpClient();
+            Client.BaseAddress = new Uri(baseUrl);
+            _subFolder = subFolder;
+        }
+
+
+        protected virtual void PrepareAuthorizeData()
+        {
+
+        }
+
+        protected bool ExistInternet
+        { 
+            get { return CrossConnectivity.Current.IsConnected; }
+        }
+
+        public async Task<TResponse> PostJsonRequestWithParamsAsync<TResponse>(string url, List<KeyValuePair<string, object>> param)
+        {
+            if (!ExistInternet)
+            {
+                throw new NoInternetConnectionException();
+            }
+            var serializedParams = new List<KeyValuePair<string, string>>();
+            foreach (var p in param)
+            {
+                serializedParams.Add(new KeyValuePair<string, string>(p.Key, JsonConvert.SerializeObject(p.Value)));
+            }
+            var serializedData = new FormUrlEncodedContent(serializedParams);
+            //authorize
+            PrepareAuthorizeData();
+            var message = new HttpRequestMessage(HttpMethod.Post, $"{_subFolder}/{url}")
+            {
+                Content = serializedData
+            };
+            using (var response = await Client.SendAsync(message))
+            {
+                using (var content = response.Content)
+                {
+                    // ... Read the string.
+                    var result = await content.ReadAsStringAsync();
+
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<TResponse>(result);
+                    }
+                    catch
+                    {
+                        return Activator.CreateInstance<TResponse>();
+                    }
+                }
+            }
+        }
+
+        public async Task<TResponse> PostJsonRequestAsync<TResponse, TRequest>(string url, TRequest request) where TResponse : class where TRequest : class
+        {
+
+            if (!ExistInternet)
+            {
+                throw new NoInternetConnectionException();
+            }
+            var serializedData = JsonConvert.SerializeObject(request);
+            //authorize
+            PrepareAuthorizeData();
+            using (var response = await Client.PostAsync($"{_subFolder}/{url}", new StringContent(serializedData, Encoding.UTF8, "application/json")))
+            {
+                using (var content = response.Content)
+                {
+                    // ... Read the string.
+                    var result = await content.ReadAsStringAsync();
+
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<TResponse>(result);
+                    }
+                    catch
+                    {
+                        return Activator.CreateInstance<TResponse>();
+                    }
+                }
+            }
+        }
+        public TResponse PostJsonRequest<TResponse, TRequest>(string url, TRequest request) where TResponse : class where TRequest : class
+        {
+
+            if (!ExistInternet)
+            {
+                throw new NoInternetConnectionException();
+            }
+            var serializedData = JsonConvert.SerializeObject(request);
+            //authorize
+            PrepareAuthorizeData();
+            using (var response = Client.PostAsync($"{_subFolder}/{url}", new StringContent(serializedData, Encoding.UTF8, "application/json")).Result)
+            {
+                using (var content = response.Content)
+                {
+                    // ... Read the string.
+                    var result = content.ReadAsStringAsync().Result;
+
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<TResponse>(result);
+                    }
+                    catch
+                    {
+                        return Activator.CreateInstance<TResponse>();
+                    }
+                }
+            }
+        }
+    }
+}

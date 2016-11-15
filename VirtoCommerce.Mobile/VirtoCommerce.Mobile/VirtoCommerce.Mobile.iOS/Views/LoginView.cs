@@ -25,10 +25,14 @@ namespace VirtoCommerce.Mobile.iOS.Views
             CreateView();
             var set = this.CreateBindingSet<LoginView, LoginViewModel>();
             set.Bind(_login).To(x => x.Login);
+            set.Bind(_login).For(x => x.Enabled).To(x => x.IsBusy).WithConversion(new NativConvertors.InvertBoolConvertor());
             set.Bind(_pass).To(x => x.Password);
+            set.Bind(_pass).For(x => x.Enabled).To(x => x.IsBusy).WithConversion(new NativConvertors.InvertBoolConvertor());
             set.Bind(_loginButton).To(x => x.LoginCommand);
+            set.Bind(_loginButton).For(x => x.Enabled).To(x => x.IsBusy).WithConversion(new NativConvertors.InvertBoolConvertor());
             set.Bind(_message).For(x => x.Hidden).To(x => x.HideShowError);
             set.Bind(_message).For(x => x.Text).To(x => x.Message);
+            set.Bind(_busyIndicator).For(x => x.Hidden).To(x => x.IsBusy).WithConversion(new NativConvertors.InvertBoolConvertor());
             set.Apply();
         }
 
@@ -45,6 +49,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UIButton _loginButton;
         private UIView _container;
         private UILabel _message;
+        private UIActivityIndicatorView _busyIndicator;
         private void CreateView()
         {
             View = new UIView()
@@ -71,8 +76,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
             };
             _showKbNotification = UIKeyboard.Notifications.ObserveDidShow(DidShowKeyboard);
             _hideKbNotification = UIKeyboard.Notifications.ObserveDidHide(DidHideKeyboard);
-
-            _container.AddSubviews(_login, _pass, _loginButton, _message);
+            _busyIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
+            _busyIndicator.Frame = new CGRect(0, 114, 211, 30);
+            _container.AddSubviews(_login, _pass, _loginButton, _message, _busyIndicator);
             View.Add(_container);
         }
         private NSObject _showKbNotification;
