@@ -8,6 +8,7 @@ using UIKit;
 using VirtoCommerce.Mobile.Model;
 using System.Drawing;
 using CoreGraphics;
+using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Cart
 {
@@ -49,7 +50,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             _quantity.Text = item.Quantity.ToString();
             _stepper.Value = item.Quantity;
             _subTotalLabel.Text = item.FormattedSubTotal;
-            _iconImage.Image = UIImage.FromFile(item.Product.TitleImage);
+            _iconImage.Image = UIImage.FromFile(Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.Personal),item.Product.TitleImage));
             if (!isEdit)
             {
                 _stepper.Hidden = true;

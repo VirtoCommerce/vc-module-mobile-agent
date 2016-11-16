@@ -4,8 +4,10 @@ using System.Drawing;
 using VirtoCommerce.Mobile.Model;
 using Foundation;
 using UIKit;
+using System.Linq;
 
 using Xamarin.Themes;
+using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Products
 {
@@ -104,8 +106,8 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
 
             _data = data;
             _titleLabel.Text = data.Name;
-            _descriptionLabel.Text = data.Description;
-            var listPrice = data.Price.FormattedListPrice;
+            _descriptionLabel.Text = (data.Reviews?.FirstOrDefault(x => x.ReviewType == "QuickReview")?.Content) ?? data.Reviews?.FirstOrDefault()?.Content;
+            var listPrice = data.Price?.FormattedListPrice;
             if (!string.IsNullOrEmpty(listPrice))
             {
                 var attrString = new NSMutableAttributedString(listPrice);
@@ -115,8 +117,8 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
                     new NSRange(0, attrString.Length));
                 _listPriceLable.AttributedText = attrString;
             }
-            _salePriceLable.Text =  data.Price.FormattedSalePrice;
-            var image = UIImage.FromFile(_data.TitleImage);
+            _salePriceLable.Text =  data.Price?.FormattedSalePrice;
+            var image = UIImage.FromFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), data.TitleImage));
             var scale = 230 / image.Size.Width;
             image = image.Scale(new CoreGraphics.CGSize(image.Size.Width * scale, image.Size.Height * scale));
             _productImage.Image = image;

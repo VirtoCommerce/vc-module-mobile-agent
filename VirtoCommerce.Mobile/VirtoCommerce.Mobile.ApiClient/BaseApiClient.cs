@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Exceptions;
 using Xamarin.Forms;
 using VirtoCommerce.Mobile.ApiClient.Models;
+using System.Net.Http.Headers;
 
 namespace VirtoCommerce.Mobile.ApiClient
 {
@@ -26,7 +27,6 @@ namespace VirtoCommerce.Mobile.ApiClient
 
         protected virtual void PrepareAuthorizeData()
         {
-
         }
 
         protected bool ExistInternet
@@ -71,6 +71,35 @@ namespace VirtoCommerce.Mobile.ApiClient
             }
         }
 
+        public async Task<TResponse> GetRequestAsync<TResponse>(string url) where TResponse : class
+        {
+            if (!ExistInternet)
+            {
+                throw new NoInternetConnectionException();
+            }
+            //authorize
+            PrepareAuthorizeData();
+            HttpRequestMessage request = new HttpRequestMessage();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            using (var response = await Client.GetAsync($"{_subFolder}/{url}"))
+            {
+                using (var content = response.Content)
+                {
+
+                    var result = await content.ReadAsStringAsync();
+
+                    try
+                    {
+                        return JsonConvert.DeserializeObject<TResponse>(result);
+                    }
+                    catch
+                    {
+                        return Activator.CreateInstance<TResponse>();
+                    }
+                }
+            }
+        }
+
         public async Task<TResponse> PostJsonRequestAsync<TResponse, TRequest>(string url, TRequest request) where TResponse : class where TRequest : class
         {
 
@@ -85,7 +114,7 @@ namespace VirtoCommerce.Mobile.ApiClient
             {
                 using (var content = response.Content)
                 {
-                    // ... Read the string.
+                    
                     var result = await content.ReadAsStringAsync();
 
                     try

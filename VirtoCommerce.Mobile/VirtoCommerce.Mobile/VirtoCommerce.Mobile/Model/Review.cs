@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtoCommerce.Mobile.Entities
+namespace VirtoCommerce.Mobile.Model
 {
-    public class ReviewEntity:BaseEntity
+    public class Review
     {
+        public string Id { set; get; }
         public string Content { set; get; }
         public string ReviewType { set; get; }
-        public string LanguageCode { set; get; }
-        public string ProductId { set; get; }
     }
 }

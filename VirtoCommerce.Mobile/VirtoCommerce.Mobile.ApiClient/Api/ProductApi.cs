@@ -21,5 +21,17 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
             });
             return result;
         }
+
+        public async Task<ICollection<Product>> GetProductsWithReviewsAsync(string ids)
+        {
+            var result = await Client.GetRequestAsync<ICollection<Product>>($"api/catalog/products?ids={ids}&respGroup=16");
+            return result;
+        }
+
+        public async Task<ProductPricesSearchResult> GetProductPricesAsync(string ids)
+        {
+            var result = await Client.GetRequestAsync<ProductPricesSearchResult>($"api/catalog/products/prices/search?ProductIds={ids}");
+            return result;
+        }
     }
 }

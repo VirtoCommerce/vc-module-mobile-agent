@@ -20,6 +20,7 @@ namespace VirtoCommerce.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            Xamarin.Forms.Forms.Init();
             //Xamarin.Themes.GridlockTheme.Apply();
             //init theme
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);

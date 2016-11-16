@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtoCommerce.Mobile.Entities
+namespace VirtoCommerce.Mobile.Events
 {
-    public class PropertyEntity
+    public class OpenCartEvent:BaseEvent
     {
     }
 }

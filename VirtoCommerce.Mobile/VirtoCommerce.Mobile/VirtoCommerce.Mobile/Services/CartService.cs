@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
+using VirtoCommerce.Mobile.Repositories;
+using VirtoCommerce.Mobile.Convertors;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -11,151 +13,70 @@ namespace VirtoCommerce.Mobile.Services
     {
         private readonly IProductStorageService _productService;
         private readonly IGlobalEventor _eventor;
-        public CartService(IProductStorageService productService, IGlobalEventor eventor)
+        private readonly ICartRepository _cartRepository;
+        public CartService(IProductStorageService productService, IGlobalEventor eventor, ICartRepository cartRepository)
         {
             _eventor = eventor;
             _productService = productService;
+            _cartRepository = cartRepository;
         }
 
         public Cart GetCart()
         {
-            var prods = _productService.GetProducts(0, int.MaxValue);
-            var cart = new Cart()
+            
+            var cartItems = _cartRepository.GetAllCartItems();
+            if (cartItems.Count == 0)
+                return null;
+            var cart = new Cart();
+            foreach (var item in cartItems)
             {
-                SubTotal = 25,
-                Discount = 5,
-                Taxes = 5,
-                Total = 25,
-                Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                CartItems = new List<CartItem> {
-                    new CartItem {
-                        Product = prods.ElementAt(6),
-                        Quantity = 1,
-                        SubTotal = 10,
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },new CartItem {
-                        Product = prods.ElementAt(3),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },new CartItem {
-                        Product = prods.ElementAt(5),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },
-                    new CartItem {
-                        Product = prods.ElementAt(2),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },
-                    new CartItem {
-                        Product = prods.ElementAt(2),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                },
-                        Quantity = 1
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Quantity = 1,
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Quantity = 1,Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Quantity = 1,
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Quantity = 1,
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },new CartItem {
-                        Product = prods.ElementAt(2),
-                        Quantity = 1,
-                        Currency = new Currency
-                {
-                    Symbol = "$"
-                }
-                    },
-                }
+                var cartItem = item.CartItemEntityToCartItem();
+                cartItem.Product = _productService.GetProduct(cartItem.Id);
+                cartItem.SubTotal = (cartItem.Product.Price?.Sale ?? 0) * cartItem.Quantity;
+                cart.CartItems.Add(cartItem);
+            }
+            cart.SubTotal = cart.CartItems.Sum(x => x.SubTotal);
+            cart.Total = cart.SubTotal;
+            //Todo create setting currency shop
+            cart.Currency = new Currency
+            {
+                Code = "USD",
+                Symbol ="$"
             };
-            //for (var i = 0; i < 250; i++)
-            //{
-            //    cart.CartItems.Add(cart.CartItems[0]);
-            //}
-            return null;
+            return cart;
         }
 
         public Cart UpdateCartItem(CartItem cartItem)
         {
-            var cart = GetCart();
-            var item = cart.CartItems.FirstOrDefault(x => x.Product.Id == cartItem.Product.Id);
-            if (item != null)
+            if (cartItem.Quantity != 0)
             {
-                if (cartItem.Quantity == 0)
-                {
-                    cart.CartItems.Remove(item);
-                }
-                else
-                {
-                    item.Quantity = cartItem.Quantity;
-                    item.SubTotal = (cartItem.Product.Price?.Sale * item.Quantity) ?? 0;
-                }
+                _cartRepository.AddOrUpdateCartItem(cartItem.CartItemToCartItemEntity());
             }
-            cart.SubTotal = new Random().Next();
+            else
+            {
+                _cartRepository.RemoveCartItem(cartItem.Id);
+            }
             _eventor.Publish(new Events.CartChangeEvent());
-            return cart;
+            return GetCart();
         }
 
-        Cart ICartService.AddToCart(string id)
+        public Cart AddToCart(string id)
         {
-            throw new NotImplementedException();
+            _cartRepository.AddOrUpdateCartItem(new Entities.CartItemEntity { Count = 1, Id = id });
+            _eventor.Publish(new Events.CartChangeEvent());
+            return GetCart();
         }
 
-        Cart ICartService.RemoveFromCart(string id)
+        public Cart RemoveFromCart(string id)
         {
-            throw new NotImplementedException();
+            _cartRepository.RemoveCartItem(id);
+            _eventor.Publish(new Events.CartChangeEvent());
+            return GetCart();
+        }
+
+        public int CountInCart()
+        {
+            return _cartRepository.CountInCart();
         }
     }
 }

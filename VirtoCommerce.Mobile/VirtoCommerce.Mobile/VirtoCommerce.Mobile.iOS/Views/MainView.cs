@@ -23,6 +23,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             base.Dispose(disposing);
             MainViewModel.Eventor.UnSubcribe<CartChangeEvent>(UpdateCartBage);
+            MainViewModel.Eventor.UnSubcribe<OpenCartEvent>(SetCart);
         }
 
         protected MainViewModel MainViewModel
@@ -35,6 +36,12 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _cartController.TabBarItem.BadgeColor = UIColor.Red;
             _cartController.TabBarItem.BadgeValue = MainViewModel.CountInCart;
         }
+
+        private void SetCart(OpenCartEvent arg)
+        {
+            SelectedViewController = _cartController;
+        }
+
 
         public override void ViewDidLoad()
         {
@@ -49,6 +56,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                (_cartController =  CreateTabFor("Cart","cart_menu", MainViewModel.CartViewModel)),
             };
             MainViewModel.Eventor.Subscribe<CartChangeEvent>(UpdateCartBage);
+            MainViewModel.Eventor.Subscribe<OpenCartEvent>(SetCart);
             UpdateCartBage(null);
             ViewControllers = viewControllers;
             TabBar.TintColor = UI.Consts.ColorMain;

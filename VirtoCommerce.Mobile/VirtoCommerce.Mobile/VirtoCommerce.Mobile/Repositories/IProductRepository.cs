@@ -10,10 +10,41 @@ namespace VirtoCommerce.Mobile.Repositories
 {
     public interface IProductRepository
     {
+
+        /// <summary>
+        /// Save product property
+        /// </summary>
+        bool SaveProductProperty(ProductPropertyEntity propertyEntity);
+        /// <summary>
+        /// Get product properties
+        /// </summary>
+        ICollection<ProductPropertyEntity> GetProductProperties(string propductId);
+        /// <summary>
+        /// Get product count
+        /// </summary>
+        /// <returns></returns>
+        int GetProductCount();
         /// <summary>
         /// Get product entity by id
         /// </summary>
         ProductEntity GetProductById(string id);
+        /// <summary>
+        /// Get all products from DB
+        /// </summary>
+        /// <returns></returns>
+        ICollection<ProductEntity> GetAllProducts();
+        /// <summary>
+        /// Get all images for product
+        /// </summary>
+        ICollection<ImageEntity> GetImagesByProduct(string productId);
+        /// <summary>
+        /// Get all reviews for product
+        /// </summary>
+        ICollection<ReviewEntity> GetReviewsByProduct(string productId);
+        /// <summary>
+        /// Get all prices for product
+        /// </summary>
+        ICollection<PriceEntity> GetAllPricesByProduct(string productId);
         /// <summary>
         /// Begin transaction
         /// </summary>
@@ -33,15 +64,15 @@ namespace VirtoCommerce.Mobile.Repositories
         /// <summary>
         /// Save image entity
         /// </summary>
-        bool SaveImage(ImageEntity images);
+        bool SaveImage(ImageEntity image);
         /// <summary>
         /// Save review entity
         /// </summary>
-        bool SaveReview(ReviewEntity reviews);
+        bool SaveReview(ReviewEntity review);
         /// <summary>
         /// Save price entity
         /// </summary>
-        bool SavePrice(PriceEntity prices);
+        bool SavePrice(PriceEntity price);
         
     }
 }

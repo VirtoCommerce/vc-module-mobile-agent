@@ -37,17 +37,23 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
-    <Compile Include="Convertors\ApiProductToProductEntity.cs" />
+    <Compile Include="Convertors\CartConvertors.cs" />
+    <Compile Include="Convertors\PriceConvertors.cs" />
+    <Compile Include="Convertors\ProductConvertors.cs" />
+    <Compile Include="Convertors\PropertyConvertors.cs" />
+    <Compile Include="Convertors\ReviewConvertors.cs" />
+    <Compile Include="Entities\CartItemEntity.cs" />
     <Compile Include="Entities\PriceEntity.cs" />
+    <Compile Include="Entities\ProductPropertyEntity.cs" />
     <Compile Include="Entities\ReviewEntity.cs" />
     <Compile Include="Events\BaseEvent.cs" />
+    <Compile Include="Events\OpenCartEvent.cs" />
     <Compile Include="Events\SyncEvent.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\SyncManager.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\ImageEntity.cs" />
     <Compile Include="Entities\ProductEntity.cs" />
-    <Compile Include="Entities\PropertyEntity.cs" />
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\SyncStatus.cs" />
     <Compile Include="Events\CartChangeEvent.cs" />
@@ -63,8 +69,11 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductProperty.cs" />
+    <Compile Include="Model\Review.cs" />
+    <Compile Include="Repositories\ICartRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\SqlLiteCartRepository.cs" />
     <Compile Include="Repositories\SqlLiteProductRepository.cs" />
     <Compile Include="Repositories\PreferencesUserRepository.cs" />
     <Compile Include="Responses\BaseResponse.cs" />

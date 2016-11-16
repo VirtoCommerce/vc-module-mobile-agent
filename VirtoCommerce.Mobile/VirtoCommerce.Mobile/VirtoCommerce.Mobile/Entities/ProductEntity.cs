@@ -40,7 +40,7 @@ namespace VirtoCommerce.Mobile.Entities
         public string TaxType { get; set; }
         public string Vendor { get; set; }
         public int? Priority { get; set; }
-        public string ImgSrc { get; private set; }
+        public string ImgSrc { get; set; }
         public System.DateTime? CreatedDate { get; set; }
         public System.DateTime? ModifiedDate { get; set; }
         public string CreatedBy { get; set; }

@@ -67,6 +67,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
             CreatedBy = createdBy;
             ModifiedBy = modifiedBy;
             Id = id;
+            Prices = new List<Price>();
         }
 
         /// <summary>
@@ -314,5 +315,6 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
+        public IList<Price> Prices { set; get; }
     }
 }

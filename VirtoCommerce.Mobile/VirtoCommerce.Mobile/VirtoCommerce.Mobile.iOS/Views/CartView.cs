@@ -23,6 +23,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
     {
         public CartViewModel CartViewModel { get { return ViewModel as CartViewModel; } }
         private const int _padding = 10;
+        private IDisposable _subscribeCartChange;
         public CartView() : base(null, null)
         {
             Title = "Cart";
@@ -35,7 +36,17 @@ namespace VirtoCommerce.Mobile.iOS.Views
             bindingSet.Bind(_infoView).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Bind(_emptyMessageLabel).For(x => x.Hidden).To(x => x.HideEmptyMessage);
             bindingSet.Bind(_borderView).For(x => x.Hidden).To(x => x.HideProductList);
+            _subscribeCartChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<Cart>("Cart", (s, e) =>
+            {
+                UpdateCartView();
+            });
             bindingSet.Apply();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _subscribeCartChange?.Dispose();
         }
 
         private void UpdateCartView()
@@ -149,7 +160,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UIView _borderView;
         private UIButton _createOrderButton;
         private UILabel _emptyMessageLabel;
-
+        
 
         private void CreateView()
         {

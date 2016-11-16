@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtoCommerce.Mobile.Model
+namespace VirtoCommerce.Mobile.Entities
 {
-    public class ProductProperty
+    public class ProductPropertyEntity:BaseEntity
     {
         public string ProductId { set; get; }
         public string PropertyName { get; set; }
 
-        public string DisplayName { set; get; }
+        public string PropertyDisplayName { set; get; }
 
         public string PropertyId { get; set; }
 

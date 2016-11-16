@@ -32,8 +32,29 @@ namespace VirtoCommerce.Mobile.Services
             var result = new ServerResponseCollection<ApiClient.Models.Product>();
             try
             {
-                var products = await _productApi.GetProductsAsync();
-                result.Data = products.Products.ToArray();
+                var products = (await _productApi.GetProductsAsync()).Products.ToArray();
+                int count = 20;
+                int countRequestes =  products.Length / count + 1;
+
+                
+                for(var i = 0;i<countRequestes;i++)
+                {
+                    var ids = string.Join(",", products.Skip(i * count).Take(count).Select(x => x.Id));
+                    if (!string.IsNullOrEmpty(ids))
+                    {
+                        var productWithReviews = await _productApi.GetProductsWithReviewsAsync(ids);
+                        var productPrices = (await _productApi.GetProductPricesAsync(ids)).ProductPrices;
+                        foreach (var prod in productWithReviews)
+                        {
+                            products.First(x => x.Id == prod.Id).Reviews = prod.Reviews;
+                        }
+                        foreach (var prod in productPrices)
+                        {
+                            products.First(x => x.Id == prod.ProductId).Prices = prod.Prices;
+                        }
+                    }
+                }
+                result.Data = products;
                 result.Status = Enums.ResponseStatus.Ok;
             }
             catch (NoInternetConnectionException)

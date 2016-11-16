@@ -13,5 +13,6 @@ namespace VirtoCommerce.Mobile.Services
         Cart RemoveFromCart(string id);
         Cart GetCart();
         Cart UpdateCartItem(CartItem cartItem);
+        int CountInCart();
     }
 }

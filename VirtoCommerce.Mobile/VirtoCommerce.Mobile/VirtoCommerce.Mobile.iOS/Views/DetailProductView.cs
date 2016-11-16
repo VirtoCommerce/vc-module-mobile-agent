@@ -15,6 +15,7 @@ using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.UI.ProductDetail;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
 using Xamarin.Themes;
+using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -38,7 +39,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             CreateView();
             var set = this.CreateBindingSet<DetailProductView, DetailProductViewModel>();
             set.Bind(_titleLabel).To(x => x.Product.Name);
-            set.Bind(_descriptionLabel).To(x => x.Product.Description);
+            set.Bind(_descriptionLabel).To(x => x.ProductDescription);
             set.Bind(_salePriceLable).To(x => x.Product.Price.FormattedSalePriceFull);
             set.Bind(NavigationItem).For(x => x.Title).To(x => x.Product.Name);
             set.Bind(_listPriceLable).For(x => x.Text).To(x => x.Product.Price.FormattedListPriceFull);
@@ -46,6 +47,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
             set.Bind(_descriptionLabel).For(x => x.Hidden).To(x => x.HideDescription);
             set.Bind(_propertiesTable).For(x => x.Hidden).To(x => x.HideProperties);
+            set.Bind(_cartButton).To(x => x.AddToCartCommand);
+            set.Bind(_cartOpenButton).For(x => x.Title).To(x => x.CountInCart);
             set.Apply();
         }
         public override void ViewWillAppear(bool animated)
@@ -85,13 +88,14 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UITableView _propertiesTable { set; get; }
         private UISegmentedControl _segmentControl { set; get; }
         private UIView _borderView { set; get; }
+        private UIBarButtonItem _cartOpenButton { set; get; }
 
         private void CreateView()
         {
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
                 BackgroundColor = Consts.ColorMainBg,
-            ContentMode = UIViewContentMode.ScaleToFill,
+                ContentMode = UIViewContentMode.ScaleToFill,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
                 AutosizesSubviews = true
             };
@@ -123,10 +127,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 BackgroundColor = Consts.ColorMainBg
             };
-            UIImage img = UIImage.FromFile(((DetailProductViewModel)ViewModel).Product.Id + ".png");
-            _imageSlider.AddImage(img);
-            img = UIImage.FromFile("2.png");
-            _imageSlider.AddImage(img);
+            foreach (var img in DetailViewModel.Product.Images)
+            {
+                _imageSlider.AddImage(UIImage.FromFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), img)));
+            }
             _mainInfo.Add(_imageSlider);
             //price
             _priceView = new UIView();
@@ -203,24 +207,25 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _propertiesTable = new UITableView();
             _propertiesTable.BackgroundColor = Consts.ColorMainBg;
             _propertiesTable.ScrollEnabled = true;
-            _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
+            _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.DisplayName, x.Value)).ToList());
             _propertiesTable.RowHeight = 30;
             _propertiesTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _propertiesTable.ReloadData();
             _detailView.AddSubview(_propertiesTable);
             //add to cart item
-            _cartButton =  Helpers.UICreator.CreateImageButtonWithText("Add to cart", "cart.png");
+            _cartButton = Helpers.UICreator.CreateImageButtonWithText("Add to cart", "cart.png");
             _detailView.AddSubview(_cartButton);
             //border view
             _borderView = new UIView
             {
-               BackgroundColor = Consts.ColorGray
+                BackgroundColor = Consts.ColorGray
             };
             Add(_borderView);
             #endregion
-
+            //cart button
+            _cartOpenButton = new UIBarButtonItem("Cart", UIBarButtonItemStyle.Plain, (s, e) => { DetailViewModel.OpenCartCommad.Execute(); });
+            NavigationItem.RightBarButtonItem = _cartOpenButton;
             View.AddSubviews(_mainInfo, _detailView);
-
         }
 
         private void ChangeSegment(object o, EventArgs e)
@@ -232,6 +237,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             base.Dispose(disposing);
             _segmentControl.ValueChanged -= ChangeSegment;
+            DetailViewModel.UnSubscribeEventor();
         }
 
         private void PrepareMainInfo()
@@ -267,7 +273,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _listPriceLable.SizeToFit();
             var priceViewFrame = _priceView.Frame;
             priceViewFrame.Width = mainViewFrame.Width;
-            priceViewFrame.Height = _listPriceLable.Frame.Height;
+            priceViewFrame.Height = _listPriceLable.Frame.Height == 0?30: _listPriceLable.Frame.Height;
             priceViewFrame.Y = sliderFrame.Y + sliderFrame.Height + Padding;
             _priceView.Frame = priceViewFrame;
             //price
@@ -280,7 +286,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _profitPriceLabel.SizeToFit();
             var profitViewFrame = _profitView.Frame;
             profitViewFrame.Width = mainViewFrame.Width;
-            profitViewFrame.Height = _listPriceLable.Frame.Height;
+            profitViewFrame.Height = _listPriceLable.Frame.Height == 0? 30: _listPriceLable.Frame.Height;
             profitViewFrame.Y = priceViewFrame.Y + priceViewFrame.Height + Padding;
             _profitView.Frame = profitViewFrame;
             //profit

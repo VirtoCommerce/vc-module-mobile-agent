@@ -14,6 +14,7 @@ namespace VirtoCommerce.Mobile.ViewModels
         #region Services
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
+        private readonly IGlobalEventor _globalEventor;
         #endregion
 
         #region Fields
@@ -24,10 +25,15 @@ namespace VirtoCommerce.Mobile.ViewModels
         #endregion
 
         #region Constructor
-        public CartViewModel(ICartService cartService, IOrderService orderService)
+        public CartViewModel(ICartService cartService, IOrderService orderService, IGlobalEventor globalEventor)
         {
             _cartService = cartService;
             _orderService = orderService;
+            _globalEventor = globalEventor;
+            _globalEventor.Subscribe<Events.CartChangeEvent>(arg =>
+            {
+                Cart = _cartService.GetCart();
+            });
             Cart = _cartService.GetCart();
             PaymentMethods = _orderService.PaymentMethods().Select(x => new PaymnetMethodViewModel(x, CreateOrderCommand)).ToArray();
         }

@@ -21,10 +21,11 @@ namespace VirtoCommerce.Mobile.iOS.Shared
             var webClient = new WebClient();
             var bytes = webClient.DownloadData(image.Path);
             string documentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), productId);
-            string localFilename = image.Path;
-            string localPath = Path.Combine(documentsPath, localFilename);
+            if (!Directory.Exists(documentsPath))
+                Directory.CreateDirectory(documentsPath);
+            string localPath = Path.Combine(documentsPath, image.Name);
             File.WriteAllBytes(localPath, bytes);
-            return localPath;
+            return Path.Combine(productId, image.Name);
         }
     }
 }

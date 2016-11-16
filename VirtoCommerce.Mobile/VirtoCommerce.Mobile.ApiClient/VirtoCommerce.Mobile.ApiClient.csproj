@@ -51,8 +51,11 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Outline.cs" />
     <Compile Include="Models\OutlineItem.cs" />
+    <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductAssociation.cs" />
+    <Compile Include="Models\ProductPrice.cs" />
+    <Compile Include="Models\ProductPricesSearchResult.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\PropertyAttribute.cs" />
     <Compile Include="Models\PropertyDictionaryValue.cs" />

@@ -37,15 +37,18 @@ namespace VirtoCommerce.Mobile
             //order service
             Mvx.RegisterType<IOrderService, OrderService>();
             //filter service
-            Mvx.RegisterType<IFilterService, FilterService>();
-            //product repository
-            Mvx.RegisterType<IProductRepository, SqlLiteProductRepository>();
+            Mvx.RegisterType<IFilterService, FilterService>();            
             //global eventor
             Mvx.RegisterSingleton<IGlobalEventor>(new GlobalEventor());
             //register api client
             Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
-            //user repository
+
+            #region Repositories
             Mvx.RegisterType<IUserRepository, PreferencesUserRepository>();
+            Mvx.RegisterType<IProductRepository, SqlLiteProductRepository>();
+            Mvx.RegisterType<ICartRepository, SqlLiteCartRepository>();
+            #endregion
+
             #region Api
             Mvx.RegisterType<ILoginApi, LoginApi>();
             Mvx.RegisterType<IProductApi, ProductApi>();

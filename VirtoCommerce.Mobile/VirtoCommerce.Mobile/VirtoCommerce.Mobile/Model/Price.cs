@@ -27,7 +27,7 @@ namespace VirtoCommerce.Mobile.Model
         {
             get
             {
-                if ((List ?? 0) == 0 || List == Sale)
+                if ((List ?? 0) == 0)
                 {
                     return string.Empty;
                 }
