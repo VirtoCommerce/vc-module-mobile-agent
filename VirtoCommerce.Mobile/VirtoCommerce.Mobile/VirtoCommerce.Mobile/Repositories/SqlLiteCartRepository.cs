@@ -39,12 +39,17 @@ namespace VirtoCommerce.Mobile.Repositories
 
         public bool ClearCart()
         {
-            return _connection.Table<CartItemEntity>().Delete(x => !string.IsNullOrEmpty(x.Id)) != -1;
+            var items = _connection.Table<CartItemEntity>().ToList();
+            foreach (var item in items)
+            {
+                _connection.Table<CartItemEntity>().Delete(x => item.Id == x.Id);
+            }
+            return true;
         }
 
         public int CountInCart()
         {
-            return _connection.Table<CartItemEntity>().Count();
+            return _connection.Table<CartItemEntity>().Sum(x => x.Count);
         }
     }
 }

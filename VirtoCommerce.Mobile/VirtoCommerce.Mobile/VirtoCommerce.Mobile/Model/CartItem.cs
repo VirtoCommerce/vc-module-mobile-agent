@@ -20,5 +20,7 @@ namespace VirtoCommerce.Mobile.Model
                 return string.Format("{0}{1:#0.00}", Currency?.Symbol, SubTotal);
             }
         }
+
+        public decimal Discount { get; set; }
     }
 }

@@ -9,8 +9,17 @@ namespace VirtoCommerce.Mobile.Services
 {
     public class OrderService : IOrderService
     {
+        private readonly ICartService _cartService;
+        private readonly IGlobalEventor _globalEventor;
+        public OrderService(ICartService cartService, IGlobalEventor eventor)
+        {
+            _cartService = cartService;
+            _globalEventor = eventor;
+        }
         public Order CreateOreder()
         {
+            _cartService.ClearCart();
+            _globalEventor.Publish(new Events.CartChangeEvent());
             return new Order();
         }
 

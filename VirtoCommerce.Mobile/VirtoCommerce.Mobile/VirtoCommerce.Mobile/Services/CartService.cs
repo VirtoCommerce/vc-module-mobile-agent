@@ -14,11 +14,13 @@ namespace VirtoCommerce.Mobile.Services
         private readonly IProductStorageService _productService;
         private readonly IGlobalEventor _eventor;
         private readonly ICartRepository _cartRepository;
-        public CartService(IProductStorageService productService, IGlobalEventor eventor, ICartRepository cartRepository)
+        private readonly ITaxService _taxService;
+        public CartService(IProductStorageService productService, IGlobalEventor eventor, ICartRepository cartRepository, ITaxService taxService)
         {
             _eventor = eventor;
             _productService = productService;
             _cartRepository = cartRepository;
+            _taxService = taxService;
         }
 
         public Cart GetCart()
@@ -33,10 +35,13 @@ namespace VirtoCommerce.Mobile.Services
                 var cartItem = item.CartItemEntityToCartItem();
                 cartItem.Product = _productService.GetProduct(cartItem.Id);
                 cartItem.SubTotal = (cartItem.Product.Price?.Sale ?? 0) * cartItem.Quantity;
+                cartItem.Discount = (cartItem.Product.Price?.List - cartItem.Product.Price?.Sale ?? 0) * cartItem.Quantity;
                 cart.CartItems.Add(cartItem);
             }
             cart.SubTotal = cart.CartItems.Sum(x => x.SubTotal);
-            cart.Total = cart.SubTotal;
+            cart.Taxes = cart.SubTotal * Convert.ToDecimal(_taxService.GetCurrentTax().Percent / 100);
+            cart.Discount = cart.CartItems.Sum(x => x.Discount);
+            cart.Total = cart.SubTotal + cart.Taxes;
             //Todo create setting currency shop
             cart.Currency = new Currency
             {
@@ -78,5 +83,11 @@ namespace VirtoCommerce.Mobile.Services
         {
             return _cartRepository.CountInCart();
         }
+
+        public bool ClearCart()
+        {
+            return _cartRepository.ClearCart();
+        }
+
     }
 }

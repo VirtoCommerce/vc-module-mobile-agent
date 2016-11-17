@@ -40,9 +40,8 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IFilterService, FilterService>();            
             //global eventor
             Mvx.RegisterSingleton<IGlobalEventor>(new GlobalEventor());
-            //register api client
-            Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
-
+            //tax service
+            Mvx.RegisterType<ITaxService, TaxService>();
             #region Repositories
             Mvx.RegisterType<IUserRepository, PreferencesUserRepository>();
             Mvx.RegisterType<IProductRepository, SqlLiteProductRepository>();
@@ -52,6 +51,8 @@ namespace VirtoCommerce.Mobile
             #region Api
             Mvx.RegisterType<ILoginApi, LoginApi>();
             Mvx.RegisterType<IProductApi, ProductApi>();
+            //base api client
+            Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
             #endregion
         }
     }

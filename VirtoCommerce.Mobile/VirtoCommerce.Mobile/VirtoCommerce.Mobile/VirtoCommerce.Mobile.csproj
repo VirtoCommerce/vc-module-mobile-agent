@@ -70,6 +70,7 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductProperty.cs" />
     <Compile Include="Model\Review.cs" />
+    <Compile Include="Model\Tax.cs" />
     <Compile Include="Repositories\ICartRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
@@ -92,8 +93,10 @@
     <Compile Include="Services\IProductStorageService.cs" />
     <Compile Include="Services\ISyncServerService.cs" />
     <Compile Include="Services\ISyncService.cs" />
+    <Compile Include="Services\ITaxService.cs" />
     <Compile Include="Services\IUserManagerService.cs" />
     <Compile Include="Services\CartService.cs" />
+    <Compile Include="Services\TaxService.cs" />
     <Compile Include="Services\UserManagerService.cs" />
     <Compile Include="Services\SyncServerService.cs" />
     <Compile Include="Services\OrderService.cs" />
