@@ -11,14 +11,11 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
     {
         public ProductApi(BaseApiClient client) : base(client)
         { }
-        public async Task<CatalogSearchResult> GetProductsAsync()
+        public async Task<SyncProductResponseResult> GetProductsAsync(string userLogin)
         {
-            var result = await Client.PostJsonRequestAsync<CatalogSearchResult, SearchCriteria>("api/catalog/search", new SearchCriteria()
-            {
-                CategoryId = "2459df4f7dcd4f90b86085cc491a664b",
-                ResponseGroup = "withProducts",
-                Take = int.MaxValue
-            });
+            if (string.IsNullOrEmpty(userLogin))
+                return new SyncProductResponseResult();
+            var result = await Client.GetRequestAsync<SyncProductResponseResult>($"api/mobile/sync/product/{userLogin}");
             return result;
         }
 

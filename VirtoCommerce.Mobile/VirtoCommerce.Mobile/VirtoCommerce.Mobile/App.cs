@@ -24,6 +24,8 @@ namespace VirtoCommerce.Mobile
         public override void Initialize()
         {
             Mvx.RegisterType<IMvxAppStart, AppStart>();
+            
+            #region Services
             //user manager
             Mvx.RegisterType<IUserManagerService, UserManagerService>();
             //sync service
@@ -42,15 +44,21 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterSingleton<IGlobalEventor>(new GlobalEventor());
             //tax service
             Mvx.RegisterType<ITaxService, TaxService>();
+            //theme service
+            Mvx.RegisterType<IThemeStorageService, ThemeStorageService>();
+            #endregion
+
             #region Repositories
             Mvx.RegisterType<IUserRepository, PreferencesUserRepository>();
             Mvx.RegisterType<IProductRepository, SqlLiteProductRepository>();
             Mvx.RegisterType<ICartRepository, SqlLiteCartRepository>();
+            Mvx.RegisterType<IThemeSettingsRepository, SqlLiteThemeSettingsRepository>();
             #endregion
 
             #region Api
             Mvx.RegisterType<ILoginApi, LoginApi>();
             Mvx.RegisterType<IProductApi, ProductApi>();
+            Mvx.RegisterType<IThemeApi, ThemeApi>();
             //base api client
             Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
             #endregion

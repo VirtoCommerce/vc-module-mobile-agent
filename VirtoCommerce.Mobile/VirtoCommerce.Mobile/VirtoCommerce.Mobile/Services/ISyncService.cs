@@ -20,5 +20,11 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <returns></returns>
         Task<SyncResponse> SyncFilters();
+
+        /// <summary>
+        /// Sync theme from server
+        /// </summary>
+        /// <returns></returns>
+        Task<SyncResponse> SyncTheme();
     }
 }

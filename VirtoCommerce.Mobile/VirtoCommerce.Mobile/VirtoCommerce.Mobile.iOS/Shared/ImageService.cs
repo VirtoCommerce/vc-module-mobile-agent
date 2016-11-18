@@ -27,5 +27,10 @@ namespace VirtoCommerce.Mobile.iOS.Shared
             File.WriteAllBytes(localPath, bytes);
             return Path.Combine(productId, image.Name);
         }
+        public void SaveImageLogo(Image image) {
+            var webClient = new WebClient();
+            var bytes = webClient.DownloadData(image.Path);
+            File.WriteAllBytes("logo.png", bytes);
+        }
     }
 }

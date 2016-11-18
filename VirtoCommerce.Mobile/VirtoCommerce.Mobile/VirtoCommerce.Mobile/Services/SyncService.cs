@@ -13,10 +13,12 @@ namespace VirtoCommerce.Mobile.Services
     {
         private readonly ISyncServerService _syncServerService;
         private readonly IProductStorageService _productStorageService;
-        public SyncService(ISyncServerService serverSyncService, IProductStorageService productStorageService)
+        private readonly IThemeStorageService _themeStorageService;
+        public SyncService(ISyncServerService serverSyncService, IProductStorageService productStorageService, IThemeStorageService themeStorageService)
         {
             _syncServerService = serverSyncService;
             _productStorageService = productStorageService;
+            _themeStorageService = themeStorageService;
         }
         public async Task<SyncResponse> SyncProducts()
         {
@@ -44,6 +46,20 @@ namespace VirtoCommerce.Mobile.Services
                 syncResponse.Message = filters.Message;
                 return syncResponse;
             }
+            return syncResponse;
+        }
+
+        public async Task<SyncResponse> SyncTheme()
+        {
+            var syncResponse = new SyncResponse();
+            var theme = await _syncServerService.GetTheme();
+            if (theme.Status != ResponseStatus.Ok)
+            {
+                syncResponse.SyncStatus = SyncStatus.Error;
+                syncResponse.Message = theme.Message;
+                return syncResponse;
+            }
+            _themeStorageService.SaveTheme(theme.Data);
             return syncResponse;
         }
 

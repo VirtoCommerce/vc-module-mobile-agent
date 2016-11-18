@@ -13,7 +13,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
         /// Find products 
         /// </summary>
         /// <returns></returns>
-        Task<CatalogSearchResult> GetProductsAsync();
+        Task<SyncProductResponseResult> GetProductsAsync(string userLogin);
         /// <summary>
         /// Get full info for products
         /// </summary>

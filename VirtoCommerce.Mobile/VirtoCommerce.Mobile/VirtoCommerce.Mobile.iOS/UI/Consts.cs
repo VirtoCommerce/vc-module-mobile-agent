@@ -24,7 +24,7 @@ namespace VirtoCommerce.Mobile.iOS.UI
         #endregion
 
         #region Colors
-        public static UIColor ColorMainBg = UIColor.White;
+        public static UIColor ColorMainBg = UIColor.FromRGB(245,245,245);
         public static UIColor ColorMain = UIColor.FromRGBA(0, 0, 0, 200);//UIColor.FromRGBA(4, 86, 151);
         public static UIColor ColorRed = UIColor.FromRGB(255, 59, 48);
         public static UIColor ColorBlack = UIColor.FromRGBA(0, 0, 0, 200);

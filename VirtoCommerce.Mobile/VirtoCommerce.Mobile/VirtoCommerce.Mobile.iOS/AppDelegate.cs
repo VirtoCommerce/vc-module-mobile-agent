@@ -4,7 +4,9 @@ using MvvmCross.Platform;
 using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.Services;
+using VirtoCommerce.Mobile.iOS.NativConvertors;
 using ToastIOS;
+using VirtoCommerce.Mobile.Helpers;
 
 namespace VirtoCommerce.Mobile.iOS
 {
@@ -23,24 +25,16 @@ namespace VirtoCommerce.Mobile.iOS
             Xamarin.Forms.Forms.Init();
             //Xamarin.Themes.GridlockTheme.Apply();
             //init theme
-            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
-            UINavigationBar.Appearance.BarTintColor = UI.Consts.ColorMain;
-            UINavigationBar.Appearance.Translucent = false;
-            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
-            {
-                TextColor = UIColor.White
-            });
-            UINavigationBar.Appearance.TintColor = UIColor.White;
-            UISegmentedControl.Appearance.TintColor = UI.Consts.ColorMain;
-            UISegmentedControl.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = UI.Consts.ColorMain }, UIControlState.Normal);
-            UITableViewCell.Appearance.TintColor = UI.Consts.ColorMain;
+            
             //
             var setup = new Setup(this, Window);
             setup.Initialize();
+
             var startup = Mvx.Resolve<IMvxAppStart>();
             Mvx.Resolve<IGlobalEventor>().Subscribe<Events.SyncEvent>(SetSyncIndicator);
+            SetTheme();
             startup.Start();
-
+            
             Window.MakeKeyAndVisible();
 
             return true;
@@ -52,6 +46,8 @@ namespace VirtoCommerce.Mobile.iOS
             {
                 Mvx.Resolve<IGlobalEventor>().UnSubcribe<Events.SyncEvent>(SetSyncIndicator);
                 var toaster = Toast.MakeText(string.IsNullOrEmpty(eventArgs.Message) ? "Sync complete" : eventArgs.Message).SetDuration(1500).SetCornerRadius(0).SetBgAlpha(1).SetGravity(ToastGravity.Center);
+                SetTheme();
+                
                 if (eventArgs.IsError)
                 {
                     toaster.Show(ToastType.Error);
@@ -64,6 +60,44 @@ namespace VirtoCommerce.Mobile.iOS
                     toaster.Show(ToastType.Info);
                 }
             }
+        }
+        private void SetTheme()
+        {
+            var theme = Mvx.Resolve<IThemeStorageService>().GetTheme();
+            //set theme values
+            if (theme != null)
+            {
+                var refresh = false;
+                var newMain = theme.MainColor.ToUIColor();
+                if (!ComapareColors(UI.Consts.ColorMain, newMain))
+                {
+                    refresh = true;
+                }
+                UI.Consts.ColorMain = newMain;
+
+                if (SyncManager.SyncComplete && refresh)
+                {
+                    var startup = Mvx.Resolve<IMvxAppStart>();
+                    startup.Start();
+                }
+                
+            }
+            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
+            UINavigationBar.Appearance.BarTintColor = UI.Consts.ColorMain;
+            UINavigationBar.Appearance.Translucent = false;
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
+            {
+                TextColor = UIColor.White
+            });
+            UINavigationBar.Appearance.TintColor = UIColor.White;
+            UISegmentedControl.Appearance.TintColor = UI.Consts.ColorMain;
+            UISegmentedControl.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = UI.Consts.ColorMain }, UIControlState.Normal);
+            UITableViewCell.Appearance.TintColor = UI.Consts.ColorMain;
+        }
+        private bool ComapareColors(UIColor color1, UIColor color2)
+        {
+            
+            return color1.Equals(color2);
         }
     }
 }

@@ -19,5 +19,11 @@ namespace VirtoCommerce.Mobile.Services
         /// Get list filters
         /// </summary>
         Task<ServerResponseCollection<Filter>> GetFilters();
+
+        /// <summary>
+        /// Get theme
+        /// </summary>
+        /// <returns></returns>
+        Task<ServerResponse<ApiClient.Models.MobileTheme>> GetTheme();
     }
 }

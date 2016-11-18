@@ -38,7 +38,9 @@
     <Compile Include="Api\BaseApi.cs" />
     <Compile Include="Api\ILoginApi.cs" />
     <Compile Include="Api\IProductApi.cs" />
+    <Compile Include="Api\IThemeApi.cs" />
     <Compile Include="Api\ProductApi.cs" />
+    <Compile Include="Api\ThemeApi.cs" />
     <Compile Include="BaseApiClient.cs" />
     <Compile Include="Api\LoginApi.cs" />
     <Compile Include="Exceptions\NoInternetConnection.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="Models\CategoryLink.cs" />
     <Compile Include="Models\EditorialReview.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\MobileTheme.cs" />
     <Compile Include="Models\Outline.cs" />
     <Compile Include="Models\OutlineItem.cs" />
     <Compile Include="Models\Price.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\SeoInfo.cs" />
     <Compile Include="Models\SignInResult.cs" />
+    <Compile Include="Models\SyncProductResponseResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

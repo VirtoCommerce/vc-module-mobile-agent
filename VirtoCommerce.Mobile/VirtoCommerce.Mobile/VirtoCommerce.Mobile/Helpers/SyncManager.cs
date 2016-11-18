@@ -37,7 +37,13 @@ namespace VirtoCommerce.Mobile.Helpers
                 SendEvent(result);
                 return false;
             }
-                result = await syncService.SyncProducts();
+            result = await syncService.SyncProducts();
+            if (result.SyncStatus != SyncStatus.Ok)
+            {
+                SendEvent(result);
+                return false;
+            }
+            result = await syncService.SyncTheme();
             if (result.SyncStatus != SyncStatus.Ok)
             {
                 SendEvent(result);
