@@ -43,6 +43,14 @@ namespace VirtoCommerce.Mobile.Helpers
                 SendEvent(result);
                 return false;
             }
+
+            result = await syncService.SyncCurrency();
+            if (result.SyncStatus != SyncStatus.Ok)
+            {
+                SendEvent(result);
+                return false;
+            }
+            
             result = await syncService.SyncTheme();
             if (result.SyncStatus != SyncStatus.Ok)
             {

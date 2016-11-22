@@ -12,5 +12,6 @@ namespace VirtoCommerce.Mobile.ViewModels
     {
         public bool IsSelect { get; set; }
         public FilterItem FilterItem { set; get; }
+        public Filter Filter { set; get; }
     }
 }

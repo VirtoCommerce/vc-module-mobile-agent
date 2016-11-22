@@ -141,10 +141,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private Dictionary<string, List<FilterItemViewModel>> GetFilters()
         {
             var result = new Dictionary<string, List<FilterItemViewModel>>();
-            var filters = ProductsGridViewModel.GetFilters();
+            var filters = ProductsGridViewModel.Filters;
             foreach (var filter in filters)
             {
-                result.Add(filter.Header, filter.Items.Select(x => new FilterItemViewModel { FilterItem = x }).ToList());
+                result.Add(filter.Header, filter.Items.Select(x => new FilterItemViewModel { FilterItem = x, Filter = filter }).ToList());
             }
             return result;
         }
@@ -220,7 +220,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _filterView.Add(_clearAll);
             //apply filters
             _applyFilters = UICreator.CreateSimpleButton("Done");
-            _applyFilters.TouchDown += ShowHideFilter;
+            _applyFilters.TouchDown += ApplyFilters;
             _filterView.Add(_applyFilters);
         }
 
@@ -266,10 +266,23 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
         private void ApplyFilters(object s, EventArgs e)
         {
-            //TODO: Call apply filters in VM
             ShowHideFilter(s, e);
+            var filterRequest = new FilterRequest();
+            var filters = _filtersList.Source as FilterSource;
+            foreach (var filter in filters.Data)
+            {
+                var selectFilters = filter.Value.Where(x => x.IsSelect);
+                if (selectFilters.Count() != 0)
+                {
+                    var f = selectFilters.First().Filter.Copy();
+                    f.Items = selectFilters.Select(x => x.FilterItem).ToList();
+                    filterRequest.Filters.Add(f);
+                }
+            }
+            ProductsGridViewModel.ApplyFilters(filterRequest);
         }
         #endregion
+
         #endregion
     }
 

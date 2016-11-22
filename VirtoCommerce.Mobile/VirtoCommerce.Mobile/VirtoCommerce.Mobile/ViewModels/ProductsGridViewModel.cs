@@ -20,24 +20,27 @@ namespace VirtoCommerce.Mobile.ViewModels
         private readonly IProductStorageService _productsStorageService;
         private readonly ICartService _cartService;
         private readonly IFilterService _filterService;
+        private readonly ISyncService _syncService;
+        private readonly IGlobalEventor _globalEventor;
         #endregion
 
         #region Private field
-        private readonly ISyncService _syncService;
         private string _status = "";
         private bool _isSync;
         private bool _hideBusy = true;
         private int _countProductPerPage = 20;
         private ICollection<Product> _products = new Product[0];
+        private ICollection<Filter> _filters;
         #endregion
 
         #region Constructor
-        public ProductsGridViewModel(ISyncService syncService, IProductStorageService productService, ICartService cartService, IFilterService filterService)
+        public ProductsGridViewModel(ISyncService syncService, IProductStorageService productService, ICartService cartService, IFilterService filterService, IGlobalEventor globalEventor)
         {
             _syncService = syncService;
             _productsStorageService = productService;
             _cartService = cartService;
             _filterService = filterService;
+            _globalEventor = globalEventor;
             if (!SyncManager.SyncComplete && _productsStorageService.GetProductsCount() == 0)
             {
                 RunSync();
@@ -46,6 +49,7 @@ namespace VirtoCommerce.Mobile.ViewModels
             {
                 GetProducts(0, _countProductPerPage);
                 RunBackgroundAsync();
+                _globalEventor.Subscribe<Events.SyncEvent>(SyncComplate);
             }
         }
         
@@ -84,6 +88,11 @@ namespace VirtoCommerce.Mobile.ViewModels
                 return _products;
             }
         }
+
+        public ICollection<Filter> Filters
+        {
+            get { return _filters ?? (_filters = _filterService.GetProductFilters()); }
+        }
         #endregion
 
         #region Public methods
@@ -102,9 +111,9 @@ namespace VirtoCommerce.Mobile.ViewModels
             _cartService.AddToCart(product.Id);
         }
 
-        public ICollection<Filter> GetFilters()
+        public void ApplyFilters(FilterRequest filterRequst)
         {
-           return _filterService.GetProductFilters();
+            Products = _productsStorageService.GetProductByFilter(filterRequst);
         }
         #endregion
 
@@ -127,6 +136,19 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             await SyncManager.Sync();
         }
+        /// <summary>
+        /// Sync complate 
+        /// </summary>
+        /// <param name="arg"></param>
+        private void SyncComplate(Events.SyncEvent arg)
+        {
+            if (arg.IsEnd)
+            {
+                _globalEventor.UnSubcribe<Events.SyncEvent>(SyncComplate);
+                GetProducts(0, _countProductPerPage);
+            }
+        }
+
         #endregion
     }
 }

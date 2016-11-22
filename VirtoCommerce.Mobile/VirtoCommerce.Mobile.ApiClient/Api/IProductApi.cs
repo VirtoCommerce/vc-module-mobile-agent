@@ -22,5 +22,10 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
         /// Get product prices
         /// </summary>
         Task<ProductPricesSearchResult> GetProductPricesAsync(string ids);
+        /// <summary>
+        /// Get current currency from store
+        /// </summary>
+        /// <returns></returns>
+        Task<Currency> GetCurrency();
     }
 }

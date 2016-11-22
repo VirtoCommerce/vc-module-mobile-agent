@@ -67,7 +67,6 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
             CreatedBy = createdBy;
             ModifiedBy = modifiedBy;
             Id = id;
-            Prices = new List<Price>();
         }
 
         /// <summary>

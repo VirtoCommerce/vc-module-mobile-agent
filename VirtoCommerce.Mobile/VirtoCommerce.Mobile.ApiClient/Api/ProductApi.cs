@@ -30,5 +30,10 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
             var result = await Client.GetRequestAsync<ProductPricesSearchResult>($"api/catalog/products/prices/search?ProductIds={ids}");
             return result;
         }
+
+        public async Task<Currency> GetCurrency()
+        {
+            return await Client.GetRequestAsync<Currency>($"api/mobile/sync/currency");
+        }
     }
 }

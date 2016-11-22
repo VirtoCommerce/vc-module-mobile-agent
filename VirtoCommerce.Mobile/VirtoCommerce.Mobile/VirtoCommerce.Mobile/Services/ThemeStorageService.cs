@@ -27,14 +27,9 @@ namespace VirtoCommerce.Mobile.Services
 
         public bool SaveTheme(MobileTheme theme)
         {
-            if (!string.IsNullOrEmpty(theme.LogoPath))
-            {
-                var imageService = DependencyService.Get<ILocalStorageImageService>();
-                imageService.SaveImageLogo(new Model.Image {
-                    Name = "logo",
-                    Path = theme.LogoPath
-                });
-            }
+
+            if (theme == null)
+                return true;
             return _themeRepository.SaveSettings(theme.ApiThemeToEntityModel());
         }
     }

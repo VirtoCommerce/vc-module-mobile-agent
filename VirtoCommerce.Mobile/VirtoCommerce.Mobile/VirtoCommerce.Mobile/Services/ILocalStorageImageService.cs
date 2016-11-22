@@ -20,5 +20,14 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <param name="image"></param>
         void SaveImageLogo(Image image);
+
+        /// <summary>
+        /// Delete folder
+        /// </summary>
+        void DeleteFolderImage(string folder);
+        /// <summary>
+        /// Delete image from folder
+        /// </summary>
+        void DeleteImage(string path);
     }
 }

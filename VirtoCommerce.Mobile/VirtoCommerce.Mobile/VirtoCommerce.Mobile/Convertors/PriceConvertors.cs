@@ -29,16 +29,13 @@ namespace VirtoCommerce.Mobile.Convertors
             };
         }
 
-        public static Price PriceEntityToPrice(this PriceEntity price)
+        public static Price PriceEntityToPrice(this PriceEntity price, CurrencyEntity currency)
         {
             return new Price
             {
-                Currency = new Currency {
-                    Code = price.Currency,
-                    Symbol = "$"
-                },
                 List = Convert.ToDecimal(price.List),
-                Sale = Convert.ToDecimal(price.Sale)
+                Sale = Convert.ToDecimal(price.Sale),
+                Currency = currency.EntitiesToModel()
             };
         }
     }

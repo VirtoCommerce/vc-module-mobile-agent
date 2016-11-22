@@ -35,6 +35,21 @@ namespace VirtoCommerce.Mobile.Services
             return syncResponse;
         }
 
+        public async Task<SyncResponse> SyncCurrency()
+        {
+            var syncResponse = new SyncResponse();
+            //get currency from server
+            var currency = await _syncServerService.GetCurrency();
+            if (currency.Status != ResponseStatus.Ok)
+            {
+                syncResponse.SyncStatus = SyncStatus.Error;
+                syncResponse.Message = currency.Message;
+                return syncResponse;
+            }
+            _productStorageService.SaveCurrency(currency.Data);
+            return syncResponse;
+        }
+
         public async Task<SyncResponse> SyncFilters()
         {
             var syncResponse = new SyncResponse();

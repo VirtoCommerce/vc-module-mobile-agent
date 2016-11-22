@@ -49,6 +49,7 @@
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\CatalogSearchResult.cs" />
     <Compile Include="Models\CategoryLink.cs" />
+    <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\EditorialReview.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\MobileTheme.cs" />

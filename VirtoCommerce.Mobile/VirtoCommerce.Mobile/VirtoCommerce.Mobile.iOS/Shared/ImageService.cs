@@ -16,6 +16,15 @@ namespace VirtoCommerce.Mobile.iOS.Shared
 {
     public class ImageService : ILocalStorageImageService
     {
+        public void DeleteFolderImage(string folder)
+        {
+            Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), folder), true);
+        }
+        public void DeleteImage(string file)
+        {
+            File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), file));
+        }
+
         public string SaveImage(Image image, string productId)
         {
             var webClient = new WebClient();

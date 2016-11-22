@@ -29,25 +29,22 @@ namespace VirtoCommerce.Mobile.Services
             var cartItems = _cartRepository.GetAllCartItems();
             if (cartItems.Count == 0)
                 return null;
-            var cart = new Cart();
+            var cart = new Cart {
+                Currency = _productService.GetCurrentCurrency()
+            };
             foreach (var item in cartItems)
             {
                 var cartItem = item.CartItemEntityToCartItem();
                 cartItem.Product = _productService.GetProduct(cartItem.Id);
                 cartItem.SubTotal = (cartItem.Product.Price?.Sale ?? 0) * cartItem.Quantity;
                 cartItem.Discount = (cartItem.Product.Price?.List - cartItem.Product.Price?.Sale ?? 0) * cartItem.Quantity;
+                cartItem.Currency = cart.Currency;
                 cart.CartItems.Add(cartItem);
             }
             cart.SubTotal = cart.CartItems.Sum(x => x.SubTotal);
             cart.Taxes = cart.SubTotal * Convert.ToDecimal(_taxService.GetCurrentTax().Percent / 100);
             cart.Discount = cart.CartItems.Sum(x => x.Discount);
             cart.Total = cart.SubTotal + cart.Taxes;
-            //Todo create setting currency shop
-            cart.Currency = new Currency
-            {
-                Code = "USD",
-                Symbol ="$"
-            };
             return cart;
         }
 

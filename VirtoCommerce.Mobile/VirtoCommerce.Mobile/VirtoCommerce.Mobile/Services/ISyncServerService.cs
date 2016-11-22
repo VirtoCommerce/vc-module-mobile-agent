@@ -25,5 +25,11 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <returns></returns>
         Task<ServerResponse<ApiClient.Models.MobileTheme>> GetTheme();
+
+        /// <summary>
+        /// Get current currency
+        /// </summary>
+        /// <returns></returns>
+        Task<ServerResponse<ApiClient.Models.Currency>> GetCurrency();
     }
 }

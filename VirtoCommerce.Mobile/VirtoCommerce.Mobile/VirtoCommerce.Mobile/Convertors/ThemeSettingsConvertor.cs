@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Models;
+using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.Convertors
 {
@@ -24,15 +25,22 @@ namespace VirtoCommerce.Mobile.Convertors
         }
         public static Entities.ThemeSettingsEntity ApiThemeToEntityModel(this MobileTheme model)
         {
+            var mainColor = HexStringToByteArray(model.MainColor);
             var result = new Entities.ThemeSettingsEntity
             {
                 Id = model.Id,
-                MainColorA = model.MainColor[3],
-                MainColorR = model.MainColor[0],
-                MainColorG = model.MainColor[1],
-                MainColorB = model.MainColor[2],
+                MainColorA = mainColor[3],
+                MainColorR = mainColor[0],
+                MainColorG = mainColor[1],
+                MainColorB = mainColor[2],
             };
             return result;
+        }
+
+        private static byte[] HexStringToByteArray(string hex)
+        {
+            var color = Color.FromHex(hex);
+            return new byte[] { (byte)(255 * color.R), (byte)(255 * color.G), (byte)(255 * color.B), (byte)(255 * color.A) };
         }
     }
 }

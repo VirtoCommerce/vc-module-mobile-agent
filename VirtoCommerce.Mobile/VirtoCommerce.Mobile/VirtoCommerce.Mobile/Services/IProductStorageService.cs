@@ -19,6 +19,11 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         ICollection<Product> GetProducts(int start, int count);
         /// <summary>
+        /// Get product by filter
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Product> GetProductByFilter(FilterRequest request);
+        /// <summary>
         /// Get count products 
         /// </summary>        
         int GetProductsCount();
@@ -30,5 +35,15 @@ namespace VirtoCommerce.Mobile.Services
         /// Save products in LocalStorage
         /// </summary>
         bool SaveProducts(ICollection<ApiClient.Models.Product> products);
+        /// <summary>
+        /// Save currency
+        /// </summary>
+        bool SaveCurrency(ApiClient.Models.Currency currency);
+        /// <summary>
+        /// Get current currency
+        /// </summary>
+        Currency GetCurrentCurrency();
+
+        
     }
 }

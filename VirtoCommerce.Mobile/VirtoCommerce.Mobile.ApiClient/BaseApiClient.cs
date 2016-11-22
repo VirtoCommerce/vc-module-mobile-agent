@@ -54,19 +54,16 @@ namespace VirtoCommerce.Mobile.ApiClient
             };
             using (var response = await Client.SendAsync(message))
             {
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new Exception("Server error");
+                }
                 using (var content = response.Content)
                 {
                     // ... Read the string.
                     var result = await content.ReadAsStringAsync();
 
-                    try
-                    {
-                        return JsonConvert.DeserializeObject<TResponse>(result);
-                    }
-                    catch
-                    {
-                        return Activator.CreateInstance<TResponse>();
-                    }
+                    return JsonConvert.DeserializeObject<TResponse>(result);
                 }
             }
         }
@@ -83,19 +80,18 @@ namespace VirtoCommerce.Mobile.ApiClient
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             using (var response = await Client.GetAsync($"{_subFolder}/{url}"))
             {
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new Exception("Server error");
+                }
+
                 using (var content = response.Content)
                 {
 
                     var result = await content.ReadAsStringAsync();
+                    
+                    return JsonConvert.DeserializeObject<TResponse>(result);
 
-                    try
-                    {
-                        return JsonConvert.DeserializeObject<TResponse>(result);
-                    }
-                    catch
-                    {
-                        return Activator.CreateInstance<TResponse>();
-                    }
                 }
             }
         }
@@ -112,19 +108,16 @@ namespace VirtoCommerce.Mobile.ApiClient
             PrepareAuthorizeData();
             using (var response = await Client.PostAsync($"{_subFolder}/{url}", new StringContent(serializedData, Encoding.UTF8, "application/json")))
             {
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new Exception("Server error");
+                }
                 using (var content = response.Content)
                 {
-                    
-                    var result = await content.ReadAsStringAsync();
 
-                    try
-                    {
-                        return JsonConvert.DeserializeObject<TResponse>(result);
-                    }
-                    catch
-                    {
-                        return Activator.CreateInstance<TResponse>();
-                    }
+                    var result = await content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<TResponse>(result);
+
                 }
             }
         }
@@ -140,19 +133,16 @@ namespace VirtoCommerce.Mobile.ApiClient
             PrepareAuthorizeData();
             using (var response = Client.PostAsync($"{_subFolder}/{url}", new StringContent(serializedData, Encoding.UTF8, "application/json")).Result)
             {
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new Exception("Server error");
+                }
                 using (var content = response.Content)
                 {
                     // ... Read the string.
                     var result = content.ReadAsStringAsync().Result;
 
-                    try
-                    {
-                        return JsonConvert.DeserializeObject<TResponse>(result);
-                    }
-                    catch
-                    {
-                        return Activator.CreateInstance<TResponse>();
-                    }
+                    return JsonConvert.DeserializeObject<TResponse>(result);
                 }
             }
         }

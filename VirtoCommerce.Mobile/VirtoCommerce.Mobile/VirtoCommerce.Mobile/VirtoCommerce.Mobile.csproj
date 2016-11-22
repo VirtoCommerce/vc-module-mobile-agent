@@ -38,12 +38,14 @@
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
     <Compile Include="Convertors\CartConvertors.cs" />
+    <Compile Include="Convertors\CurrencyConvertors.cs" />
     <Compile Include="Convertors\PriceConvertors.cs" />
     <Compile Include="Convertors\ProductConvertors.cs" />
     <Compile Include="Convertors\PropertyConvertors.cs" />
     <Compile Include="Convertors\ReviewConvertors.cs" />
     <Compile Include="Convertors\ThemeSettingsConvertor.cs" />
     <Compile Include="Entities\CartItemEntity.cs" />
+    <Compile Include="Entities\CurrencyEntity.cs" />
     <Compile Include="Entities\PriceEntity.cs" />
     <Compile Include="Entities\ProductPropertyEntity.cs" />
     <Compile Include="Entities\ReviewEntity.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Model\Currency.cs" />
     <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\FilterItem.cs" />
+    <Compile Include="Model\FilterRequest.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\PaymentMethod.cs" />

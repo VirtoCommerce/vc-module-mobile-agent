@@ -27,7 +27,7 @@ namespace VirtoCommerce.Mobile.Services
 
         public async Task<ServerResponseCollection<Filter>> GetFilters()
         {
-            await Task.Delay(2000);
+            await Task.Delay(1);
             return new ServerResponseCollection<Filter>() {
                 Status = Enums.ResponseStatus.Ok,
             };
@@ -38,7 +38,7 @@ namespace VirtoCommerce.Mobile.Services
             var result = new ServerResponseCollection<ApiClient.Models.Product>();
             try
             {
-                var requestResult = (await _productApi.GetProductsAsync(Settings.CurrentUser?.Name));
+                var requestResult = await _productApi.GetProductsAsync(Settings.CurrentUser?.Name);
                 var products = requestResult.Products.ToArray();
                 foreach (var price in requestResult.Prices)
                 {
@@ -54,7 +54,8 @@ namespace VirtoCommerce.Mobile.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
             }
             return result;
             
@@ -65,7 +66,7 @@ namespace VirtoCommerce.Mobile.Services
             var result = new ServerResponse<MobileTheme>();
             try
             {
-                var requestResult = (await _themeApi.GetThemeAsync(Settings.CurrentUser?.Name));
+                var requestResult = await _themeApi.GetThemeAsync(Settings.CurrentUser?.Name);
 
                 result.Data = requestResult;
                 result.Status = Enums.ResponseStatus.Ok;
@@ -77,7 +78,31 @@ namespace VirtoCommerce.Mobile.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ServerResponse<ApiClient.Models.Currency>> GetCurrency()
+        {
+            var result = new ServerResponse<ApiClient.Models.Currency>();
+            try
+            {
+                var requestResult = await _productApi.GetCurrency();
+
+                result.Data = requestResult;
+                result.Status = Enums.ResponseStatus.Ok;
+            }
+            catch (NoInternetConnectionException)
+            {
+                result.Status = Enums.ResponseStatus.NotConnected;
+                result.Message = "No connection to the server";
+            }
+            catch (Exception ex)
+            {
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
             }
             return result;
         }
