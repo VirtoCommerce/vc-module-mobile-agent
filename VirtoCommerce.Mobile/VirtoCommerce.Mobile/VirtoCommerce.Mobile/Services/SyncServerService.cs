@@ -18,10 +18,16 @@ namespace VirtoCommerce.Mobile.Services
     {
         private readonly IProductApi _productApi;
         private readonly IThemeApi _themeApi;
-        public SyncServerService(IProductApi productApi, IThemeApi themeApi)
+        private readonly IShippingApi _shippingApi;
+        private readonly IPaymentApi _paymentApi;
+        private readonly IOrderApi _orderApi;
+        public SyncServerService(IProductApi productApi, IThemeApi themeApi, IShippingApi shippingApi, IPaymentApi paymentApi, IOrderApi orderApi)
         {
             _themeApi = themeApi;
             _productApi = productApi;
+            _shippingApi = shippingApi;
+            _paymentApi = paymentApi;
+            _orderApi = orderApi;
         }
 
 
@@ -89,9 +95,83 @@ namespace VirtoCommerce.Mobile.Services
             var result = new ServerResponse<ApiClient.Models.Currency>();
             try
             {
-                var requestResult = await _productApi.GetCurrency();
+                var requestResult = await _productApi.GetCurrency(Settings.CurrentUser?.Name);
 
                 result.Data = requestResult;
+                result.Status = Enums.ResponseStatus.Ok;
+            }
+            catch (NoInternetConnectionException)
+            {
+                result.Status = Enums.ResponseStatus.NotConnected;
+                result.Message = "No connection to the server";
+            }
+            catch (Exception ex)
+            {
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ServerResponseCollection<ApiClient.Models.ShippingMethod>> GetShippingMethods()
+        {
+            var result = new ServerResponseCollection<ApiClient.Models.ShippingMethod>();
+            try
+            {
+                var requestResult = await _shippingApi.GetShippingMethodsAsync(Settings.CurrentUser?.Name);
+
+                result.Data = requestResult;
+                result.Status = Enums.ResponseStatus.Ok;
+            }
+            catch (NoInternetConnectionException)
+            {
+                result.Status = Enums.ResponseStatus.NotConnected;
+                result.Message = "No connection to the server";
+            }
+            catch (Exception ex)
+            {
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ServerResponseCollection<ApiClient.Models.PaymentMethod>> GetPaymentMethods()
+        {
+            var result = new ServerResponseCollection<ApiClient.Models.PaymentMethod>();
+            try
+            {
+                var requestResult = await _paymentApi.GetPaymentMethodsAsync(Settings.CurrentUser?.Name);
+                result.Data = requestResult;
+                result.Status = Enums.ResponseStatus.Ok;
+            }
+            catch (NoInternetConnectionException)
+            {
+                result.Status = Enums.ResponseStatus.NotConnected;
+                result.Message = "No connection to the server";
+            }
+            catch (Exception ex)
+            {
+                result.Status = Enums.ResponseStatus.Error;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public async Task<ServerResponse<bool>> SendOrders(ICollection<ApiClient.Models.Order> orders)
+        {
+            var result = new ServerResponse<bool>();
+            try
+            {
+                if (orders.Count != 0)
+                {
+                    var requestResult = await _orderApi.SyncOrdersAsync(orders, Settings.CurrentUser?.Name);
+                    result.Data = requestResult;
+                }
+                else
+                {
+                    result.Data = true;
+                }
                 result.Status = Enums.ResponseStatus.Ok;
             }
             catch (NoInternetConnectionException)

@@ -37,9 +37,15 @@
   <ItemGroup>
     <Compile Include="Api\BaseApi.cs" />
     <Compile Include="Api\ILoginApi.cs" />
+    <Compile Include="Api\IOrderApi.cs" />
+    <Compile Include="Api\IPaymentApi.cs" />
     <Compile Include="Api\IProductApi.cs" />
+    <Compile Include="Api\IShippingApi.cs" />
     <Compile Include="Api\IThemeApi.cs" />
+    <Compile Include="Api\OrderApi.cs" />
+    <Compile Include="Api\PaymentApi.cs" />
     <Compile Include="Api\ProductApi.cs" />
+    <Compile Include="Api\ShippingApi.cs" />
     <Compile Include="Api\ThemeApi.cs" />
     <Compile Include="BaseApiClient.cs" />
     <Compile Include="Api\LoginApi.cs" />
@@ -50,11 +56,15 @@
     <Compile Include="Models\CatalogSearchResult.cs" />
     <Compile Include="Models\CategoryLink.cs" />
     <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\EditorialReview.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\MobileTheme.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Outline.cs" />
     <Compile Include="Models\OutlineItem.cs" />
+    <Compile Include="Models\PaymentMethod.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductAssociation.cs" />
@@ -67,6 +77,8 @@
     <Compile Include="Models\PropertyValue.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\SeoInfo.cs" />
+    <Compile Include="Models\ShippingMethod.cs" />
+    <Compile Include="Models\ShippingRate.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Models\SyncProductResponseResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

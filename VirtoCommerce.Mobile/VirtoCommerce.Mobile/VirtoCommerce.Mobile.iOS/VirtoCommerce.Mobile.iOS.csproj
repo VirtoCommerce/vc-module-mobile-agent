@@ -122,11 +122,15 @@
     <Compile Include="UI\Cart\CartSource.cs" />
     <Compile Include="UI\Cart\TotalRowData.cs" />
     <Compile Include="UI\Cart\TotalSource.cs" />
+    <Compile Include="UI\Order\CustomerInfoCell.cs" />
+    <Compile Include="UI\Order\CustomerInfoSource.cs" />
     <Compile Include="UI\Consts.cs" />
     <Compile Include="UI\Filters\FilterCell.cs" />
     <Compile Include="UI\Filters\FilterSource.cs" />
     <Compile Include="UI\Order\PaymentCell.cs" />
     <Compile Include="UI\Order\PaymentSource.cs" />
+    <Compile Include="UI\Order\ShippingCell.cs" />
+    <Compile Include="UI\Order\ShippingSource.cs" />
     <Compile Include="UI\ProductDetail\PropertiesSource.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
     <Compile Include="UI\ImageSlider.cs" />
@@ -300,6 +304,18 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\password-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\user-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cart-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\products-black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

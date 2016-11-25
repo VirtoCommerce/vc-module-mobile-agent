@@ -1,4 +1,5 @@
-﻿using CoreGraphics;
+﻿using CoreAnimation;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
@@ -48,6 +49,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UITextField _pass;
         private UIButton _loginButton;
         private UIView _container;
+        private UIImageView _logoImage;
         private UILabel _message;
         private UIActivityIndicatorView _busyIndicator;
         private void CreateView()
@@ -56,29 +58,25 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 BackgroundColor = Consts.ColorMainBg
             };
-            _container = new UIView(new CGRect(0, 0, 211, 152));
-            _login = new UITextField(new CGRect(0, 0, 211, 30))
-            {
-                Placeholder = "Login",
-                BorderStyle = UITextBorderStyle.Bezel
-            };
-            _pass = new UITextField(new CGRect(0, 38, 211, 30))
-            {
-                SecureTextEntry = true,
-                Placeholder = "Password",
-                BorderStyle = UITextBorderStyle.Bezel
-            };
-            _loginButton = Helpers.UICreator.CreateSimpleButton("Login");// new UIButton();
-            _loginButton.Frame = new CGRect(0, 76, 211, 30);
-            _message = new UILabel(new CGRect(0, 114, 211, 30))
+            var width = 500;
+            _container = new UIView(new CGRect(0, 0, width, 560));
+            _logoImage = new UIImageView(new CGRect(0, 0, 150, 150));
+            _logoImage.Center = new CGPoint(width/2, 75);
+            _logoImage.Image = UIImage.FromFile("logo.png");
+            _login = Helpers.UICreator.CreateTextField("Login", UIImage.FromFile("user-black.png"), Consts.ColorBlack, new CGRect(0, 250, width, 30));
+            _pass = Helpers.UICreator.CreateTextField("Password", UIImage.FromFile("password-black.png"), Consts.ColorBlack, new CGRect(0, 320, width, 30));
+            _pass.SecureTextEntry = true;
+            _loginButton = Helpers.UICreator.CreateSimpleButton("Login");
+            _loginButton.Frame = new CGRect(0, 390, width, 40);
+            _message = new UILabel(new CGRect(0, 410, width, 30))
             {
                 TextColor = Consts.ColorRed
             };
             _showKbNotification = UIKeyboard.Notifications.ObserveDidShow(DidShowKeyboard);
             _hideKbNotification = UIKeyboard.Notifications.ObserveDidHide(DidHideKeyboard);
             _busyIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
-            _busyIndicator.Frame = new CGRect(0, 114, 211, 30);
-            _container.AddSubviews(_login, _pass, _loginButton, _message, _busyIndicator);
+            _busyIndicator.Frame = new CGRect(0, 410, width, 30);
+            _container.AddSubviews(_login, _pass, _loginButton, _message, _busyIndicator, _logoImage);
             View.Add(_container);
         }
         private NSObject _showKbNotification;

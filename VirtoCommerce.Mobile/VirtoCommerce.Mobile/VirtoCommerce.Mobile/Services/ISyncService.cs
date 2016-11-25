@@ -32,5 +32,21 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <returns></returns>
         Task<SyncResponse> SyncCurrency();
+
+        /// <summary>
+        /// Sync shipping methods
+        /// </summary>
+        Task<SyncResponse> SyncShippingMethods();
+        /// <summary>
+        /// Sync payment methods
+        /// </summary>
+        Task<SyncResponse> SyncPaymentMethods();
+
+        /// <summary>
+        /// Sync orders
+        /// </summary>
+        /// <returns></returns>
+        Task<SyncResponse> SyncOrders();
+
     }
 }

@@ -6,13 +6,14 @@ using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.ViewModels;
 using Xamarin.Themes;
+using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Order
 {
     public class PaymentSource : UITableViewSource
     {
-        private ICollection<PaymnetMethodViewModel> _methods;
-        public PaymentSource(UITableView tableView, ICollection<PaymnetMethodViewModel> methods)
+        private ICollection<SelectViewModel<PaymentMethod>> _methods;
+        public PaymentSource(UITableView tableView, ICollection<SelectViewModel<PaymentMethod>> methods)
         {
             tableView.RegisterClassForCellReuse(typeof(PaymentCell), PaymentCell.CellId);
             _methods = methods;

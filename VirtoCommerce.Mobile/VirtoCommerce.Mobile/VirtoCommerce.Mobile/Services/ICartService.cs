@@ -18,6 +18,10 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         Cart RemoveFromCart(string id);
         /// <summary>
+        /// Get cart with shipment
+        /// </summary>
+        Cart GetCartWithShipment(string shipmentId);
+        /// <summary>
         /// Get current cart
         /// </summary>
         Cart GetCart();
@@ -33,5 +37,6 @@ namespace VirtoCommerce.Mobile.Services
         /// Clear cart
         /// </summary>
         bool ClearCart();
+        
     }
 }

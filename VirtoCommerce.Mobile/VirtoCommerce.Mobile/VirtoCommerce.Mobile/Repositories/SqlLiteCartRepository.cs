@@ -27,6 +27,7 @@ namespace VirtoCommerce.Mobile.Repositories
         {
             return _connection.Table<CartItemEntity>().Delete(x => x.Id == id) != -1;
         }
+
         public ICollection<CartItemEntity> GetAllCartItems()
         {
             return _connection.Table<CartItemEntity>().ToList();

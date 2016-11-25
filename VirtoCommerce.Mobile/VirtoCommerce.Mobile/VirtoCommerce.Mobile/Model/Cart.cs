@@ -20,6 +20,8 @@ namespace VirtoCommerce.Mobile.Model
 
         public decimal Taxes { set; get; }
 
+        public decimal Shipment { set; get; }
+
         public decimal Discount { set; get; }
 
         public Currency Currency { set; get; }
@@ -38,7 +40,10 @@ namespace VirtoCommerce.Mobile.Model
         {
             get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Taxes); }
         }
-
+        public string FormattedShipment
+        {
+            get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Shipment); }
+        }
         public string FormattedDiscount
         {
             get { return string.Format("{0}{1:#0.00}", Currency?.Symbol, Discount); }

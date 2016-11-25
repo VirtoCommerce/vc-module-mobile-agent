@@ -31,9 +31,9 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
             return result;
         }
 
-        public async Task<Currency> GetCurrency()
+        public async Task<Currency> GetCurrency(string userLogin)
         {
-            return await Client.GetRequestAsync<Currency>($"api/mobile/sync/currency");
+            return await Client.GetRequestAsync<Currency>($"api/mobile/sync/currency/{userLogin}");
         }
     }
 }

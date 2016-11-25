@@ -7,6 +7,7 @@ using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.ViewModels;
 using VirtoCommerce.Mobile.iOS.Controls;
+using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Order
 {
@@ -16,7 +17,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
         public const string CellId = "PaymentMethod";
         public const float CellHeight = 40;
         private const int _padding = 10;
-        private PaymnetMethodViewModel viewModel;
+        private SelectViewModel<PaymentMethod> viewModel;
         public PaymentCell()
         {
             InitView();
@@ -42,12 +43,12 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
         {
             _selectButton.Checked = viewModel.IsSelect;
         }
-        public void UpdateCell(PaymnetMethodViewModel info)
+        public void UpdateCell(SelectViewModel<PaymentMethod> info)
         {
             viewModel = info;
-            if(!string.IsNullOrEmpty( info.PaymentMethod.Icon))
-            _icon.Image = UIImage.FromFile(info.PaymentMethod.Icon);
-            _name.Text = info.PaymentMethod.Name;
+            if(!string.IsNullOrEmpty( info.Method.Icon))
+            _icon.Image = UIImage.FromFile(info.Method.Icon);
+            _name.Text = info.Method.Name;
             _selectButton.Checked = info.IsSelect;
             viewModel.NotificationSelectChange = SelectChange;
         }

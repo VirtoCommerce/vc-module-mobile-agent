@@ -36,6 +36,7 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             _eventor = eventor;
             _cartService = cartService;
+
             ProductsGridViewModel = Mvx.IocConstruct<ProductsGridViewModel>();
             CartViewModel = Mvx.IocConstruct<CartViewModel>();
         }

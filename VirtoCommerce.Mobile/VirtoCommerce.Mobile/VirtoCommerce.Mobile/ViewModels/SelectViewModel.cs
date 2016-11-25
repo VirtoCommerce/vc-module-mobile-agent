@@ -8,21 +8,21 @@ using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class PaymnetMethodViewModel:MvxViewModel
+    public class SelectViewModel<T>:MvxViewModel where T:class
     {
-        private PaymentMethod _paymentMethod;
+        private T _method;
         private bool _isSelect;
         private MvxCommand _commandCheck;
-        public PaymnetMethodViewModel(PaymentMethod method, MvxCommand commandCheck)
+        public SelectViewModel(T method, MvxCommand commandCheck)
         {
-            _paymentMethod = method;
+            _method = method;
             _commandCheck = commandCheck;
         }
-        public PaymentMethod PaymentMethod
+        public T Method
         {
             get
             {
-                return _paymentMethod;
+                return _method;
             }
         }
         /// <summary>

@@ -31,5 +31,20 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <returns></returns>
         Task<ServerResponse<ApiClient.Models.Currency>> GetCurrency();
+
+        /// <summary>
+        /// Get shipping methods
+        /// </summary>
+        Task<ServerResponseCollection<ApiClient.Models.ShippingMethod>> GetShippingMethods();
+
+        /// <summary>
+        /// Get payment methods
+        /// </summary>
+        /// <returns></returns>
+        Task<ServerResponseCollection<ApiClient.Models.PaymentMethod>> GetPaymentMethods();
+        /// <summary>
+        /// Send orders to server
+        /// </summary>
+        Task<ServerResponse<bool>> SendOrders(ICollection<ApiClient.Models.Order> orders);
     }
 }

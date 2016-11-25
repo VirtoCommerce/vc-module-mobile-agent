@@ -96,7 +96,7 @@ namespace VirtoCommerce.Mobile.ApiClient
             }
         }
 
-        public async Task<TResponse> PostJsonRequestAsync<TResponse, TRequest>(string url, TRequest request) where TResponse : class where TRequest : class
+        public async Task<TResponse> PostJsonRequestAsync<TResponse, TRequest>(string url, TRequest request) where TRequest : class
         {
 
             if (!ExistInternet)
@@ -121,7 +121,7 @@ namespace VirtoCommerce.Mobile.ApiClient
                 }
             }
         }
-        public TResponse PostJsonRequest<TResponse, TRequest>(string url, TRequest request) where TResponse : class where TRequest : class
+        public TResponse PostJsonRequest<TResponse, TRequest>(string url, TRequest request) where TRequest : class
         {
 
             if (!ExistInternet)

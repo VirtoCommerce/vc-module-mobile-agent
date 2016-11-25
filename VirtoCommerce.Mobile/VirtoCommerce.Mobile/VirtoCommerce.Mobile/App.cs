@@ -46,6 +46,9 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<ITaxService, TaxService>();
             //theme service
             Mvx.RegisterType<IThemeStorageService, ThemeStorageService>();
+            //shipping service
+            Mvx.RegisterType<IShippingMethodsService, ShippingMethodsService>();
+            Mvx.RegisterType<IPaymentMethodService, PaymentMethodService>();
             #endregion
 
             #region Repositories
@@ -53,14 +56,23 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IProductRepository, SqlLiteProductRepository>();
             Mvx.RegisterType<ICartRepository, SqlLiteCartRepository>();
             Mvx.RegisterType<IThemeSettingsRepository, SqlLiteThemeSettingsRepository>();
+            Mvx.RegisterType<IShippingRepository, SqlLiteShippingRepository>();
+            Mvx.RegisterType<IPaymentRepository, SqlLitePaymentRepository>();
+            Mvx.RegisterType<IOrderRepository, SqlLiteOrderRepository>();
             #endregion
 
             #region Api
+            //base api client
+            Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
+            //
+            Mvx.RegisterType<IPaymentApi, PaymentApi>();
             Mvx.RegisterType<ILoginApi, LoginApi>();
             Mvx.RegisterType<IProductApi, ProductApi>();
             Mvx.RegisterType<IThemeApi, ThemeApi>();
-            //base api client
-            Mvx.RegisterSingleton<BaseApiClient>(new HmacApiClient(_baseUrl, _appKey, _secretKey, _subFolder));
+            Mvx.RegisterType<IShippingApi, ShippingApi>();
+            Mvx.RegisterType<IOrderApi, OrderApi>();
+            
+            
             #endregion
         }
     }

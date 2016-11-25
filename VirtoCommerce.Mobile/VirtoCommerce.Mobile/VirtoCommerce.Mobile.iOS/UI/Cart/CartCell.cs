@@ -135,14 +135,15 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             {
                 iconFrame.Height = ActualRowHeight - _padding * 2;
                 iconScale = iconFrame.Height / _iconImage.Image?.Size.Height ?? 1;
-                iconFrame.Width = (_iconImage.Image?.Size.Width??0) * iconScale;
+                iconFrame.Width = (_iconImage.Image?.Size.Width ?? 0) * iconScale;
                 if (iconFrame.Width < 150)
                 {
                     iconFrame.X = (150 - iconFrame.Width) / 2;
                 }
             }
-            else {
-                iconFrame.Y = (iconFrame.Height - (ActualRowHeight - _padding * 2)) / 2;
+            else
+            {
+                iconFrame.Y = (ActualRowHeight - iconFrame.Height) / 2;
             }
             _iconImage.Frame = iconFrame;
             

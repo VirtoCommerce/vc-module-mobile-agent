@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Enums;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Responses;
+using VirtoCommerce.Mobile.Convertors;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -14,11 +15,18 @@ namespace VirtoCommerce.Mobile.Services
         private readonly ISyncServerService _syncServerService;
         private readonly IProductStorageService _productStorageService;
         private readonly IThemeStorageService _themeStorageService;
-        public SyncService(ISyncServerService serverSyncService, IProductStorageService productStorageService, IThemeStorageService themeStorageService)
+        private readonly IShippingMethodsService _shippingMethodsService;
+        private readonly IPaymentMethodService _paymentMethodsService;
+        private readonly IOrderService _orderService;
+
+        public SyncService(IOrderService orderService, ISyncServerService serverSyncService, IProductStorageService productStorageService, IThemeStorageService themeStorageService, IShippingMethodsService shippingMethodsService, IPaymentMethodService paymentMethodsService)
         {
+            _orderService = orderService;
             _syncServerService = serverSyncService;
             _productStorageService = productStorageService;
             _themeStorageService = themeStorageService;
+            _shippingMethodsService = shippingMethodsService;
+            _paymentMethodsService = paymentMethodsService;
         }
         public async Task<SyncResponse> SyncProducts()
         {
@@ -78,5 +86,53 @@ namespace VirtoCommerce.Mobile.Services
             return syncResponse;
         }
 
+       public async  Task<SyncResponse> SyncShippingMethods() {
+            var syncResponse = new SyncResponse();
+            var shippingMethods = await _syncServerService.GetShippingMethods();
+            if (shippingMethods.Status != ResponseStatus.Ok)
+            {
+                syncResponse.SyncStatus = SyncStatus.Error;
+                syncResponse.Message = shippingMethods.Message;
+                return syncResponse;
+            }
+            _shippingMethodsService.SaveShippingMethods(shippingMethods.Data);
+            return syncResponse;
+        }
+
+        public async Task<SyncResponse> SyncPaymentMethods()
+        {
+            var syncResponse = new SyncResponse();
+            var shippingMethods = await _syncServerService.GetPaymentMethods();
+            if (shippingMethods.Status != ResponseStatus.Ok)
+            {
+                syncResponse.SyncStatus = SyncStatus.Error;
+                syncResponse.Message = shippingMethods.Message;
+                return syncResponse;
+            }
+            _paymentMethodsService.SaveMethods(shippingMethods.Data);
+            return syncResponse;
+        }
+
+        public async Task<SyncResponse> SyncOrders()
+        {
+            var syncResponse = new SyncResponse();
+            var orders = _orderService.GetNotSyncOrders();
+            var orderResult = await _syncServerService.SendOrders(orders.Select(x => x.ModelToApiModel()).ToArray());
+            if (orderResult.Status != ResponseStatus.Ok)
+            {
+                syncResponse.SyncStatus = SyncStatus.Error;
+                syncResponse.Message = orderResult.Message;
+                return syncResponse;
+            }
+            if (orderResult.Data)
+            {
+                foreach (var order in orders)
+                {
+                    order.IsSync = true;
+                }
+                _orderService.SetSyncStatusOrders(orders);
+            }
+            return syncResponse;
+        }
     }
 }

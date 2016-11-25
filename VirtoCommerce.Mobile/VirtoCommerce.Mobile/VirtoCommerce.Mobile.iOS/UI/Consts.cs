@@ -12,6 +12,7 @@ namespace VirtoCommerce.Mobile.iOS.UI
         #region Fonts
         public const string FontNameRegular = "Helvetica Neue";
         public const string FontNameBold = "Helvetica Bold";
+        public const float FontSizeRegular = 17; 
         #endregion
 
         #region Button
@@ -24,12 +25,14 @@ namespace VirtoCommerce.Mobile.iOS.UI
         #endregion
 
         #region Colors
-        public static UIColor ColorMainBg = UIColor.FromRGB(245,245,245);
+        public static UIColor ColorMainBg = UIColor.FromRGB(255, 255, 255);//UIColor.FromRGB(245,245,245);
         public static UIColor ColorMain = UIColor.FromRGBA(0, 0, 0, 200);//UIColor.FromRGBA(4, 86, 151);
         public static UIColor ColorRed = UIColor.FromRGB(255, 59, 48);
         public static UIColor ColorBlack = UIColor.FromRGBA(0, 0, 0, 200);
         public static UIColor ColorGray = UIColor.FromRGB(170, 170, 170);
         public static UIColor ColorGrayLight = UIColor.FromRGB(245, 245, 245);
+        public static UIColor ColorDark = UIColor.FromRGB(33, 29, 30);
+        public static UIColor ColorDarkLight = UIColor.FromRGB(75, 72, 73);
         #endregion
     }
 }

@@ -30,8 +30,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             View.BackgroundColor = Consts.ColorMainBg;
             CreateView();
             var bindingSet = this.CreateBindingSet<CartView, CartViewModel>();
-            bindingSet.Bind(_createOrderButton).To(x => x.CreateOrderCommand);
-            bindingSet.Bind(_createOrderButton).For(x => x.Enabled).To(x => x.CanCreateOrder);
+            bindingSet.Bind(_chekoutButton).To(x => x.ToCheckoutCommand);
+            //bindingSet.Bind(_chekoutButton).For(x => x.Enabled).To(x => x.CanCreateOrder);
             bindingSet.Bind(_cartItems).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Bind(_infoView).For(x => x.Hidden).To(x => x.HideProductList);
             bindingSet.Bind(_emptyMessageLabel).For(x => x.Hidden).To(x => x.HideEmptyMessage);
@@ -128,19 +128,19 @@ namespace VirtoCommerce.Mobile.iOS.Views
             totalViewFrame.Height = _totalView.Source.RowsInSection(_totalView, 0) * _totalView.RowHeight;
             _totalView.Frame = totalViewFrame;
             //payments 
-            var paymentsViewFrame = _paymentMethods.Frame;
+            /*var paymentsViewFrame = _paymentMethods.Frame;
             paymentsViewFrame.Y = totalViewFrame.Y + totalViewFrame.Height;
             paymentsViewFrame.Width = infoViewFrame.Width;
             paymentsViewFrame.Height = _paymentMethods.Source.RowsInSection(_paymentMethods, 0) * _paymentMethods.RowHeight + 60;
             _paymentMethods.Frame = paymentsViewFrame;
-            _paymentMethods.SizeToFit();
+            _paymentMethods.SizeToFit();*/
             //create order button
-            var createOrderButtonFrame = _createOrderButton.Frame;
+            var createOrderButtonFrame = _chekoutButton.Frame;
             createOrderButtonFrame.Width = _infoView.Frame.Width - _padding * 2;
             createOrderButtonFrame.Height = 50;
             createOrderButtonFrame.X = _padding;
-            createOrderButtonFrame.Y = paymentsViewFrame.Height + _padding + paymentsViewFrame.Y;
-            _createOrderButton.Frame = createOrderButtonFrame;
+            createOrderButtonFrame.Y = totalViewFrame.Height + _padding + totalViewFrame.Y;
+            _chekoutButton.Frame = createOrderButtonFrame;
             //border
             var borderViewFrame = _borderView.Frame;
             borderViewFrame.Height = View.Frame.Height;
@@ -154,11 +154,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
         #region View
         private UITableView _cartItems;
-        private UITableView _paymentMethods;
+        //private UITableView _paymentMethods;
         private UITableView _totalView;
         private UIView _infoView;
         private UIView _borderView;
-        private UIButton _createOrderButton;
+        private UIButton _chekoutButton;
         private UILabel _emptyMessageLabel;
         
 
@@ -182,17 +182,17 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _totalView.ScrollEnabled = true;
             _infoView.Add(_totalView);
             //payment methods
-            _paymentMethods = new UITableView(new RectangleF(0, 0, 250, 250), UITableViewStyle.Grouped);
+            /*_paymentMethods = new UITableView(new RectangleF(0, 0, 250, 250), UITableViewStyle.Grouped);
             _paymentMethods.BackgroundColor = Consts.ColorMainBg;
             _paymentMethods.Source = new PaymentSource(_paymentMethods, CartViewModel.PaymentMethods);
             _paymentMethods.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _paymentMethods.RowHeight = 30;
             _paymentMethods.ScrollEnabled = true;
             _paymentMethods.AllowsMultipleSelection = false;
-            _infoView.Add(_paymentMethods);
+            _infoView.Add(_paymentMethods);*/
             //create
-            _createOrderButton = Helpers.UICreator.CreateSimpleButton("Create order");
-            _infoView.Add(_createOrderButton);
+            _chekoutButton = Helpers.UICreator.CreateSimpleButton("Checkout");
+            _infoView.Add(_chekoutButton);
             //border view
             _borderView = new UIView(new RectangleF(0, 0, 1, 1));
             _borderView.BackgroundColor = UIColor.LightGray;

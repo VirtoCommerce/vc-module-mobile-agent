@@ -7,6 +7,7 @@ using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.iOS.UI;
 using CoreGraphics;
+using CoreAnimation;
 
 namespace VirtoCommerce.Mobile.iOS.Helpers
 {
@@ -17,12 +18,40 @@ namespace VirtoCommerce.Mobile.iOS.Helpers
         {
             var button = new UIButton(UIButtonType.RoundedRect);
             button.SetTitle(title, UIControlState.Normal);
-            button.SetTitleColor(UIColor.White, UIControlState.Normal);
-            button.TitleLabel.Font = UIFont.FromName(Consts.FontNameBold, Consts.ButtonFontSize);
-            button.SetBackgroundImage(GetImageFromColor(Consts.ColorMain), UIControlState.Normal);
-            button.SetBackgroundImage(GetImageFromColor(Consts.ColorGray), UIControlState.Disabled);
+            button.SetTitleColor(UIColor.Black, UIControlState.Normal);
+            button.TitleLabel.Font = UIFont.FromName(Consts.FontNameRegular, Consts.ButtonFontSize);
+            button.Layer.BorderColor = Consts.ColorBlack.CGColor;
+            button.Layer.BorderWidth = 1;
+            //button.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
+            button.SetBackgroundImage(GetImageFromColor(UIColor.FromRGBA(0, 0, 0, 0)), UIControlState.Normal);
+            //button.SetBackgroundImage(GetImageFromColor(Consts.ColorGray), UIControlState.Disabled);
             button.Layer.CornerRadius = Consts.ButtonCornerRadius;
             return button;
+        }
+
+        public static UITextField CreateTextField(string placeHodler, UIImage leftImage, UIColor bottomColor, CGRect rect)
+        {
+            var  field = new UITextField(rect)
+            {
+                Placeholder = placeHodler,
+                BorderStyle = UITextBorderStyle.Bezel
+            };
+            if (leftImage != null)
+            {
+                var image = new UIImageView(new CGRect(0, 0, 25, 25));
+                image.Image = leftImage;
+                field.LeftView = image;
+                field.LeftViewMode = UITextFieldViewMode.Always;
+            }
+            if (bottomColor != null)
+            {
+                field.BorderStyle = UITextBorderStyle.None;
+                var bottomLine = new CALayer();
+                bottomLine.Frame = new CGRect(0, field.Frame.Height - 1, field.Frame.Width, 1);
+                bottomLine.BackgroundColor = Consts.ColorBlack.CGColor;
+                field.Layer.AddSublayer(bottomLine);
+            }
+            return field;
         }
 
         public static UIImage GetImageFromColor(UIColor color)

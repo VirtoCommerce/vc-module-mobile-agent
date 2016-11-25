@@ -43,7 +43,18 @@ namespace VirtoCommerce.Mobile.Helpers
                 SendEvent(result);
                 return false;
             }
-
+            result = await syncService.SyncShippingMethods();
+            if (result.SyncStatus != SyncStatus.Ok)
+            {
+                SendEvent(result);
+                return false;
+            }
+            result = await syncService.SyncPaymentMethods();
+            if (result.SyncStatus != SyncStatus.Ok)
+            {
+                SendEvent(result);
+                return false;
+            }
             result = await syncService.SyncCurrency();
             if (result.SyncStatus != SyncStatus.Ok)
             {
@@ -52,6 +63,12 @@ namespace VirtoCommerce.Mobile.Helpers
             }
             
             result = await syncService.SyncTheme();
+            if (result.SyncStatus != SyncStatus.Ok)
+            {
+                SendEvent(result);
+                return false;
+            }
+            result = await syncService.SyncOrders();
             if (result.SyncStatus != SyncStatus.Ok)
             {
                 SendEvent(result);

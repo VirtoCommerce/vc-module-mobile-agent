@@ -15,21 +15,23 @@ namespace VirtoCommerce.Mobile.Services
         private readonly IGlobalEventor _eventor;
         private readonly ICartRepository _cartRepository;
         private readonly ITaxService _taxService;
-        public CartService(IProductStorageService productService, IGlobalEventor eventor, ICartRepository cartRepository, ITaxService taxService)
+        private readonly IShippingMethodsService _shipmentService;
+        public CartService(IProductStorageService productService, IGlobalEventor eventor, ICartRepository cartRepository, ITaxService taxService, IShippingMethodsService shipmentService)
         {
             _eventor = eventor;
             _productService = productService;
             _cartRepository = cartRepository;
             _taxService = taxService;
+            _shipmentService = shipmentService;
         }
 
         public Cart GetCart()
         {
-            
             var cartItems = _cartRepository.GetAllCartItems();
             if (cartItems.Count == 0)
                 return null;
-            var cart = new Cart {
+            var cart = new Cart
+            {
                 Currency = _productService.GetCurrentCurrency()
             };
             foreach (var item in cartItems)
@@ -41,10 +43,20 @@ namespace VirtoCommerce.Mobile.Services
                 cartItem.Currency = cart.Currency;
                 cart.CartItems.Add(cartItem);
             }
+            
             cart.SubTotal = cart.CartItems.Sum(x => x.SubTotal);
             cart.Taxes = cart.SubTotal * Convert.ToDecimal(_taxService.GetCurrentTax().Percent / 100);
             cart.Discount = cart.CartItems.Sum(x => x.Discount);
-            cart.Total = cart.SubTotal + cart.Taxes;
+            cart.Total = cart.SubTotal + cart.Taxes + cart.Shipment;
+            return cart;
+        }
+
+        public Cart GetCartWithShipment(string shipmentId)
+        {
+            var cart = GetCart();
+            var shipmentRate = _shipmentService.GetAllShippingMethods().SelectMany(x => x.MethodRates).FirstOrDefault(x => x.Id == shipmentId)?.Rate ?? 0;
+            cart.Shipment = shipmentRate;
+            cart.Total = cart.SubTotal + cart.Taxes + cart.Shipment;
             return cart;
         }
 

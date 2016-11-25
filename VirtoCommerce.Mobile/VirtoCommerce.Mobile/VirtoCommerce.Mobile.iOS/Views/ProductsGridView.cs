@@ -64,7 +64,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
                 Delegate = this,
-                BackgroundColor = Consts.ColorGrayLight
+                BackgroundColor = Consts.ColorMainBg
             };
             Add(_listProducts);
             foreach (var product in ((ProductsGridViewModel)ViewModel).Products)
@@ -104,7 +104,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 if (tabSupperView != null)
                 {
                     var frame = _listProducts.Frame;
-                    frame.Height = View.Frame.Height - tabSupperView.TabBar.Frame.Height;
+                    frame.Height = View.Frame.Height - tabSupperView.TabBar.Frame.Height -30;
                     _listProducts.Frame = frame;
                 }
             }

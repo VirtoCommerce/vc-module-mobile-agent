@@ -52,8 +52,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             if (ViewModel == null)
                 return;
             var viewControllers = new UIViewController[] {
-                CreateTabFor("Products","home", MainViewModel.ProductsGridViewModel),
-               (_cartController =  CreateTabFor("Cart","cart_menu", MainViewModel.CartViewModel)),
+                CreateTabFor("Products","products-black", MainViewModel.ProductsGridViewModel),
+               (_cartController =  CreateTabFor("Cart","cart-black", MainViewModel.CartViewModel)),
             };
             MainViewModel.Eventor.Subscribe<CartChangeEvent>(UpdateCartBage);
             MainViewModel.Eventor.Subscribe<OpenCartEvent>(SetCart);
@@ -78,7 +78,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private void SetTitleAndTabBarItem(UIViewController screen, string title, string imageName)
         {
             screen.Title = title;
-            screen.TabBarItem = new UITabBarItem(title, UIImage.FromBundle(imageName + ".png"),
+            screen.TabBarItem = new UITabBarItem(title, UIImage.FromBundle(imageName + ".png").Scale(new CoreGraphics.CGSize(25,25)),
                                                  _createdSoFarCount);
             _createdSoFarCount++;
         }

@@ -10,7 +10,7 @@ namespace VirtoCommerce.Mobile.Responses
     /// <summary>
     /// Server get one object
     /// </summary>
-    public class ServerResponse<T> : BaseResponse where T : class
+    public class ServerResponse<T> : BaseResponse
     {
         /// <summary>
         /// Data
