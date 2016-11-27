@@ -26,72 +26,70 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public DetailProductViewModel DetailViewModel { get { return (DetailProductViewModel)ViewModel; } }
 
         public const int Padding = 10;
+        private UIInterfaceOrientation _deviceOrientation;
+
         public DetailProductView() : base(null, null)
         {
-
+            _deviceOrientation = UIApplication.SharedApplication.StatusBarOrientation;
             
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            
             CreateView();
-            var set = this.CreateBindingSet<DetailProductView, DetailProductViewModel>();
-            set.Bind(_titleLabel).To(x => x.Product.Name);
-            set.Bind(_descriptionLabel).To(x => x.ProductDescription);
-            set.Bind(_salePriceLable).To(x => x.Product.Price.FormattedSalePriceFull);
-            set.Bind(NavigationItem).For(x => x.Title).To(x => x.Product.Name);
-            set.Bind(_listPriceLable).For(x => x.Text).To(x => x.Product.Price.FormattedListPriceFull);
-            set.Bind(_manufactureLabel).For(x => x.Text).To(x => x.Product.Manufacture);
-            set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
-            set.Bind(_descriptionLabel).For(x => x.Hidden).To(x => x.HideDescription);
-            set.Bind(_propertiesTable).For(x => x.Hidden).To(x => x.HideProperties);
-            set.Bind(_cartButton).To(x => x.AddToCartCommand);
-            set.Bind(_cartOpenButton).For(x => x.Title).To(x => x.CountInCart);
-            set.Apply();
+            
         }
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
             NavigationController.NavigationBarHidden = false;
-            _segmentControl.SelectedSegment = 0;
+            _segmentControl.CurrentSegment = 0;
         }
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-            /*var mainFrame = View.Frame;
-            mainFrame.Y = NavigationController.NavigationBar.Frame.Height + UIApplication.SharedApplication.StatusBarFrame.Height;
-            mainFrame.Height = mainFrame.Height - mainFrame.Y;
-            View.Frame = mainFrame;*/
+            if (_deviceOrientation != UIApplication.SharedApplication.StatusBarOrientation)
+            {
+                _deviceOrientation = UIApplication.SharedApplication.StatusBarOrientation;
+                CreateView();
+            }
             PrepareMainInfo();
             //
             PrepareDetailInfo();
+            if (_scrollView != null)
+            {
+                var scrollFrame = _scrollView.Frame;
+                scrollFrame.Width = View.Frame.Width;
+                scrollFrame.Height = View.Frame.Height;
+                scrollFrame.X = 0;
+                scrollFrame.Y = 0;
+                _scrollView.Frame = scrollFrame;
+                _scrollView.ContentSize = new CGSize(scrollFrame.Width, _mainInfo.Frame.Height + _mainInfo.Frame.Y + _detailView.Frame.Height);
+            }
         }
 
         #region View
-
-        // private UIImageView _productImage { get; set; }
         private UILabel _manufactureLabel { set; get; }
         private UIView _mainInfo { set; get; }
         private UIView _detailView { set; get; }
         private UILabel _titleLabel { get; set; }
         private UILabel _descriptionLabel { set; get; }
-        private UIView _priceView { set; get; }
         private UILabel _salePriceLable { set; get; }
         private UILabel _listPriceLable { set; get; }
         private UILabel _profitPriceLabel { set; get; }
         private UIButton _cartButton { set; get; }
-        private UIView _profitView { set; get; }
-        private UIView _saleView { set; get; }
         private ImageSlider _imageSlider { set; get; }
         private UITableView _propertiesTable { set; get; }
-        private UISegmentedControl _segmentControl { set; get; }
+        private Controls.UISimpleSegments _segmentControl { set; get; }
         private UIView _borderView { set; get; }
         private UIBarButtonItem _cartOpenButton { set; get; }
+        private UIScrollView _scrollView { set; get; }
 
         private void CreateView()
         {
+            _scrollView = null;
+            _borderView = null;
             View = new UIView(new CGRect(0, 0, 600, 600))
             {
                 BackgroundColor = Consts.ColorMainBg,
@@ -116,8 +114,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _titleLabel = new UILabel(new CGRect(0, 5, 295, 40))
             {
                 TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 30),
-                TextAlignment = UITextAlignment.Center,
+                Font = UIFont.FromName(Consts.FontNameBold, 18),
+                TextAlignment = UITextAlignment.Left,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
             };
@@ -133,55 +131,28 @@ namespace VirtoCommerce.Mobile.iOS.Views
             }
             _mainInfo.Add(_imageSlider);
             //price
-            _priceView = new UIView();
-            _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
+            _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 18))
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 25),
+                TextColor = Consts.ColorDarkLight,
+                Font = UIFont.FromName(Consts.FontNameRegular, 12),
                 TextAlignment = UITextAlignment.Center,
             };
-            _priceView.Add(_listPriceLable);
-            _priceView.Add(new UILabel(new CGRect(0, 0, 100, 45))
-            {
-                Text = "Price:",
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 25),
-            });
-            _mainInfo.AddSubview(_priceView);
-            //profit price
-            _profitView = new UIView();
+            _mainInfo.Add(_listPriceLable);
             _profitPriceLabel = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 25),
+                TextColor = UIColor.White,
+                Font = UIFont.FromName(Consts.FontNameRegular, 18),
                 TextAlignment = UITextAlignment.Center,
+                BackgroundColor = Consts.ColorRed
             };
-            _profitView.Add(_profitPriceLabel);
-            _profitView.Add(new UILabel(new CGRect(0, 0, 300, 45))
-            {
-                Text = "Instant Saving:",
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 25),
-            });
-            _mainInfo.AddSubview(_profitView);
-            //sale price
-            _saleView = new UIView();
+            _mainInfo.Add(_profitPriceLabel);
             _salePriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
-                TextColor = UIColor.FromRGB(189, 13, 13),
-                Font = UIFont.FromName(Consts.FontNameRegular, 35),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameRegular, 18),
                 TextAlignment = UITextAlignment.Center,
             };
-
-            _saleView.Add(_salePriceLable);
-            _saleView.Add(new UILabel(new CGRect(0, 0, 300, 45))
-            {
-                Text = "You Pay:",
-                TextColor = UIColor.FromRGB(189, 13, 13),
-                Font = UIFont.FromName(Consts.FontNameRegular, 35),
-            });
-            _mainInfo.AddSubview(_saleView);
-            //
+            _mainInfo.Add(_salePriceLable);
             #endregion
 
             #region Detail info
@@ -198,52 +169,79 @@ namespace VirtoCommerce.Mobile.iOS.Views
             };
             _detailView.AddSubview(_descriptionLabel);
             //tabbed
-            _segmentControl = new UISegmentedControl(new CGRect(0, 0, 250, 50));
-            _segmentControl.InsertSegment("Properties", 0, true);
-            _segmentControl.InsertSegment("Description", 1, true);
-            _segmentControl.ValueChanged += ChangeSegment;
+            _segmentControl = new Controls.UISimpleSegments(new CGRect(0, 0, 250, 50));
+            _segmentControl.AddSegment("Properties");
+            _segmentControl.AddSegment("Description");
+            _segmentControl.ChangeSegment += ChangeSegment;
             _detailView.AddSubviews(_segmentControl);
             //properties
             _propertiesTable = new UITableView();
             _propertiesTable.BackgroundColor = Consts.ColorMainBg;
             _propertiesTable.ScrollEnabled = true;
             _propertiesTable.Source = new PropertiesSource(DetailViewModel.Product.Properties.Select(x => new KeyValuePair<string, string>(x.DisplayName, x.Value)).ToList());
-            _propertiesTable.RowHeight = 30;
+            _propertiesTable.RowHeight = PropertyCell.CellHeight;
             _propertiesTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _propertiesTable.ReloadData();
             _detailView.AddSubview(_propertiesTable);
             //add to cart item
-            _cartButton = Helpers.UICreator.CreateImageButtonWithText("Add to cart", "cart.png");
+            _cartButton = Helpers.UICreator.CreateSimpleButton("Add to cart");
             _detailView.AddSubview(_cartButton);
-            //border view
-            _borderView = new UIView
-            {
-                BackgroundColor = Consts.ColorGray
-            };
-            Add(_borderView);
+            
             #endregion
             //cart button
             _cartOpenButton = new UIBarButtonItem("Cart", UIBarButtonItemStyle.Plain, (s, e) => { DetailViewModel.OpenCartCommad.Execute(); });
             NavigationItem.RightBarButtonItem = _cartOpenButton;
-            View.AddSubviews(_mainInfo, _detailView);
+            if (_deviceOrientation == UIInterfaceOrientation.Portrait || _deviceOrientation == UIInterfaceOrientation.PortraitUpsideDown)
+            {
+                _scrollView = new UIScrollView();
+                _scrollView.AddSubviews(_mainInfo, _detailView);
+                View.Add(_scrollView);
+            }
+            else
+            {
+
+                View.AddSubviews(_mainInfo, _detailView);
+                _borderView = new UIView
+                {
+                    BackgroundColor = Consts.ColorGray
+                };
+                Add(_borderView);
+            }
+            //bindings
+            var set = this.CreateBindingSet<DetailProductView, DetailProductViewModel>();
+            set.Bind(_titleLabel).To(x => x.Product.Name);
+            set.Bind(_descriptionLabel).To(x => x.ProductDescription);
+            set.Bind(_salePriceLable).To(x => x.Product.Price.FormattedSalePriceFull);
+            set.Bind(NavigationItem).For(x => x.Title).To(x => x.Product.Name);
+            set.Bind(_listPriceLable).For(x => x.AttributedText).To(x => x.Product.Price.FormattedListPriceFull).WithConversion(new StrikeTextConvertor());
+            set.Bind(_manufactureLabel).For(x => x.Text).To(x => x.Product.Manufacture);
+            set.Bind(_profitPriceLabel).For(x => x.Text).To(x => x.Product.Price).WithConversion(new ProfitConvertor());
+            set.Bind(_descriptionLabel).For(x => x.Hidden).To(x => x.HideDescription);
+            set.Bind(_propertiesTable).For(x => x.Hidden).To(x => x.HideProperties);
+            set.Bind(_cartButton).To(x => x.AddToCartCommand);
+            set.Bind(_cartOpenButton).For(x => x.Title).To(x => x.CountInCart);
+            set.Apply();
         }
 
-        private void ChangeSegment(object o, EventArgs e)
+        private void ChangeSegment(object o, int e)
         {
-            ((DetailProductViewModel)ViewModel).SetSegment((int)_segmentControl.SelectedSegment);
+            ((DetailProductViewModel)ViewModel).SetSegment(_segmentControl.CurrentSegment);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _segmentControl.ValueChanged -= ChangeSegment;
+            _segmentControl.ChangeSegment -= ChangeSegment;
             DetailViewModel.UnSubscribeEventor();
         }
-
+        private bool IsPortrait()
+        {
+            return _deviceOrientation == UIInterfaceOrientation.Portrait || _deviceOrientation == UIInterfaceOrientation.PortraitUpsideDown;
+        }
         private void PrepareMainInfo()
         {
             var mainViewFrame = _mainInfo.Frame;
-            mainViewFrame.Width = (View.Frame.Width / 2) - Padding;
+            mainViewFrame.Width = (!IsPortrait() ? (View.Frame.Width / 2) : (View.Frame.Width - Padding)) - Padding;
             mainViewFrame.Height = View.Frame.Height;
             mainViewFrame.X = Padding;
             _mainInfo.Frame = mainViewFrame;
@@ -254,79 +252,87 @@ namespace VirtoCommerce.Mobile.iOS.Views
             manufFrame.X = 0;
             manufFrame.Y = Padding;
             _manufactureLabel.Frame = manufFrame;
-            //prepare title
-            _titleLabel.SizeToFit();
-            var titleFrame = _titleLabel.Frame;
-            titleFrame.Width = _mainInfo.Frame.Width;
-            titleFrame.X = Padding;
-            titleFrame.Y = Padding + manufFrame.Height;
-            _titleLabel.Frame = titleFrame;
             //prepare slider
             var sliderFrame = _imageSlider.Frame;
             sliderFrame.Width = mainViewFrame.Width;
-            sliderFrame.Y = titleFrame.Y + titleFrame.Height + Padding;
-            sliderFrame.Height = 400;
+            sliderFrame.Y = manufFrame.Y + manufFrame.Height + Padding;
+            sliderFrame.Height = (int)(_mainInfo.Frame.Height * 0.9);
             _imageSlider.Frame = sliderFrame;
             _imageSlider.Draw(_imageSlider.Frame);
+            //prepare title
+            _titleLabel.SizeToFit();
+            var titleFrame = _titleLabel.Frame;
+            titleFrame.Width = _mainInfo.Frame.Width / 2;
+            titleFrame.X = Padding;
+            titleFrame.Y = Padding + sliderFrame.Height + sliderFrame.Y;
+            _titleLabel.Frame = titleFrame;
             //prepare Price
-            //view
-            _listPriceLable.SizeToFit();
-            var priceViewFrame = _priceView.Frame;
-            priceViewFrame.Width = mainViewFrame.Width;
-            priceViewFrame.Height = _listPriceLable.Frame.Height == 0?30: _listPriceLable.Frame.Height;
-            priceViewFrame.Y = sliderFrame.Y + sliderFrame.Height + Padding;
-            _priceView.Frame = priceViewFrame;
-            //price
-            var listPriceFrame = _listPriceLable.Frame;
-            listPriceFrame.X = mainViewFrame.Width - _listPriceLable.Frame.Width - Padding;
-            listPriceFrame.Y = 0;
-            _listPriceLable.Frame = listPriceFrame;
-            //prepare profit
-            //view
-            _profitPriceLabel.SizeToFit();
-            var profitViewFrame = _profitView.Frame;
-            profitViewFrame.Width = mainViewFrame.Width;
-            profitViewFrame.Height = _listPriceLable.Frame.Height == 0? 30: _listPriceLable.Frame.Height;
-            profitViewFrame.Y = priceViewFrame.Y + priceViewFrame.Height + Padding;
-            _profitView.Frame = profitViewFrame;
-            //profit
-            var profitPriceFrame = _profitPriceLabel.Frame;
-            profitPriceFrame.X = mainViewFrame.Width - _profitPriceLabel.Frame.Width - Padding;
-            profitPriceFrame.Y = 0;
-            _profitPriceLabel.Frame = profitPriceFrame;
-            //prepare profit
-            //view
             _salePriceLable.SizeToFit();
-            var saleViewFrame = _saleView.Frame;
-            saleViewFrame.Width = mainViewFrame.Width;
-            saleViewFrame.Height = _salePriceLable.Frame.Height;
-            saleViewFrame.Y = profitViewFrame.Y + profitViewFrame.Height + Padding;
-            _saleView.Frame = saleViewFrame;
-            //profit
             var salePriceFrame = _salePriceLable.Frame;
-            salePriceFrame.X = mainViewFrame.Width - _salePriceLable.Frame.Width - Padding;
-            salePriceFrame.Y = 0;
+            salePriceFrame.Y = titleFrame.Y;
+            salePriceFrame.X = mainViewFrame.Width - Padding - salePriceFrame.Width;
             _salePriceLable.Frame = salePriceFrame;
+
+            //list price
+            if (!string.IsNullOrEmpty(_profitPriceLabel.Text))
+            {
+                _listPriceLable.SizeToFit();
+                var listPriceFrame = _listPriceLable.Frame;
+                listPriceFrame.X = mainViewFrame.Width - _listPriceLable.Frame.Width - salePriceFrame.Width - Padding * 2;
+                listPriceFrame.Y = titleFrame.Y + (salePriceFrame.Height - _listPriceLable.Frame.Height)-2;
+                _listPriceLable.Frame = listPriceFrame;
+            }
+            else
+            {
+                _listPriceLable.Hidden = true;
+            }
+
+            //prepare profit
+            if (!string.IsNullOrEmpty(_profitPriceLabel.Text))
+            {
+                _profitPriceLabel.SizeToFit();
+                View.BringSubviewToFront(_profitPriceLabel);
+                var profitPriceFrame = _profitPriceLabel.Frame;
+                profitPriceFrame.Width += Padding * 2;
+                profitPriceFrame.Height += Padding * 2;
+                profitPriceFrame.Y = 30;
+                profitPriceFrame.X = 30;
+                _profitPriceLabel.Frame = profitPriceFrame;
+            }
+            else
+            {
+                _profitPriceLabel.Hidden = true;
+            }
             
+        }
+
+        private nfloat GetMainInfoHeight()
+        {
+            return _titleLabel.Frame.Y + _titleLabel.Frame.Height;
         }
 
         private void PrepareDetailInfo()
         {
             var detailViewFrame = _detailView.Frame;
-            detailViewFrame.Width = (View.Frame.Width / 2) - Padding;
+            detailViewFrame.Width = (!IsPortrait() ? (View.Frame.Width / 2) : (View.Frame.Width - Padding)) - Padding;
             detailViewFrame.Height = View.Frame.Height;
-            detailViewFrame.X = (View.Frame.Width / 2) + Padding;
+            detailViewFrame.X = (!IsPortrait() ? (View.Frame.Width / 2) : 0) + Padding;
+            if (_scrollView != null)
+                detailViewFrame.Y = GetMainInfoHeight();
             _detailView.Frame = detailViewFrame;
 
             //border
-            var borderFrame = _borderView.Frame;
-            borderFrame.X = detailViewFrame.X;
-            borderFrame.Height = detailViewFrame.Height;
-            borderFrame.Width = 1;
-            _borderView.Frame = borderFrame;
+            if (_borderView != null)
+            {
+                var borderFrame = _borderView.Frame;
+                borderFrame.X = detailViewFrame.X;
+                borderFrame.Height = detailViewFrame.Height;
+                borderFrame.Width = 1;
+                _borderView.Frame = borderFrame;
+            }
             //segment control
-            _segmentControl.SizeToFit();
             var segmentFrame = _segmentControl.Frame;
+            segmentFrame.Width = detailViewFrame.Width;
             segmentFrame.X = detailViewFrame.Width / 2 - segmentFrame.Width / 2;
             segmentFrame.Y = Padding;
             _segmentControl.Frame = segmentFrame;
@@ -342,16 +348,20 @@ namespace VirtoCommerce.Mobile.iOS.Views
             propertiesTableFrame.Width = detailViewFrame.Width - Padding;
             propertiesTableFrame.X = Padding;
             propertiesTableFrame.Y = segmentFrame.Y + segmentFrame.Height + Padding;
-            propertiesTableFrame.Height = detailViewFrame.Height - (segmentFrame.Y + segmentFrame.Height + Padding + 80);
+            propertiesTableFrame.Height = _propertiesTable.RowHeight * _propertiesTable.Source.RowsInSection(_propertiesTable, 0);
             _propertiesTable.Frame = propertiesTableFrame;
-            _propertiesTable.ReloadData();
+            //_propertiesTable.ReloadData();
             //add to cart
             var addCartFrame = _cartButton.Frame;
-            addCartFrame.X = detailViewFrame.Width - addCartFrame.Width - Padding;
-            addCartFrame.Y = propertiesTableFrame.Height + propertiesTableFrame.Y + Padding;
+            addCartFrame.X = (detailViewFrame.Width - addCartFrame.Width) / 2;
+            var tableHeight = _propertiesTable.RowHeight * _propertiesTable.Source.RowsInSection(_propertiesTable, 1);
+            addCartFrame.Y = (tableHeight > _descriptionLabel.Frame.Height ? tableHeight : _descriptionLabel.Frame.Height) + Padding + _propertiesTable.Frame.Y;//propertiesTableFrame.Height + propertiesTableFrame.Y + Padding;
             addCartFrame.Width = 200;
             addCartFrame.Height = 60;
             _cartButton.Frame = addCartFrame;
+            detailViewFrame.Height = addCartFrame.Y + addCartFrame.Height + Padding;
+            _detailView.Frame = detailViewFrame;
+
         }
 
         #endregion

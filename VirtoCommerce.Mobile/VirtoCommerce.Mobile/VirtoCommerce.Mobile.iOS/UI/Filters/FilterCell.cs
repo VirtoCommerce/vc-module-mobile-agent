@@ -13,7 +13,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
     public class FilterCell:UITableViewCell
     {
         public const string CellId = "Filter";
-        public const float CellHeight = 20;
+        public const float CellHeight = 40;
         private const int _padding = 10;
         private FilterItemViewModel viewModel;
         public FilterCell()
@@ -61,7 +61,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
             //title
             _name.SizeToFit();
             var nameFrame = _name.Frame;
-            nameFrame.X = buttonFrame.Width + _padding;
+            nameFrame.X = buttonFrame.Width + _padding+ buttonFrame.X;
             nameFrame.Y = CellHeight / 2 - nameFrame.Height / 2;
             nameFrame.Width = ContentView.Frame.Width - buttonFrame.Width - _padding * 2;
             _name.Frame = nameFrame;

@@ -32,7 +32,8 @@ namespace VirtoCommerce.Mobile.iOS.UI
             {
                 var imgF = _imageViews[i].Frame;
                 imgF.X = i * rect.Width;
-                imgF.Height = scrollFrame.Height;
+                imgF.Height = _imageViews[i].Image?.Size.Height ?? 0;
+                imgF.Y = scrollFrame.Height / 2 - imgF.Height / 2;
                 _imageViews[i].Frame = imgF;
             }
             _scrollView.ContentSize = new CGSize(_scrollView.Frame.Width * _images.Count, scrollFrame.Height);
@@ -66,8 +67,8 @@ namespace VirtoCommerce.Mobile.iOS.UI
                 _pageControl = new UIPageControl()
                 {
                     BackgroundColor = Consts.ColorMainBg,
-                CurrentPageIndicatorTintColor = UIColor.Blue,
-                    PageIndicatorTintColor = Consts.ColorBlack,
+                    CurrentPageIndicatorTintColor = Consts.ColorDark,
+                    PageIndicatorTintColor = Consts.ColorDarkLight,
                 };
                 _pageControl.ValueChanged += SetManualPage;
                 AddSubviews(_scrollView, _pageControl);

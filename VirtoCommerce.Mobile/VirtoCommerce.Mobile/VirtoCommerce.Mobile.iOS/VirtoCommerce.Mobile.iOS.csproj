@@ -100,8 +100,10 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\UICustomPageControl.cs" />
     <Compile Include="Controls\UISimpleCheckBoxControl.cs" />
     <Compile Include="Controls\UISimpleRadioButtonControl.cs" />
+    <Compile Include="Controls\UISimpleSegments.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="Helpers\Animations.cs" />
     <Compile Include="Helpers\Settings.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="UI\Order\ShippingCell.cs" />
     <Compile Include="UI\Order\ShippingSource.cs" />
     <Compile Include="UI\ProductDetail\PropertiesSource.cs" />
+    <Compile Include="UI\ProductDetail\PropertyCell.cs" />
     <Compile Include="UI\Products\ProductCell.cs" />
     <Compile Include="UI\ImageSlider.cs" />
     <Compile Include="Views\CartView.cs" />

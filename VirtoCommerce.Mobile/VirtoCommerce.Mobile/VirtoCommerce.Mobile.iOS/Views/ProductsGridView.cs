@@ -220,6 +220,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _filterView.Add(_clearAll);
             //apply filters
             _applyFilters = UICreator.CreateSimpleButton("Done");
+            _applyFilters.BackgroundColor = Consts.ColorMain;
+            nfloat r, g, b, a;
+            Consts.ColorMain.GetRGBA(out r, out g, out b, out a);
+            _applyFilters.SetTitleColor(UIColor.FromRGBA(new nfloat(1.0) - r, new nfloat(1.0) - g, new nfloat(1.0) - b, a), UIControlState.Normal);
+            _applyFilters.Layer.BorderWidth = 0;
             _applyFilters.TouchDown += ApplyFilters;
             _filterView.Add(_applyFilters);
         }
