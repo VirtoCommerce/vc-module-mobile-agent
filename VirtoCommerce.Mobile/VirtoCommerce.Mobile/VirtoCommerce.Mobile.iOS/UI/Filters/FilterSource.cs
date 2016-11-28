@@ -59,7 +59,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
             };
             label.SizeToFit();
             var border = new UIView(new CGRect((tableView.Frame.Width - label.Frame.Width) / 2, label.Frame.Height+Consts.Padding, label.Frame.Width, 2)) {
-                BackgroundColor = Consts.ColorDarkLight
+                BackgroundColor = Consts.ColorDivider
             };
             var labelFrame = label.Frame;
             labelFrame.Width = tableView.Frame.Width;

@@ -1,0 +1,21 @@
+﻿<div class="blade-content __medium-wide">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <div class="form-group">
+                <label class="form-label">{{ 'mobile.settings.select-store-title' | translate }}</label>
+                <div class="form-input">
+                    <div>{{setting.selectStore.name}}</div>
+                </div>
+                <button ng-click="showSelectCategory()" class="btn">{{ 'mobile.settings.select-store-btn' | translate }}</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">{{ 'mobile.settings.main-color' | translate }}</label>
+                <div class="form-input">
+                    <input type="text"
+                           class="form-control"
+                           ng-model="setting.mainColor"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

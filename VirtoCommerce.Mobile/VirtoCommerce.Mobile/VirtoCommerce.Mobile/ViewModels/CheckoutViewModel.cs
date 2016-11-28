@@ -25,6 +25,23 @@ namespace VirtoCommerce.Mobile.ViewModels
         private string _shippingMethodId;
 
 
+        private bool NextStepEnable()
+        {
+            if (_showCustomerInfo)
+            {
+                return !(string.IsNullOrEmpty(Customer.Address) || string.IsNullOrEmpty(Customer.Apt) || string.IsNullOrEmpty(Customer.City) ||
+                    string.IsNullOrEmpty(Customer.Coutry) || string.IsNullOrEmpty(Customer.Email) ||
+                    string.IsNullOrEmpty(Customer.FirstName) ||
+                    string.IsNullOrEmpty(Customer.LastName) ||
+                    string.IsNullOrEmpty(Customer.PostalCode));
+            }
+            if (_showShippingInfo)
+            {
+                return !string.IsNullOrEmpty(_shippingMethodId);
+            }
+            return PaymentMethods.FirstOrDefault(x => x.IsSelect) != null;
+        }
+
         public Customer Customer { set; get; }
 
         public bool CanCreateOrder
@@ -103,6 +120,8 @@ namespace VirtoCommerce.Mobile.ViewModels
             {
                 return _nextCommad ?? (_nextCommad = new MvxCommand(() =>
                 {
+                    if (!NextStepEnable())
+                        return;
                     if (ShowCustomerInfo)
                     {
                         ShowShippingInfo = true;

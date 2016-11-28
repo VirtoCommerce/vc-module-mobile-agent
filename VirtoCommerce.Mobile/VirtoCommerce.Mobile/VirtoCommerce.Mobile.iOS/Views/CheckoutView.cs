@@ -42,6 +42,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _subscribeBackbuttonShowChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<bool>("ShowBackButton", (s, e) =>
             {
                 ResizeMainView();
+                NavigationItem.SetHidesBackButton(CheckoutViewModel.ShowBackButton, false);
             });
             _subscribeCartChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<Cart>("Cart", (s, e) =>
             {
@@ -111,7 +112,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 Header = "Total",
                 Value = CheckoutViewModel.Cart?.FormattedTotal,
                 TextColor = Consts.ColorBlack,
-                TextFont = UIFont.FromName(Consts.FontNameBold, 17)
+                TextFont = UIFont.FromName(Consts.FontNameBold, 20)
             });
             return result;
         }
@@ -119,7 +120,6 @@ namespace VirtoCommerce.Mobile.iOS.Views
         #region View
         private UITableView _cartItems;
         private UIView _infoView;
-        private UIView _borderView;
         private UITableView _totalView;
         private UIView _mainInfo;
         private UIButton _nextButton;
@@ -133,47 +133,47 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
             CreateInfo();
             CreateMainInfo();
-            //border view
-            _borderView = new UIView(new RectangleF(0, 0, 1, 1));
-            _borderView.BackgroundColor = UIColor.LightGray;
-            Add(_borderView);
             
         }
 
         private void CreateInfo()
         {
             //info view
-            _infoView = new UIView();
+            _infoView = new UIView() {
+                BackgroundColor = Consts.ColorSecondBg
+            };
             Add(_infoView);
             //cart items
-            _cartItems = new UITableView(new RectangleF(0, 0, 250, 250), UITableViewStyle.Plain);
+            _cartItems = new UITableView(new RectangleF(0, 0, 250, 250), UITableViewStyle.Plain)
+            {
+                BackgroundColor = Consts.ColorTransparent
+            };
             _cartItems.Source = new CartSource(_cartItems, CheckoutViewModel.Cart, x => { }, false);
             _cartItems.RowHeight = CartCell.RowHeight;
             _cartItems.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             _cartItems.ScrollEnabled = true;
             _infoView.Add(_cartItems);
             //total
-            _totalView = new UITableView(new RectangleF(_padding, _padding, 250, 200), UITableViewStyle.Plain);
+            _totalView = new UITableView(new RectangleF(_padding, _padding, 250, 200), UITableViewStyle.Grouped) 
+            {
+                BackgroundColor = Consts.ColorTransparent
+            };
             _totalView.Source = new TotalSource(GetTotalData());
-            _totalView.RowHeight = 30;
+            _totalView.RowHeight = TotalCell.CellHeight;
             _totalView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-            _totalView.ScrollEnabled = true;
+            _totalView.ScrollEnabled = false;
             _infoView.Add(_totalView);
         }
 
-        private List<KeyValuePair<string, Customer>> GetCustomerInfoData()
+        private List<ICollection<KeyValuePair<string, Customer>>> GetCustomerInfoData()
         {
-            var result = new List<KeyValuePair<string, Customer>>();
-            result.Add(new KeyValuePair<string, Customer>("Email",CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("First name", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Last name", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Company name", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Address", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Apt, suite etc.", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("City", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Country", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Postal code", CheckoutViewModel.Customer));
-            result.Add(new KeyValuePair<string, Customer>("Phone", CheckoutViewModel.Customer));
+            var result = new List<ICollection<KeyValuePair<string, Customer>>>();
+            result.Add(new[] { new KeyValuePair<string, Customer>("Email", CheckoutViewModel.Customer) });
+            result.Add(new[] { new KeyValuePair<string, Customer>("First name", CheckoutViewModel.Customer), new KeyValuePair<string, Customer>("Last name", CheckoutViewModel.Customer) });
+            result.Add(new[] { new KeyValuePair<string, Customer>("Company name", CheckoutViewModel.Customer), new KeyValuePair<string, Customer>("Address", CheckoutViewModel.Customer) });
+            result.Add(new[] { new KeyValuePair<string, Customer>("Apt, suite etc.", CheckoutViewModel.Customer), new KeyValuePair<string, Customer>("City", CheckoutViewModel.Customer) });
+            result.Add(new[] { new KeyValuePair<string, Customer>("Country", CheckoutViewModel.Customer), new KeyValuePair<string, Customer>("Postal code", CheckoutViewModel.Customer) });
+            result.Add(new[] { new KeyValuePair<string, Customer>("Phone", CheckoutViewModel.Customer) });
             return result;
         }
 
@@ -186,7 +186,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _customerInfo.BackgroundColor = Consts.ColorMainBg;
             _customerInfo.Source = new CustomerInfoSource(_customerInfo, GetCustomerInfoData());
             _customerInfo.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-            _customerInfo.RowHeight = UITableView.AutomaticDimension;
+            _customerInfo.RowHeight = CustomerInfoCell.CellHeight;
             _customerInfo.ScrollEnabled = true;
             _customerInfo.AllowsMultipleSelection = false;
             _mainInfo.Add(_customerInfo);
@@ -220,23 +220,6 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public override void ViewDidLayoutSubviews()
         {
             base.ViewDidLayoutSubviews();
-
-
-
-            //payments 
-            /*var paymentsViewFrame = _paymentMethods.Frame;
-            paymentsViewFrame.Y = totalViewFrame.Y + totalViewFrame.Height;
-            paymentsViewFrame.Width = infoViewFrame.Width;
-            paymentsViewFrame.Height = (int)(infoViewFrame.Height * 0.66);
-            _paymentMethods.Frame = paymentsViewFrame;
-            _paymentMethods.SizeToFit();*/
-            //create order button
-            /* var createOrderButtonFrame = _createOrderButton.Frame;
-             createOrderButtonFrame.Width = _infoView.Frame.Width - _padding * 2;
-             createOrderButtonFrame.Height = 50;
-             createOrderButtonFrame.X = _padding;
-             createOrderButtonFrame.Y = paymentsViewFrame.Height + _padding + paymentsViewFrame.Y;
-             _createOrderButton.Frame = createOrderButtonFrame;*/
             ResizeMainView();
             ResizeInfoView();
         }
@@ -257,7 +240,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 _backButton.Frame = backButtonFrame;
                 //button
                 var buttonFrame = _nextButton.Frame;
-                buttonFrame.Width = (mainInfoFrame.Width - _padding * 2) / 2;
+                buttonFrame.Width = (mainInfoFrame.Width - _padding * 3) / 2;
                 buttonFrame.Height = Consts.ButtonHeight;
                 buttonFrame.X = backButtonFrame.Width + backButtonFrame.X + _padding;
                 buttonFrame.Y = mainInfoFrame.Height - _padding - Consts.ButtonHeight;
@@ -280,6 +263,9 @@ namespace VirtoCommerce.Mobile.iOS.Views
             customerInfoFrame.X = _padding;
             customerInfoFrame.Y = _padding;
             _shippingMethods.Frame = _paymentMethods.Frame = _customerInfo.Frame = customerInfoFrame;
+            _shippingMethods.ReloadData();
+            _paymentMethods.ReloadData();
+            _customerInfo.ReloadData();
             
         }
         private void ResizeInfoView() {
@@ -292,24 +278,20 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _infoView.Frame = infoViewFrame;
             //total
             var totalViewFrame = _totalView.Frame;
-            totalViewFrame.Width = _infoView.Frame.Width - _padding;
-            totalViewFrame.Height = _totalView.RowHeight * _totalView.Source.RowsInSection(_totalView, 0);
+            totalViewFrame.Width = _infoView.Frame.Width - _padding * 2;
+            totalViewFrame.Height = _totalView.RowHeight * _totalView.Source.RowsInSection(_totalView, 0) + 50;
             totalViewFrame.X = _padding;
             totalViewFrame.Y = _padding;
             _totalView.Frame = totalViewFrame;
             //cart items
             var cartItemsFrame = _cartItems.Frame;
-            cartItemsFrame.Width = infoViewFrame.Width - _padding;
+            cartItemsFrame.Width = infoViewFrame.Width - _padding * 2;
             cartItemsFrame.Height = infoViewFrame.Height - totalViewFrame.Height - (_padding * 2);
             cartItemsFrame.X = _padding;
             cartItemsFrame.Y = totalViewFrame.Y + totalViewFrame.Height + _padding;
             _cartItems.Frame = cartItemsFrame;
-            //border
-            var borderViewFrame = _borderView.Frame;
-            borderViewFrame.Height = View.Frame.Height;
-            borderViewFrame.X = cartItemsFrame.Width + cartItemsFrame.X;
-            borderViewFrame.Y = 0;
-            _borderView.Frame = borderViewFrame;
+            _totalView.ReloadData();
+            _cartItems.ReloadData();
         }
         #endregion
     }

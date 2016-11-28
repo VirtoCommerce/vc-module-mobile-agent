@@ -66,14 +66,18 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
             var buttonFrame = _selectButton.Frame;
             buttonFrame.Width = 25;
             buttonFrame.Height = 25;
-            buttonFrame.X = ContentView.Frame.Width - _padding - buttonFrame.Width;
+            buttonFrame.X = _icon.Frame.Width + _icon.Frame.X + _padding;
             buttonFrame.Y = CellHeight / 2 - buttonFrame.Height / 2;
             _selectButton.Frame = buttonFrame;
             //title
             _name.SizeToFit();
             var nameFrame = _name.Frame;
-            nameFrame.X = iconFrame.X + iconFrame.Width + _padding;
-            nameFrame.Width = ContentView.Frame.Width - iconFrame.Width - buttonFrame.Width - _padding * 3;
+            nameFrame.X = buttonFrame.Width + buttonFrame.X + _padding;
+            nameFrame.Y = ContentView.Frame.Height / 2 - nameFrame.Height / 2;
+            if (nameFrame.Width + nameFrame.X > ContentView.Frame.Width)
+            {
+                nameFrame.Width = ContentView.Frame.Width - nameFrame.X - _padding;
+            }
             _name.Frame = nameFrame;
         }
 

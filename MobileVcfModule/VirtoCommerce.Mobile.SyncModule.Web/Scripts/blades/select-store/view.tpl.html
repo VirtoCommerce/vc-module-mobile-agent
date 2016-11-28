@@ -1,0 +1,20 @@
+﻿<div class="blade-static" ng-class="{'__expanded': !isCatalogSelectMode()}">
+    <va-breadcrumb ng-model="blade.breadcrumbs" blade-id="blade.id" ng-if="!isCatalogSelectMode()"></va-breadcrumb>
+    <div class="form-group">
+        <vc-item-search blade="blade"></vc-item-search>
+        <p class="form-count">{{'platform.list.count' | translate}}: <span class="count">{{pageSettings.totalItems}}</span></p>
+    </div>
+</div>
+<div class="blade-content" >
+    <div class="blade-inner">
+        <div class="inner-block clearfix">
+            <ul class="list __items">
+                <li class="list-item" ng-repeat="data in items track by data.id" ng-class="{'__selected': data.id === selectedNodeId}" ng-click='selectItem($event, data)'>
+                    <i class="list-ico fa" ng-class="data.isVirtual ? 'fa-cloud' : 'fa-folder'"></i>
+                    <span class="list-name" ng-show="data.isVirtual">{{ 'catalog.blades.catalog-items-select.labels.virtual' | translate:{ name: data.name } }}</span>
+                    <span class="list-name" ng-hide="data.isVirtual">{{data.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

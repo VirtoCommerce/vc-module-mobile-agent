@@ -60,6 +60,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             UpdateCartBage(null);
             ViewControllers = viewControllers;
             TabBar.TintColor = UI.Consts.ColorMain;
+            TabBar.BarTintColor = UI.Consts.ColorSecondBg;
+            TabBar.Layer.BorderWidth = 0;
             SelectedViewController = viewControllers[0];
         }
         public override void ViewWillAppear(bool animated)

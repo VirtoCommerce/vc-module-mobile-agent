@@ -1,9 +1,10 @@
+using CoreAnimation;
+using CoreGraphics;
+using Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.Model;
 
@@ -13,86 +14,104 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
     {
         public const string CellId = "CustomerInfoCell";
         public const float CellHeight = 40;
-        public string Header {private set; get; }
-        public Customer Value { private set; get; }
-        private UILabel _headerLabel { set; get; }
-        private UITextField _valueField { set; get; }
-        public CustomerInfoCell()
-        {
-            InitView();
-        }
+        public string[] Headers {private set; get; }
+        private ICollection<UITextField> _valueFields;
+        private ICollection<KeyValuePair<string, Customer>> _data;
+        private ICollection<CALayer> _bottomLayers { set; get; }
         public CustomerInfoCell(IntPtr handle) : base(handle)
         {
-            InitView();
         }
 
-        public void UpdateCell(string header, Customer value)
+        public void UpdateCell(ICollection<KeyValuePair<string, Customer>> data)
         {
-            Header = header;
-            Value = value;
-            SetValue();
-            _headerLabel.Text = header;
-            _valueField.Placeholder = header;
+            _data = data;
+            InitView();
         }
 
         private void InitView()
         {
-            _headerLabel = new UILabel
+            if (_valueFields != null)
             {
-                Font = UIFont.FromName(Consts.FontNameRegular, Consts.FontSizeRegular),
-                TextColor = Consts.ColorBlack
-            };
-            _headerLabel.Text = Header;
-            Add(_headerLabel);
-            _valueField = new UITextField()
+                foreach (var field in _valueFields)
+                {
+                    field.EditingChanged -= ValueTextChange;
+                }
+                _valueFields.Clear();
+            }
+            else
             {
-                BorderStyle = UITextBorderStyle.Bezel
-            };
-            _valueField.EditingChanged += ValueTextChange;
-            Add(_valueField);
+                _valueFields = new List<UITextField>();
+            }
+            if (_bottomLayers != null)
+            {
+                foreach (var bottomLayer in _bottomLayers)
+                {
+                    bottomLayer.RemoveFromSuperLayer();
+                }
+                _bottomLayers.Clear();
+            }
+            else
+            {
+                _bottomLayers = new List<CALayer>();
+            }
+            for (int i = 0; i < _data.Count; i++)
+            {
+                var valueField = new UITextField
+                {
+                    BorderStyle = UITextBorderStyle.None
+                };
+                valueField.EditingChanged += ValueTextChange;
+                valueField.Tag = i;
+                valueField.Placeholder = _data.ElementAt(i).Key;
+                _valueFields.Add(valueField);
+                _bottomLayers.Add(new CALayer());
+                valueField.Layer.AddSublayer(_bottomLayers.ElementAt(i));
+                Add(valueField);
+            }
         }
 
-        private void SetValue()
+        private void UpdateValue(int id)
         {
-            if (Header == "Email")
+            var header = _data.ElementAt(id).Key;
+            if (header == "Email")
             {
-                Value.Email = _valueField.Text;
+                _data.ElementAt(id).Value.Email = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "First name")
+            if (header == "First name")
             {
-                Value.FirstName = _valueField.Text;
+                _data.ElementAt(id).Value.FirstName = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Last name")
+            if (header == "Last name")
             {
-                Value.LastName = _valueField.Text;
+                _data.ElementAt(id).Value.LastName = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Company name")
+            if (header == "Company name")
             {
-                Value.CompanyName = _valueField.Text;
+                _data.ElementAt(id).Value.CompanyName = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Address")
+            if (header == "Address")
             {
-                Value.Address = _valueField.Text;
+                _data.ElementAt(id).Value.Address = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Apt, suite etc.")
+            if (header == "Apt, suite etc.")
             {
-                Value.Apt = _valueField.Text;
+                _data.ElementAt(id).Value.Apt = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "City")
+            if (header == "City")
             {
-                Value.City = _valueField.Text;
+                _data.ElementAt(id).Value.City = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Country")
+            if (header == "Country")
             {
-                Value.Coutry = _valueField.Text;
+                _data.ElementAt(id).Value.Coutry = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Postal code")
+            if (header == "Postal code")
             {
-                Value.PostalCode = _valueField.Text;
+                _data.ElementAt(id).Value.PostalCode = _valueFields.ElementAt(id).Text;
             }
-            if (Header == "Phone")
+            if (header == "Phone")
             {
-                Value.Phone = _valueField.Text;
+                _data.ElementAt(id).Value.Phone = _valueFields.ElementAt(id).Text;
             }
         }
 
@@ -100,30 +119,39 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
-            var headerFrame = _headerLabel.Frame;
-            headerFrame.Height = CellHeight / 2;
-            headerFrame.Width = ContentView.Frame.Width;
-            headerFrame.X = 0;
-            headerFrame.Y = 0;
-            _headerLabel.Frame = headerFrame;
+            if (_valueFields == null)
+                return;
             //
-            var valueFrame = _valueField.Frame;
-            valueFrame.Width = ContentView.Frame.Width;
-            valueFrame.Height = CellHeight / 2;
-            valueFrame.X = 0;
-            valueFrame.Y = headerFrame.Y + headerFrame.Height;
-            _valueField.Frame = valueFrame;
+            for (int i = 0; i < _valueFields.Count; i++)
+            {
+                var valueField = _valueFields.ElementAt(i);
+                var valueFrame = valueField.Frame;
+                valueFrame.Width = ContentView.Frame.Width / _valueFields.Count - 20;
+                valueFrame.Height = CellHeight;
+                valueFrame.X = i * valueFrame.Width + 20 * i;
+                valueFrame.Y = 0;
+                valueField.Frame = valueFrame;
+                var bottomLayer = _bottomLayers.ElementAt(i);
+                bottomLayer.Frame = new CGRect(0, valueField.Frame.Height - 2, valueField.Frame.Width, 2);
+                bottomLayer.BackgroundColor = Consts.ColorBlack.CGColor;
+            }
         }
 
         private void ValueTextChange(object sender, EventArgs e)
         {
-            SetValue();
+            UpdateValue((int)((UITextField)sender).Tag);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _valueField.EditingChanged -= ValueTextChange;
+            if (_valueFields != null)
+            {
+                foreach (var field in _valueFields)
+                {
+                    field.EditingChanged -= ValueTextChange;
+                }
+            }
         }
     }
 }

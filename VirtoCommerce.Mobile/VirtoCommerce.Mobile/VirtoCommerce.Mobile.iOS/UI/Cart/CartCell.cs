@@ -12,7 +12,7 @@ using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Cart
 {
-    public class CartCell:UITableViewCell
+    public class CartCell : UITableViewCell
     {
         #region Data
         private CartItem _cartItem;
@@ -30,12 +30,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
         private UIStepper _stepper;
         private UIImageView _iconImage;
         private UILabel _subTotalLabel;
+        private UIView _border;
 
         #endregion
 
         public const string CellId = "CartCell";
 
-        public CartCell(IntPtr handle):base(handle)
+        public CartCell(IntPtr handle) : base(handle)
         {
             InitView();
         }
@@ -50,12 +51,12 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             _quantity.Text = item.Quantity.ToString();
             _stepper.Value = item.Quantity;
             _subTotalLabel.Text = item.FormattedSubTotal;
-            _iconImage.Image = UIImage.FromFile(Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.Personal),item.Product.TitleImage));
+            _iconImage.Image = UIImage.FromFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), item.Product.TitleImage));
             if (!isEdit)
             {
                 _stepper.Hidden = true;
-                _subTotalLabel.Text = "Subtotal: " + _subTotalLabel.Text;
-                _quantity.Text = "Quantity: " + _quantity.Text;
+                _quantity.Hidden = true;
+                _price.Text += " x " + item.Quantity;
             }
         }
 
@@ -67,22 +68,22 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             //title
             _title = new UILabel()
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 14),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameBold, 18),
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             };
             //price
             _price = new UILabel()
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 14),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameRegular, 16),
             };
             //quantity
             _quantity = new UILabel()
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 14),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameBold, 16),
                 TextAlignment = UITextAlignment.Center
             };
             //stepper
@@ -96,11 +97,17 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             //sub total
             _subTotalLabel = new UILabel()
             {
-                TextColor = Consts.ColorRed,
-                Font = UIFont.FromName(Consts.FontNameRegular, 14),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameBold, 16),
                 TextAlignment = UITextAlignment.Center
             };
-            ContentView.AddSubviews(_title, _price, _quantity, _stepper, _iconImage, _subTotalLabel);
+            _border = new UIView()
+            {
+                BackgroundColor = Consts.ColorMain.ColorWithAlpha(new nfloat(0.1))
+            };
+            ContentView.AddSubviews(_title, _price, _quantity, _stepper, _iconImage, _subTotalLabel, _border);
+            ContentView.Layer.BorderColor = Consts.ColorMain.ColorWithAlpha(new nfloat(0.1)).CGColor;
+            ContentView.Layer.BorderWidth = 1;
         }
 
         protected override void Dispose(bool disposing)
@@ -126,19 +133,21 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             contentViewFrame.X = _padding / 2;
             contentViewFrame.Y = _padding / 2;
             ContentView.Frame = contentViewFrame;
+            ContentView.Layer.BorderColor = Consts.ColorMain.ColorWithAlpha(new nfloat(0.1)).CGColor;
+            ContentView.Layer.BorderWidth = 2;
             //icon
             var iconFrame = _iconImage.Frame;
-            iconFrame.Width = 150;
-            var iconScale = 150 / _iconImage.Image?.Size.Width ?? 1;
+            iconFrame.Width = 100;
+            var iconScale = 100 / _iconImage.Image?.Size.Width ?? 1;
             iconFrame.Height = _iconImage.Image.Size.Height * iconScale;// ActualRowHeight - _padding * 2;
             if (iconFrame.Height > ActualRowHeight - _padding * 2)
             {
                 iconFrame.Height = ActualRowHeight - _padding * 2;
                 iconScale = iconFrame.Height / _iconImage.Image?.Size.Height ?? 1;
                 iconFrame.Width = (_iconImage.Image?.Size.Width ?? 0) * iconScale;
-                if (iconFrame.Width < 150)
+                if (iconFrame.Width < 100)
                 {
-                    iconFrame.X = (150 - iconFrame.Width) / 2;
+                    iconFrame.X = (100 - iconFrame.Width) / 2;
                 }
             }
             else
@@ -146,47 +155,88 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
                 iconFrame.Y = (ActualRowHeight - iconFrame.Height) / 2;
             }
             _iconImage.Frame = iconFrame;
-            
-            //stepper
-            _stepper.SizeToFit();
-            var stepperFrame = _stepper.Frame;
-            stepperFrame.X = ContentView.Frame.Width - stepperFrame.Width - _padding;
-            stepperFrame.Y = (RowHeight / 2) + (_padding / 2) - stepperFrame.Height;
-            if (!_isEdit)
+
+            if (_isEdit)
             {
-                stepperFrame.Width = (int)(ContentView.Frame.Width * 0.33);
-                stepperFrame.X = ContentView.Frame.Width - stepperFrame.Width;
-                stepperFrame.Height = 0;
+                PrepareEdit();
             }
-            _stepper.Frame = stepperFrame;
-            //quantity
-            _quantity.SizeToFit();
-            var quantityFrame = _quantity.Frame;
-            quantityFrame.Width = stepperFrame.Width;
-            quantityFrame.X = stepperFrame.X;
-            quantityFrame.Y = stepperFrame.Y - _padding / 2 - quantityFrame.Height;
-            _quantity.Frame = quantityFrame;
+            else {
+                PrepareNotEdit();
+            }
+
+        }
+        private void PrepareEdit()
+        {
             //sub total
             _subTotalLabel.SizeToFit();
             var subTotalFrame = _subTotalLabel.Frame;
-            subTotalFrame.Width = stepperFrame.Width;
-            subTotalFrame.X = stepperFrame.X;
-            subTotalFrame.Y = stepperFrame.Y + stepperFrame.Height + _padding;
+            subTotalFrame.X = ContentView.Frame.Width - _padding - subTotalFrame.Width;
+            subTotalFrame.Y = ContentView.Frame.Height / 2 - subTotalFrame.Height / 2;
             _subTotalLabel.Frame = subTotalFrame;
+
+            //stepper
+            _stepper.SizeToFit();
+            _quantity.SizeToFit();
+            var stepperFrame = _stepper.Frame;
+            stepperFrame.X = subTotalFrame.X - _padding - stepperFrame.Width;
+            stepperFrame.Y = ContentView.Frame.Height / 2 + _padding / 2;
+            _stepper.Frame = stepperFrame;
+            //quantity
+            var quantityFrame = _quantity.Frame;
+            quantityFrame.Width = stepperFrame.Width;
+            quantityFrame.X = stepperFrame.X + (stepperFrame.Width / 2 - quantityFrame.Width / 2);
+            quantityFrame.Y = stepperFrame.Y - _padding - quantityFrame.Height;
+            _quantity.Frame = quantityFrame;
+            //price 
+            _price.SizeToFit();
+            var priceFrame = _price.Frame;
+            priceFrame.X = stepperFrame.X - _padding - priceFrame.Width;
+            priceFrame.Y = ContentView.Frame.Height / 2 - priceFrame.Height / 2;
+            _price.Frame = priceFrame;
+            //border 
+            var borderFrame = _border.Frame;
+            borderFrame.Width = 2;
+            borderFrame.Height = ContentView.Frame.Height - _padding * 2;
+            borderFrame.X = priceFrame.X - _padding - 2;
+            borderFrame.Y = _padding;
+            _border.Frame = borderFrame;
             //title
             var titleFrame = _title.Frame;
-            titleFrame.Width = ContentView.Frame.Width - _iconImage.Frame.Width - _padding * 3 - stepperFrame.Width;
-            titleFrame.Height = 40;
+            titleFrame.Width = borderFrame.X - _iconImage.Frame.Width - _padding;
+            titleFrame.Height = ContentView.Frame.Height;
             titleFrame.X = _iconImage.Frame.Width + _iconImage.Frame.X + _padding;
-            titleFrame.Y = _padding;
+            titleFrame.Y = 0;
             _title.Frame = titleFrame;
+        }
+
+        private void PrepareNotEdit()
+        {
+            //sub total
+            _subTotalLabel.SizeToFit();
+            var subTotalFrame = _subTotalLabel.Frame;
+            subTotalFrame.X = ContentView.Frame.Width - _padding - subTotalFrame.Width;
+            subTotalFrame.Y = ContentView.Frame.Height / 2 - subTotalFrame.Height / 2;
+            _subTotalLabel.Frame = subTotalFrame;
             //price 
+            _price.SizeToFit();
             var priceFrame = _price.Frame;
-            priceFrame.Width = titleFrame.Width;
-            priceFrame.X = titleFrame.X;
-            priceFrame.Y = titleFrame.Y + titleFrame.Height + _padding;
-            priceFrame.Height = 40;
+            priceFrame.X = subTotalFrame.X - _padding * 2 - priceFrame.Width;
+            priceFrame.Y = ContentView.Frame.Height / 2 - priceFrame.Height / 2;
             _price.Frame = priceFrame;
+            //border 
+            var borderFrame = _border.Frame;
+            borderFrame.Width = 2;
+            borderFrame.Height = ContentView.Frame.Height - _padding * 2;
+            borderFrame.X = priceFrame.X + priceFrame.Width + _padding;
+            borderFrame.Y = _padding;
+            _border.Frame = borderFrame;
+            //title
+            var titleFrame = _title.Frame;
+            titleFrame.Width = priceFrame.X - _iconImage.Frame.Width - _padding * 2;
+            titleFrame.Height = ContentView.Frame.Height;
+            titleFrame.X = _iconImage.Frame.Width + _iconImage.Frame.X + _padding;
+            titleFrame.Y = 0;
+            _title.Frame = titleFrame;
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿{
+  "mobile": {
+    "settings": {
+      "select-store-title": "Select store name",
+      "select-store-btn": "Select store",
+      "main-color": "Main color(HEX)"
+    } 
+  }
+}

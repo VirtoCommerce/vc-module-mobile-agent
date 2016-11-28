@@ -30,8 +30,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
             Add(_selectButton);
             _name = new UILabel()
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 14)
+                TextColor = Consts.ColorDark,
             };
             Add(_name);
             
@@ -45,12 +44,12 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
             viewModel = info;
             _name.Text = info.FilterItem.Name;
             _selectButton.Checked = info.IsSelect;
+            _name.Font = info.IsSelect ? UIFont.FromName(Consts.FontNameRegular, 15) : UIFont.FromName(Consts.FontNameRegular, 14);
         }
 
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
-
             //button
             var buttonFrame = _selectButton.Frame;
             buttonFrame.Width = 25;

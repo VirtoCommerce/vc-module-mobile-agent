@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<module>
+    <id>VirtoCommerce.Mobile.SyncModule</id>
+    <version>1.0.0</version>
+    <platformVersion>2.12.0</platformVersion>
+    <dependencies>
+        <dependency id="VirtoCommerce.Core" version="2.17.0" />
+		  <dependency id="VirtoCommerce.Catalog" version="2.13.0" />
+    </dependencies>
+
+    <title>Mobile sync module</title>
+    <description>Sync mobile</description>
+    <authors>
+        <author>Virto Commerce</author>
+    </authors>
+    <owners>
+        <owner>Virto Commerce</owner>
+    </owners>
+    <projectUrl>https://github.com/VirtoCommerce/vc-module-pricing</projectUrl>
+    <iconUrl>https://github.com/VirtoCommerce/vc-module-pricing/raw/master/VirtoCommerce.PricingModule.Web/Content/logo.png</iconUrl>
+    <releaseNotes>First version.</releaseNotes>
+    <copyright>Copyright © 2011-2016 Virto Commerce. All rights reserved</copyright>
+    
+
+    <assemblyFile>VirtoCommerce.Mobile.SyncModule.Web.dll</assemblyFile>
+    <moduleType>VirtoCommerce.Mobile.SyncModule.Web.Module, VirtoCommerce.Mobile.SyncModule.Web</moduleType>
+
+    <scripts>
+        <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
+    </scripts>
+<!--
+    <settings>
+        <group name="Pricing|General">
+            <setting>
+                <name>Pricing.ExportImport.Description</name>
+                <valueType>string</valueType>
+                <defaultValue>Export/Import price lists, assignments and prices</defaultValue>
+                <title>Export/Import description</title>
+                <description>Module description in platform export/import wizard</description>
+            </setting>
+        </group>
+    </settings>
+
+    <permissions>
+        <group name="Pricing">
+            <permission id="pricing:access" name="Open pricing menu" description=""/>
+            <permission id="pricing:create" name="Create pricing data" description=""/>
+            <permission id="pricing:read" name="View pricing data" description=""/>
+            <permission id="pricing:update" name="Update pricing data" description=""/>
+            <permission id="pricing:delete" name="Delete pricing data" description=""/>
+        </group>
+    </permissions>-->
+</module>

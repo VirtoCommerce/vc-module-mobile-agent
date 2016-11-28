@@ -7,6 +7,7 @@ using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.ViewModels;
 using VirtoCommerce.Mobile.Model;
+using CoreGraphics;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Order
 {
@@ -23,6 +24,28 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
             {
                 _sections.Add(gr.Key.Name, gr.Select(x => x).ToArray());
             }
+        }
+
+        public override UIView GetViewForHeader(UITableView tableView, nint section)
+        {
+            var headerView = new UIView(new CGRect(0, 0, tableView.Frame.Width, 20));
+            var label = new UILabel
+            {
+                Font = UIFont.FromName(Consts.FontNameRegular, 20),
+                TextColor = Consts.ColorDark,
+                TextAlignment = UITextAlignment.Center,
+                Text = _sections.Keys.ElementAt((int)section).ToUpper()
+            };
+            label.SizeToFit();
+            var border = new UIView(new CGRect((tableView.Frame.Width - label.Frame.Width) / 2, label.Frame.Height + Consts.Padding, label.Frame.Width, 2))
+            {
+                BackgroundColor = Consts.ColorDivider
+            };
+            var labelFrame = label.Frame;
+            labelFrame.Width = tableView.Frame.Width;
+            label.Frame = labelFrame;
+            headerView.AddSubviews(label, border);
+            return headerView;
         }
 
         public override string TitleForHeader(UITableView tableView, nint section)

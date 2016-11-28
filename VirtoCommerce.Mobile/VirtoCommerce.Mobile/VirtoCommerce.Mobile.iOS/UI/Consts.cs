@@ -11,6 +11,7 @@ namespace VirtoCommerce.Mobile.iOS.UI
         public const int Padding = 10;
         #region Fonts
         public const string FontNameRegular = "Helvetica Neue";
+        public const string FontNameCursive = "HelveticaNeue-Italic";
         public const string FontNameBold = "Helvetica Bold";
         public const float FontSizeRegular = 17; 
         #endregion
@@ -27,12 +28,15 @@ namespace VirtoCommerce.Mobile.iOS.UI
         #region Colors
         public static UIColor ColorMainBg = UIColor.FromRGB(255, 255, 255);//UIColor.FromRGB(245,245,245);
         public static UIColor ColorMain = UIColor.FromRGBA(0, 0, 0, 200);//UIColor.FromRGBA(4, 86, 151);
-        public static UIColor ColorRed = UIColor.FromRGB(255, 59, 48);
+        public static UIColor ColorSecondBg = UIColor.FromRGB(229, 229, 229);
+        public static UIColor ColorRed = UIColor.FromRGB(150, 82, 83);
         public static UIColor ColorBlack = UIColor.FromRGBA(0, 0, 0, 200);
-        public static UIColor ColorGray = UIColor.FromRGB(170, 170, 170);
+        public static UIColor ColorGray = UIColor.FromRGB(169, 168, 168);
         public static UIColor ColorGrayLight = UIColor.FromRGB(245, 245, 245);
-        public static UIColor ColorDark = UIColor.FromRGB(33, 29, 30);
+        public static UIColor ColorDark = UIColor.FromRGB(35, 31, 32);
         public static UIColor ColorDarkLight = UIColor.FromRGB(75, 72, 73);
+        public static UIColor ColorDivider = UIColor.FromRGB(189, 187, 188);
+        public static UIColor ColorTransparent = UIColor.FromRGBA(0, 0, 0, 0);
         #endregion
     }
 }

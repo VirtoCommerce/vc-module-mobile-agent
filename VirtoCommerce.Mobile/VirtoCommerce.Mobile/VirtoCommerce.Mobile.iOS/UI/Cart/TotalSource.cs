@@ -10,48 +10,59 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
 {
    public  class TotalSource : UITableViewSource
     {
-        public static NSString CellId = new NSString("TableCell");
         public List<TotalRowData> Data { set; get; }
         public TotalSource(List<TotalRowData> data)
         {
             Data = data;
         }
+
+        public override string TitleForHeader(UITableView tableView, nint section)
+        {
+            return "SUMMARY";
+        }
+
+        public override UIView GetViewForHeader(UITableView tableView, nint section)
+        {
+            var headerView = new UIView(new CGRect(0, 0, tableView.Frame.Width, 20))
+            {
+                BackgroundColor = Consts.ColorTransparent
+            };
+            var label = new UILabel
+            {
+                Font = UIFont.FromName(Consts.FontNameRegular, 20),
+                TextColor = Consts.ColorDark,
+                TextAlignment = UITextAlignment.Center,
+                Text = "SUMMARY"
+            };
+            label.SizeToFit();
+            var border = new UIView(new CGRect((tableView.Frame.Width - label.Frame.Width) / 2, label.Frame.Height + Consts.Padding, label.Frame.Width, 2))
+            {
+                BackgroundColor = Consts.ColorDivider
+            };
+            var labelFrame = label.Frame;
+            labelFrame.Width = tableView.Frame.Width;
+            label.Frame = labelFrame;
+            headerView.AddSubviews(label, border);
+            return headerView;
+        }
+
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-            var cell = tableView.DequeueReusableCell(CellId);
+            tableView.RegisterClassForCellReuse(typeof(TotalCell), TotalCell.CellId);
+            var cell = tableView.DequeueReusableCell(TotalCell.CellId) as TotalCell;
 
             var cellData = Data[indexPath.Row];
-            if (cell == null)
-            {
-                cell = new UITableViewCell(UITableViewCellStyle.Value2, CellId);
-            }
-            //
-            cell.TextLabel.TextAlignment = UITextAlignment.Left;
-            cell.TextLabel.Text = cellData.Header;
-            cell.TextLabel.Lines = 0;
-            cell.TextLabel.LineBreakMode = UILineBreakMode.WordWrap;
-            cell.TextLabel.Font = cellData.TextFont;
-            cell.TextLabel.TextColor = cellData.TextColor;
-            //cell.TextLabel.SizeToFit();
-            //
-            cell.DetailTextLabel.Text = cellData.Value;
-            cell.DetailTextLabel.TextAlignment = UITextAlignment.Right;
-            cell.DetailTextLabel.Lines = 0;
-            cell.DetailTextLabel.LineBreakMode = UILineBreakMode.WordWrap;
-            cell.DetailTextLabel.Font = cellData.TextFont;
-            cell.DetailTextLabel.TextColor = cellData.TextColor;
-            //cell.DetailTextLabel.SizeToFit();
+            cell.UpdateCell(cellData);
             //
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            cell.BackgroundColor = Consts.ColorMainBg;
-            if (cellData.Header.Equals("total", StringComparison.InvariantCultureIgnoreCase))
-            {
-                cell.AddSubview(new UIView(new CGRect(0, 0, cell.Frame.Width, 1))
-                {
-                    BackgroundColor = cellData.TextColor
-                });
-            }
+            cell.BackgroundColor = Consts.ColorTransparent;
             return cell;
+        }
+        
+
+        public override nint NumberOfSections(UITableView tableView)
+        {
+            return 1;
         }
 
         public override nint RowsInSection(UITableView tableview, nint section)

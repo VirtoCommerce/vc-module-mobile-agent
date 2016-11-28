@@ -56,11 +56,11 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             //
             _lineView = new UIView(new CGRect(90, 0, 60, 2))
             {
-                BackgroundColor = Consts.ColorMain
+                BackgroundColor = Consts.ColorDivider
             };
             _descriptionLabel = new UILabel(new RectangleF(15, 45, 210, 22))
             {
-                Font = UIFont.FromName(Consts.FontNameRegular, 12),
+                Font = UIFont.FromName(Consts.FontNameCursive, 12),
                 TextColor = Consts.ColorDarkLight,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap
@@ -71,15 +71,15 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             //
             _listPriceLable = new UILabel(new RectangleF(8, 10, 50, 30))
             {
-                TextColor = Consts.ColorGray,
+                TextColor = Consts.ColorDarkLight,
                 Font = UIFont.FromName(Consts.FontNameRegular, 16),
                 TextAlignment = UITextAlignment.Center
             };
             //
             _salePriceLable = new UILabel(new RectangleF(58, 10, 50, 30))
             {
-                TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameRegular, 16),
+                TextColor = Consts.ColorDark,
+                Font = UIFont.FromName(Consts.FontNameBold, 20),
                 TextAlignment = UITextAlignment.Center
             };
             //
@@ -171,26 +171,10 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             var saleFrame = _salePriceLable.Frame;
             saleFrame.X = _listPriceLable.Frame.Width + _listPriceLable.Frame.X + 3;
             _salePriceLable.Frame = saleFrame;
-            /*//
-            _descriptionLabel.SizeToFit();
-            _statusView.SizeToFit();
-			var statusFrame = _statusView.Frame;
-			
-			_statusView.Frame = Rectangle.Round((RectangleF)statusFrame);
+            var listPriceFrame = _listPriceLable.Frame;
+            listPriceFrame.Y = saleFrame.Y + saleFrame.Height - listPriceFrame.Height;
+            _listPriceLable.Frame = listPriceFrame;
             //
-            _listPriceLable.SizeToFit();
-            _salePriceLable.SizeToFit();
-            var actionFrame = _actionsView.Frame;
-            actionFrame.Y = statusFrame.Y + statusFrame.Height + 8;
-            _actionsView.Frame = actionFrame;
-            var saleFrame = _salePriceLable.Frame;
-            saleFrame.X = _listPriceLable.Frame.Width + _listPriceLable.Frame.X + 3;
-            _salePriceLable.Frame = saleFrame;
-            //line
-            var lineFrame = _lineView.Frame;
-            lineFrame.Y = _titleLabel.Frame.Height + 20 + _titleLabel.Frame.Y;
-            _lineView.Frame = lineFrame;
-            //*/
 			var cellFrame = Frame;
 			cellFrame.Width = 241;
             cellFrame.Height = _productImage.Frame.Y + _productImage.Frame.Height + _statusView.Frame.Height + 20 + actionFrame.Height;

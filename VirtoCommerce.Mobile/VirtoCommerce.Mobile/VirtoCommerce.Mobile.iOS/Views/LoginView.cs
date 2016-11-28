@@ -68,14 +68,15 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _pass.SecureTextEntry = true;
             _loginButton = Helpers.UICreator.CreateSimpleButton("Login");
             _loginButton.Frame = new CGRect(0, 390, width, 40);
-            _message = new UILabel(new CGRect(0, 410, width, 30))
+            _message = new UILabel(new CGRect(0, 450, width, 30))
             {
-                TextColor = Consts.ColorRed
+                TextColor = Consts.ColorRed,
+                TextAlignment = UITextAlignment.Center
             };
             _showKbNotification = UIKeyboard.Notifications.ObserveDidShow(DidShowKeyboard);
             _hideKbNotification = UIKeyboard.Notifications.ObserveDidHide(DidHideKeyboard);
             _busyIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
-            _busyIndicator.Frame = new CGRect(0, 410, width, 30);
+            _busyIndicator.Frame = new CGRect(0, 450, width, 30);
             _container.AddSubviews(_login, _pass, _loginButton, _message, _busyIndicator, _logoImage);
             View.Add(_container);
         }

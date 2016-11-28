@@ -69,8 +69,8 @@ namespace VirtoCommerce.Mobile.iOS.Controls
                 }
                 else
                 {
-                    ((UILabel)segment.Subviews[0]).TextColor = Consts.ColorDarkLight;
-                    bottomLine.BackgroundColor = Consts.ColorDarkLight.CGColor;
+                    ((UILabel)segment.Subviews[0]).TextColor = Consts.ColorGray;
+                    bottomLine.BackgroundColor = Consts.ColorGray.CGColor;
                 }
                 segment.Layer.AddSublayer(bottomLine);
             }

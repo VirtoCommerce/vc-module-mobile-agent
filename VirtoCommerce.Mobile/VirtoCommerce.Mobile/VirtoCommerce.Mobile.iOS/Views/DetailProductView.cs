@@ -114,7 +114,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _titleLabel = new UILabel(new CGRect(0, 5, 295, 40))
             {
                 TextColor = Consts.ColorBlack,
-                Font = UIFont.FromName(Consts.FontNameBold, 18),
+                Font = UIFont.FromName(Consts.FontNameBold, 20),
                 TextAlignment = UITextAlignment.Left,
                 Lines = 0,
                 LineBreakMode = UILineBreakMode.WordWrap,
@@ -131,17 +131,17 @@ namespace VirtoCommerce.Mobile.iOS.Views
             }
             _mainInfo.Add(_imageSlider);
             //price
-            _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 18))
+            _listPriceLable = new UILabel(new RectangleF(0, 5, 50, 20))
             {
                 TextColor = Consts.ColorDarkLight,
-                Font = UIFont.FromName(Consts.FontNameRegular, 12),
+                Font = UIFont.FromName(Consts.FontNameRegular, 16),
                 TextAlignment = UITextAlignment.Center,
             };
             _mainInfo.Add(_listPriceLable);
             _profitPriceLabel = new UILabel(new RectangleF(0, 5, 50, 30))
             {
                 TextColor = UIColor.White,
-                Font = UIFont.FromName(Consts.FontNameRegular, 18),
+                Font = UIFont.FromName(Consts.FontNameRegular, 14),
                 TextAlignment = UITextAlignment.Center,
                 BackgroundColor = Consts.ColorRed
             };
@@ -149,7 +149,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _salePriceLable = new UILabel(new RectangleF(0, 5, 50, 30))
             {
                 TextColor = Consts.ColorDark,
-                Font = UIFont.FromName(Consts.FontNameRegular, 18),
+                Font = UIFont.FromName(Consts.FontNameBold, 22),
                 TextAlignment = UITextAlignment.Center,
             };
             _mainInfo.Add(_salePriceLable);
@@ -256,7 +256,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var sliderFrame = _imageSlider.Frame;
             sliderFrame.Width = mainViewFrame.Width;
             sliderFrame.Y = manufFrame.Y + manufFrame.Height + Padding;
-            sliderFrame.Height = (int)(_mainInfo.Frame.Height * 0.9);
+            sliderFrame.Height = (int)(_mainInfo.Frame.Height * (IsPortrait() ? 0.8 : 0.9));
             _imageSlider.Frame = sliderFrame;
             _imageSlider.Draw(_imageSlider.Frame);
             //prepare title
