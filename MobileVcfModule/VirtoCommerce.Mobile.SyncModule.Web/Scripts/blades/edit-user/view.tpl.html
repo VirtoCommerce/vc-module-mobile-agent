@@ -11,9 +11,10 @@
             <div class="form-group">
                 <label class="form-label">{{ 'mobile.settings.main-color' | translate }}</label>
                 <div class="form-input">
-                    <input type="text"
+                    <!--<input type="text" colorpicker="hex"
                            class="form-control"
-                           ng-model="setting.mainColor"/>
+                           ng-model="setting.mainColor"/>-->
+                    <color-picker ng-model="setting.mainColor" options="colorOptions"></color-picker>
                 </div>
             </div>
         </div>

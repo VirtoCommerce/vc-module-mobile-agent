@@ -4,7 +4,7 @@ var moduleName = "virtoCommerce.syncMobileModule";
 if (AppDependencies != undefined) {
     AppDependencies.push(moduleName);
 }
-angular.module(moduleName, []).config(
+angular.module(moduleName, ['color.picker']).config(
   ['$stateProvider', function ($stateProvider) {
       $stateProvider
           .state('workspace.syncMobileModule', {

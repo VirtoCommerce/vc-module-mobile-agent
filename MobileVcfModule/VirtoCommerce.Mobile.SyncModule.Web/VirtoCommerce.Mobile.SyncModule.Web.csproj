@@ -131,6 +131,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\color-piker.css" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -152,6 +153,7 @@
     <Content Include="Scripts\blades\edit-user\view.tpl.html" />
     <Content Include="Scripts\blades\select-store\controller.js" />
     <Content Include="Scripts\blades\select-store\view.tpl.html" />
+    <Content Include="Scripts\libs\color-piker.js" />
     <Content Include="Scripts\services\userService.js" />
     <Content Include="Web.config" />
   </ItemGroup>

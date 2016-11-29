@@ -1,6 +1,11 @@
 ﻿angular.module("virtoCommerce.syncMobileModule")
 .controller("virtoCommerce.syncMobileModule.EditUsersController", ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.syncMobileModule.userService',
 function ($scope, bladeNavigationService, userService) {
+    $scope.colorOptions = {
+        format: 'hex',
+        alpha: true,
+        case: 'upper'
+    };
     var blade = $scope.blade;
     blade.toolbarCommands = [{
         name: "platform.commands.save",
@@ -75,4 +80,6 @@ function ($scope, bladeNavigationService, userService) {
         bladeNavigationService.showBlade(newBlade, blade);
     }
     $scope.refresh();
+
+    
 }]);
