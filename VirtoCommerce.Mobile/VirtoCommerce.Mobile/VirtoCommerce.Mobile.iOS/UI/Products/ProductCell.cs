@@ -12,11 +12,11 @@ using CoreGraphics;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Products
 {
-	public class ProductCell : UIView
-	{
-		private UIView _statusView { get; set; }
-		private UIImageView _productImage { get; set; }
-		private UILabel _titleLabel { get; set; }
+    public class ProductCell : UIView
+    {
+        private UIView _statusView { get; set; }
+        private UIImageView _productImage { get; set; }
+        private UILabel _titleLabel { get; set; }
         private UILabel _descriptionLabel { set; get; }
         private UIView _actionsView { set; get; }
         private UILabel _salePriceLable { set; get; }
@@ -25,17 +25,17 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
         private UIView _lineView { set; get; }
 
         private Action<Product> _cartTouch { set; get; }
-		Product _data;
+        Product _data;
 
-		public static readonly NSString Key = new NSString ("ProductCell");
-		
-		public ProductCell(Action<Product> cartTouch) //: base (UITableViewCellStyle.Default, Key)
-		{
+        public static readonly NSString Key = new NSString("ProductCell");
+
+        public ProductCell(Action<Product> cartTouch) //: base (UITableViewCellStyle.Default, Key)
+        {
             _cartTouch = cartTouch;
             this.Frame = new CoreGraphics.CGRect(0, 0, 241, 1000);
-			InitSubviews();
-			ApplyStyles();
-		}
+            InitSubviews();
+            ApplyStyles();
+        }
 
         void InitSubviews()
         {
@@ -86,11 +86,11 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             _cartButton = new UIButton(new RectangleF(200, 8, 25, 25));
             _cartButton.TouchDown += TouchCart;
             _cartButton.SetImage(UIImage.FromFile("cart-black"), UIControlState.Normal);
-            
+
             _actionsView = new UIView(new RectangleF(0, 20, 241, 40));
             _actionsView.AddSubviews(_listPriceLable, _salePriceLable, _cartButton);
             //
-            nfloat r,g,b,a;
+            nfloat r, g, b, a;
             Consts.ColorMain.GetRGBA(out r, out g, out b, out a);
             Layer.BorderColor = UIColor.FromRGBA(r, g, b, new nfloat(0.1)).CGColor;
             Layer.BorderWidth = 1;
@@ -101,7 +101,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
         private void TouchCart(object s, EventArgs e)
         {
             _cartTouch?.Invoke(_data);
-        } 
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -110,9 +110,9 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
         }
 
         void ApplyStyles()
-		{
+        {
             BackgroundColor = UIColor.White;
-		}
+        }
 
         public void Bind(Product data)
         {
@@ -131,7 +131,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
                 _listPriceLable.AttributedText = attrString;
                 _actionsView.BackgroundColor = Consts.ColorMain.ColorWithAlpha(new nfloat(0.5));
             }
-            _salePriceLable.Text =  data.Price?.FormattedSalePrice;
+            _salePriceLable.Text = data.Price?.FormattedSalePrice;
             var image = UIImage.FromFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), data.TitleImage));
             var scale = 230 / image.Size.Width;
             image = image.Scale(new CGSize(image.Size.Width * scale, image.Size.Height * scale));
@@ -142,9 +142,9 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             _productImage.Image = image;
         }
 
-		public override void LayoutSubviews ()
-		{
-			base.LayoutSubviews ();
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
             _titleLabel.SizeToFit();
             _descriptionLabel.SizeToFit();
             var titleFrame = _titleLabel.Frame;
@@ -175,13 +175,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Products
             listPriceFrame.Y = saleFrame.Y + saleFrame.Height - listPriceFrame.Height;
             _listPriceLable.Frame = listPriceFrame;
             //
-			var cellFrame = Frame;
-			cellFrame.Width = 241;
+            var cellFrame = Frame;
+            cellFrame.Width = 241;
             cellFrame.Height = _productImage.Frame.Y + _productImage.Frame.Height + _statusView.Frame.Height + 20 + actionFrame.Height;
-			Frame = Rectangle.Round((RectangleF)cellFrame);
+            Frame = Rectangle.Round((RectangleF)cellFrame);
 
             //Superview.Superview.LayoutSubviews();
         }
-	}
+    }
 }
 
