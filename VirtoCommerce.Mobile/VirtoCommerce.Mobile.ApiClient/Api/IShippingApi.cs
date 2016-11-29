@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using VirtoCommerce.Mobile.ApiClient.Models;
 
 namespace VirtoCommerce.Mobile.ApiClient.Api
 {
@@ -12,6 +10,6 @@ namespace VirtoCommerce.Mobile.ApiClient.Api
         /// Get shipping methods
         /// </summary>
         /// <returns></returns>
-        Task<ICollection<Models.ShippingMethod>> GetShippingMethodsAsync(string userLogin);
+        Task<ICollection<ShippingMethod>> GetShippingMethodsAsync(string userLogin);
     }
 }

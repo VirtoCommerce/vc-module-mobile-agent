@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Events;
 
 namespace VirtoCommerce.Mobile.Services
@@ -41,7 +37,7 @@ namespace VirtoCommerce.Mobile.Services
             }
         }
 
-        public void UnSubcribe<T>(Action<T> action) where T : BaseEvent
+        public void Unsubscribe<T>(Action<T> action) where T : BaseEvent
         {
             var t = typeof(T);
             if (_events.ContainsKey(t.FullName))

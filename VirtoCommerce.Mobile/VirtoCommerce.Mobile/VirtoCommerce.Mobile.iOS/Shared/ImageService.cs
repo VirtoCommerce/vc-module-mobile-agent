@@ -1,10 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
-using UIKit;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 using System.Net;
@@ -36,7 +30,8 @@ namespace VirtoCommerce.Mobile.iOS.Shared
             File.WriteAllBytes(localPath, bytes);
             return Path.Combine(productId, image.Name);
         }
-        public void SaveImageLogo(Image image) {
+        public void SaveImageLogo(Image image)
+        {
             var webClient = new WebClient();
             var bytes = webClient.DownloadData(image.Path);
             File.WriteAllBytes("logo.png", bytes);

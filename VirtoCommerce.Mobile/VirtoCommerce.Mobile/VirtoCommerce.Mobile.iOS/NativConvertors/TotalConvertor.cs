@@ -1,8 +1,5 @@
 using MvvmCross.Platform.Converters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace VirtoCommerce.Mobile.iOS.NativConvertors

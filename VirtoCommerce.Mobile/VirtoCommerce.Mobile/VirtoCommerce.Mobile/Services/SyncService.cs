@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Enums;
-using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Responses;
 using VirtoCommerce.Mobile.Convertors;
 

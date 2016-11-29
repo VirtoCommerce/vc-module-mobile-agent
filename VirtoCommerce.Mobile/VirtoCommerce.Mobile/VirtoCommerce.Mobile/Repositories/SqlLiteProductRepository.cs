@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Entities;
 using VirtoCommerce.Mobile.Interfaces;
 using VirtoCommerce.Mobile.Services;
+using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.Repositories
 {
@@ -16,8 +15,8 @@ namespace VirtoCommerce.Mobile.Repositories
         private readonly ILocalStorageImageService _localStorageImage;
         public SqlLiteProductRepository()
         {
-            _connection = Xamarin.Forms.DependencyService.Get<ISqlLiteConnection>().GetConnection();
-            _localStorageImage = Xamarin.Forms.DependencyService.Get<ILocalStorageImageService>();
+            _connection = DependencyService.Get<ISqlLiteConnection>().GetConnection();
+            _localStorageImage = DependencyService.Get<ILocalStorageImageService>();
             _connection.CreateTable<ProductEntity>();
             _connection.CreateTable<ImageEntity>();
             _connection.CreateTable<ReviewEntity>();

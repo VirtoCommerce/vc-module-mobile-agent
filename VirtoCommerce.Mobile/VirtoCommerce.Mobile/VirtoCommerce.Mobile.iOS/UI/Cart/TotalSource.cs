@@ -1,14 +1,12 @@
-﻿using CoreAnimation;
-using CoreGraphics;
+﻿using CoreGraphics;
 using Foundation;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using UIKit;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Cart
 {
-   public  class TotalSource : UITableViewSource
+    public class TotalSource : UITableViewSource
     {
         public List<TotalRowData> Data { set; get; }
         public TotalSource(List<TotalRowData> data)
@@ -58,7 +56,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             cell.BackgroundColor = Consts.ColorTransparent;
             return cell;
         }
-        
+
 
         public override nint NumberOfSections(UITableView tableView)
         {

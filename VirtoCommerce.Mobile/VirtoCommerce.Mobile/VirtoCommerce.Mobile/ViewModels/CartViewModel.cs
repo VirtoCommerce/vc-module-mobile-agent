@@ -1,9 +1,4 @@
 ﻿using MvvmCross.Core.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 
@@ -73,10 +68,6 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             Cart = _cartService.UpdateCartItem(cartItem);
         }
-        #endregion
-
-        
-
-        
+        #endregion       
     }
 }

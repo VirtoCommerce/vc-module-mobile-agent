@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
-    public partial class CatalogSearchResult
+    public class CatalogSearchResult
     {
         /// <summary>
         /// Initializes a new instance of the CatalogSearchResult class.
@@ -16,7 +13,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
         /// <summary>
         /// Initializes a new instance of the CatalogSearchResult class.
         /// </summary>
-        public CatalogSearchResult(int? productsTotalCount = default(int?), System.Collections.Generic.IList<Product> products = default(System.Collections.Generic.IList<Product>))
+        public CatalogSearchResult(int? productsTotalCount = default(int?), IList<Product> products = default(IList<Product>))
         {
             ProductsTotalCount = productsTotalCount;
             Products = products;
@@ -24,13 +21,13 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "productsTotalCount")]
+        [JsonProperty(PropertyName = "productsTotalCount")]
         public int? ProductsTotalCount { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "products")]
-        public System.Collections.Generic.IList<Product> Products { get; set; }
+        [JsonProperty(PropertyName = "products")]
+        public IList<Product> Products { get; set; }
 
     }
 

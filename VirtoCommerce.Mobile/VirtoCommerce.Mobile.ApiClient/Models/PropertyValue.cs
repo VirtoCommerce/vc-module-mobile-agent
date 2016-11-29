@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -33,49 +29,49 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "propertyName")]
+        [JsonProperty(PropertyName = "propertyName")]
         public string PropertyName { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "propertyId")]
+        [JsonProperty(PropertyName = "propertyId")]
         public string PropertyId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "languageCode")]
+        [JsonProperty(PropertyName = "languageCode")]
         public string LanguageCode { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "alias")]
+        [JsonProperty(PropertyName = "alias")]
         public string Alias { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'shortText', 'longText',
         /// 'number', 'dateTime', 'boolean'
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "valueType")]
+        [JsonProperty(PropertyName = "valueType")]
         public string ValueType { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "valueId")]
+        [JsonProperty(PropertyName = "valueId")]
         public string ValueId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isInherited")]
+        [JsonProperty(PropertyName = "isInherited")]
         public bool? IsInherited { get; set; }
 
     }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VirtoCommerce.Mobile.Entities
+﻿namespace VirtoCommerce.Mobile.Entities
 {
-    public class OrderEntity:BaseEntity
+    public class OrderEntity : BaseEntity
     {
         public string PaymentId { set; get; }
         public string ShipmentId { set; get; }

@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -13,9 +10,9 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
             Products = new List<Product>();
             Prices = new List<ProductPrice>();
         }
-        [Newtonsoft.Json.JsonProperty(PropertyName = "products")]
+        [JsonProperty(PropertyName = "products")]
         public ICollection<Product> Products { set; get; }
-        [Newtonsoft.Json.JsonProperty(PropertyName = "prices")]
+        [JsonProperty(PropertyName = "prices")]
         public ICollection<ProductPrice> Prices { set; get; }
     }
 }

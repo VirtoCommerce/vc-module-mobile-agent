@@ -1,18 +1,11 @@
 ﻿using MvvmCross.Core.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Services;
-using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
     public class LoginViewModel : MvxViewModel
     {
-        #region services
+        #region Services
         private readonly IUserManagerService _userManagerService;
         #endregion
 

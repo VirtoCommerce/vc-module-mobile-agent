@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using CoreGraphics;
 
@@ -24,9 +19,10 @@ namespace VirtoCommerce.Mobile.iOS.Helpers
             {
                 viewStopFrame = new CGRect(view.Frame.X + view.Frame.Width, view.Frame.Y, view.Frame.Width, view.Frame.Height);
             }
-            
+
             UIView.Animate(duration, 0, UIViewAnimationOptions.CurveEaseInOut,
-                () => {
+                () =>
+                {
                     view.Frame = viewStopFrame;
                 },
                 onFinished

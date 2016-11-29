@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Api;
 using VirtoCommerce.Mobile.ApiClient.Exceptions;
@@ -37,7 +34,7 @@ namespace VirtoCommerce.Mobile.Services
             {
                 return Login(user.Name, user.Password) != null;
             }
-            catch (NoInternetConnectionException ex)
+            catch (NoInternetConnectionException)
             {
                 return true;
             }
@@ -45,7 +42,7 @@ namespace VirtoCommerce.Mobile.Services
             {
                 throw ex;
             }
-            
+
         }
         public User Login(string userName, string password)
         {
@@ -87,7 +84,7 @@ namespace VirtoCommerce.Mobile.Services
                     return null;
                 }
             }
-            catch (NoInternetConnectionException ex)
+            catch (NoInternetConnectionException)
             {
                 return null;
             }

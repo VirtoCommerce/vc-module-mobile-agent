@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.ViewModels;
@@ -11,7 +6,7 @@ using VirtoCommerce.Mobile.iOS.Controls;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Order
 {
-    public class ShippingCell:UITableViewCell
+    public class ShippingCell : UITableViewCell
     {
 
         public const string CellId = "ShippingCell";

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Foundation;
 using UIKit;
@@ -58,7 +57,8 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
                 Text = Data.Keys.ElementAt((int)section)
             };
             label.SizeToFit();
-            var border = new UIView(new CGRect((tableView.Frame.Width - label.Frame.Width) / 2, label.Frame.Height+Consts.Padding, label.Frame.Width, 2)) {
+            var border = new UIView(new CGRect((tableView.Frame.Width - label.Frame.Width) / 2, label.Frame.Height + Consts.Padding, label.Frame.Width, 2))
+            {
                 BackgroundColor = Consts.ColorDivider
             };
             var labelFrame = label.Frame;
@@ -77,6 +77,6 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
         {
             return Data.Keys.Count;
         }
-        
+
     }
 }

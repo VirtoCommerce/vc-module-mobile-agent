@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Api;
-using VirtoCommerce.Mobile.Entities;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Responses;
-using VirtoCommerce.Mobile.Convertors;
 using VirtoCommerce.Mobile.ApiClient.Exceptions;
 using VirtoCommerce.Mobile.Helpers;
-using VirtoCommerce.Mobile.ApiClient.Models;
+using ApiModel =  VirtoCommerce.Mobile.ApiClient.Models;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -39,9 +36,9 @@ namespace VirtoCommerce.Mobile.Services
             };
         }
 
-        public async Task<ServerResponseCollection<ApiClient.Models.Product>> GetProducts()
+        public async Task<ServerResponseCollection<ApiModel.Product>> GetProducts()
         {
-            var result = new ServerResponseCollection<ApiClient.Models.Product>();
+            var result = new ServerResponseCollection<ApiModel.Product>();
             try
             {
                 var requestResult = await _productApi.GetProductsAsync(Settings.CurrentUser?.Name);
@@ -67,9 +64,9 @@ namespace VirtoCommerce.Mobile.Services
             
         }
 
-        public async Task<ServerResponse<MobileTheme>> GetTheme()
+        public async Task<ServerResponse<ApiModel.MobileTheme>> GetTheme()
         {
-            var result = new ServerResponse<MobileTheme>();
+            var result = new ServerResponse<ApiModel.MobileTheme>();
             try
             {
                 var requestResult = await _themeApi.GetThemeAsync(Settings.CurrentUser?.Name);
@@ -90,9 +87,9 @@ namespace VirtoCommerce.Mobile.Services
             return result;
         }
 
-        public async Task<ServerResponse<ApiClient.Models.Currency>> GetCurrency()
+        public async Task<ServerResponse<ApiModel.Currency>> GetCurrency()
         {
-            var result = new ServerResponse<ApiClient.Models.Currency>();
+            var result = new ServerResponse<ApiModel.Currency>();
             try
             {
                 var requestResult = await _productApi.GetCurrency(Settings.CurrentUser?.Name);
@@ -113,9 +110,9 @@ namespace VirtoCommerce.Mobile.Services
             return result;
         }
 
-        public async Task<ServerResponseCollection<ApiClient.Models.ShippingMethod>> GetShippingMethods()
+        public async Task<ServerResponseCollection<ApiModel.ShippingMethod>> GetShippingMethods()
         {
-            var result = new ServerResponseCollection<ApiClient.Models.ShippingMethod>();
+            var result = new ServerResponseCollection<ApiModel.ShippingMethod>();
             try
             {
                 var requestResult = await _shippingApi.GetShippingMethodsAsync(Settings.CurrentUser?.Name);
@@ -136,9 +133,9 @@ namespace VirtoCommerce.Mobile.Services
             return result;
         }
 
-        public async Task<ServerResponseCollection<ApiClient.Models.PaymentMethod>> GetPaymentMethods()
+        public async Task<ServerResponseCollection<ApiModel.PaymentMethod>> GetPaymentMethods()
         {
-            var result = new ServerResponseCollection<ApiClient.Models.PaymentMethod>();
+            var result = new ServerResponseCollection<ApiModel.PaymentMethod>();
             try
             {
                 var requestResult = await _paymentApi.GetPaymentMethodsAsync(Settings.CurrentUser?.Name);
@@ -158,7 +155,7 @@ namespace VirtoCommerce.Mobile.Services
             return result;
         }
 
-        public async Task<ServerResponse<bool>> SendOrders(ICollection<ApiClient.Models.Order> orders)
+        public async Task<ServerResponse<bool>> SendOrders(ICollection<ApiModel.Order> orders)
         {
             var result = new ServerResponse<bool>();
             try

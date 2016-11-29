@@ -1,11 +1,5 @@
-﻿using Microsoft.Practices.Unity;
-using MvvmCross.Core.ViewModels;
+﻿using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
-using MvvmCross.Platform.IoC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using VirtoCommerce.Mobile.ApiClient;
 using VirtoCommerce.Mobile.ApiClient.Api;
 using VirtoCommerce.Mobile.Repositories;
@@ -13,7 +7,7 @@ using VirtoCommerce.Mobile.Services;
 
 namespace VirtoCommerce.Mobile
 {
-    public class App : MvvmCross.Core.ViewModels.MvxApplication
+    public class App : MvxApplication
     {
 
         private const string _appKey = "27e0d789f12641049bd0e939185b4fd2";
@@ -24,7 +18,7 @@ namespace VirtoCommerce.Mobile
         public override void Initialize()
         {
             Mvx.RegisterType<IMvxAppStart, AppStart>();
-            
+
             #region Services
             //user manager
             Mvx.RegisterType<IUserManagerService, UserManagerService>();
@@ -39,7 +33,7 @@ namespace VirtoCommerce.Mobile
             //order service
             Mvx.RegisterType<IOrderService, OrderService>();
             //filter service
-            Mvx.RegisterType<IFilterService, FilterService>();            
+            Mvx.RegisterType<IFilterService, FilterService>();
             //global eventor
             Mvx.RegisterSingleton<IGlobalEventor>(new GlobalEventor());
             //tax service
@@ -71,8 +65,8 @@ namespace VirtoCommerce.Mobile
             Mvx.RegisterType<IThemeApi, ThemeApi>();
             Mvx.RegisterType<IShippingApi, ShippingApi>();
             Mvx.RegisterType<IOrderApi, OrderApi>();
-            
-            
+
+
             #endregion
         }
     }

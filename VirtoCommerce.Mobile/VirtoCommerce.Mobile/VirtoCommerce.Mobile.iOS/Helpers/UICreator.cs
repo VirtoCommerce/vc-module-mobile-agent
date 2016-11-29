@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.iOS.UI;
 using CoreGraphics;
@@ -22,16 +16,14 @@ namespace VirtoCommerce.Mobile.iOS.Helpers
             button.TitleLabel.Font = UIFont.FromName(Consts.FontNameRegular, Consts.ButtonFontSize);
             button.Layer.BorderColor = Consts.ColorBlack.CGColor;
             button.Layer.BorderWidth = 1;
-            //button.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
             button.SetBackgroundImage(GetImageFromColor(UIColor.FromRGBA(0, 0, 0, 0)), UIControlState.Normal);
-            //button.SetBackgroundImage(GetImageFromColor(Consts.ColorGray), UIControlState.Disabled);
             button.Layer.CornerRadius = Consts.ButtonCornerRadius;
             return button;
         }
 
         public static UITextField CreateTextField(string placeHodler, UIImage leftImage, UIColor bottomColor, CGRect rect)
         {
-            var  field = new UITextField(rect)
+            var field = new UITextField(rect)
             {
                 Placeholder = placeHodler,
                 BorderStyle = UITextBorderStyle.Bezel

@@ -5,8 +5,6 @@ using VirtoCommerce.Mobile.Model;
 using Foundation;
 using UIKit;
 using System.Linq;
-
-using Xamarin.Themes;
 using System.IO;
 using CoreGraphics;
 

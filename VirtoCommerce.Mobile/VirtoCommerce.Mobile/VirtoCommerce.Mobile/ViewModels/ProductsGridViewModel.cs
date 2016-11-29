@@ -1,16 +1,9 @@
 ﻿using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
-using MvvmCross.Platform.Platform;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Helpers;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
-using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
@@ -52,7 +45,7 @@ namespace VirtoCommerce.Mobile.ViewModels
                 _globalEventor.Subscribe<Events.SyncEvent>(SyncComplate);
             }
         }
-        
+
         #endregion
 
         #region Public properties
@@ -61,7 +54,8 @@ namespace VirtoCommerce.Mobile.ViewModels
             set { _status = value; RaisePropertyChanged(); }
             get { return _status; }
         }
-        public bool HideBusy {
+        public bool HideBusy
+        {
             get { return _hideBusy; }
             set { _hideBusy = value; RaisePropertyChanged(); }
         }
@@ -137,14 +131,14 @@ namespace VirtoCommerce.Mobile.ViewModels
             await SyncManager.Sync();
         }
         /// <summary>
-        /// Sync complate 
+        /// Sync complete 
         /// </summary>
         /// <param name="arg"></param>
         private void SyncComplate(Events.SyncEvent arg)
         {
             if (arg.IsEnd)
             {
-                _globalEventor.UnSubcribe<Events.SyncEvent>(SyncComplate);
+                _globalEventor.Unsubscribe<Events.SyncEvent>(SyncComplate);
                 GetProducts(0, _countProductPerPage);
             }
         }

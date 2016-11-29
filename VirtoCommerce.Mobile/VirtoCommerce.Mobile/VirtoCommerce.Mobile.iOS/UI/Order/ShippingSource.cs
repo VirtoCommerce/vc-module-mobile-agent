@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Foundation;
 using UIKit;
@@ -80,7 +79,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Order
                         _sections[keys.ElementAt(i)].ElementAt(j).IsSelect = false;
                     }
                 }
-            } 
+            }
         }
         public override nint RowsInSection(UITableView tableview, nint section)
         {

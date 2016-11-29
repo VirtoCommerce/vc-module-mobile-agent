@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using UIKit;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
 using VirtoCommerce.Mobile.iOS.UI;
@@ -133,13 +131,14 @@ namespace VirtoCommerce.Mobile.iOS.Views
 
             CreateInfo();
             CreateMainInfo();
-            
+
         }
 
         private void CreateInfo()
         {
             //info view
-            _infoView = new UIView() {
+            _infoView = new UIView()
+            {
                 BackgroundColor = Consts.ColorSecondBg
             };
             Add(_infoView);
@@ -154,7 +153,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _cartItems.ScrollEnabled = true;
             _infoView.Add(_cartItems);
             //total
-            _totalView = new UITableView(new RectangleF(_padding, _padding, 250, 200), UITableViewStyle.Grouped) 
+            _totalView = new UITableView(new RectangleF(_padding, _padding, 250, 200), UITableViewStyle.Grouped)
             {
                 BackgroundColor = Consts.ColorTransparent
             };
@@ -177,7 +176,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             return result;
         }
 
-        private void CreateMainInfo() {
+        private void CreateMainInfo()
+        {
             //main info view
             _mainInfo = new UIView();
             Add(_mainInfo);
@@ -223,7 +223,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             ResizeMainView();
             ResizeInfoView();
         }
-        private void ResizeMainView() {
+        private void ResizeMainView()
+        {
             var mainInfoFrame = _mainInfo.Frame;
             mainInfoFrame.Width = (int)(View.Frame.Width * 0.5);
             mainInfoFrame.Height = (int)(View.Frame.Height);
@@ -266,9 +267,10 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _shippingMethods.ReloadData();
             _paymentMethods.ReloadData();
             _customerInfo.ReloadData();
-            
+
         }
-        private void ResizeInfoView() {
+        private void ResizeInfoView()
+        {
             //info view
             var infoViewFrame = _infoView.Frame;
             infoViewFrame.Width = (int)(View.Frame.Width * 0.5);

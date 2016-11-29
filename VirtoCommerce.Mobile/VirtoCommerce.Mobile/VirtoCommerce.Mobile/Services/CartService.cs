@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Repositories;
 using VirtoCommerce.Mobile.Convertors;
+using VirtoCommerce.Mobile.Events;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -70,21 +68,21 @@ namespace VirtoCommerce.Mobile.Services
             {
                 _cartRepository.RemoveCartItem(cartItem.Id);
             }
-            _eventor.Publish(new Events.CartChangeEvent());
+            _eventor.Publish(new CartChangeEvent());
             return GetCart();
         }
 
         public Cart AddToCart(string id)
         {
             _cartRepository.AddOrUpdateCartItem(new Entities.CartItemEntity { Count = 1, Id = id });
-            _eventor.Publish(new Events.CartChangeEvent());
+            _eventor.Publish(new CartChangeEvent());
             return GetCart();
         }
 
         public Cart RemoveFromCart(string id)
         {
             _cartRepository.RemoveCartItem(id);
-            _eventor.Publish(new Events.CartChangeEvent());
+            _eventor.Publish(new CartChangeEvent());
             return GetCart();
         }
 

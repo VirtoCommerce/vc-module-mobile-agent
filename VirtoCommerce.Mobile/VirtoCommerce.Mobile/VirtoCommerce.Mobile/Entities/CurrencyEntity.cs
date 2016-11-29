@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VirtoCommerce.Mobile.Entities
+﻿namespace VirtoCommerce.Mobile.Entities
 {
-    public class CurrencyEntity:BaseEntity
+    public class CurrencyEntity : BaseEntity
     {
         /// <summary>
         /// the currency code

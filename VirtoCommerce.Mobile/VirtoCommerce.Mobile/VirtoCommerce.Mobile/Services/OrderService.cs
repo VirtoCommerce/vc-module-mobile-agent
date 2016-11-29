@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Convertors;
 
@@ -82,7 +80,7 @@ namespace VirtoCommerce.Mobile.Services
                 _cartService.ClearCart();
                 _globalEventor.Publish(new Events.CartChangeEvent());
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 _orderRepository.RollbackTransaction();
             }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.Entities
 {
@@ -41,21 +37,10 @@ namespace VirtoCommerce.Mobile.Entities
         public string Vendor { get; set; }
         public int? Priority { get; set; }
         public string ImgSrc { get; set; }
-        public System.DateTime? CreatedDate { get; set; }
-        public System.DateTime? ModifiedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
-        //
-        //public System.Collections.Generic.IList<Property> Properties { get; set; }
-        //public System.Collections.Generic.IList<Image> Images { get; set; }
-        //public System.Collections.Generic.IList<Asset> Assets { get; set; }
-        //public System.Collections.Generic.IList<Product> Variations { get; set; }
-        //public System.Collections.Generic.IList<CategoryLink> Links { get; set; }
-        //public System.Collections.Generic.IList<EditorialReview> Reviews { get; set; }
-        //public System.Collections.Generic.IList<ProductAssociation> Associations { get; set; }
-        //public System.Collections.Generic.IList<string> SecurityScopes { get; set; }
-        //public string SeoObjectType { get; private set; }
-        //public System.Collections.Generic.IList<SeoInfo> SeoInfos { get; set; }
-        //public System.Collections.Generic.IList<Outline> Outlines { get; set; }
+
     }
 }

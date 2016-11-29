@@ -1,15 +1,11 @@
 ﻿using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Services;
 
 namespace VirtoCommerce.Mobile.ViewModels
 {
-    public class MainViewModel: MvxViewModel
+    public class MainViewModel : MvxViewModel
     {
         private CartViewModel _cartViewModel;
         private ProductsGridViewModel _productsGridViewModel;
@@ -17,7 +13,7 @@ namespace VirtoCommerce.Mobile.ViewModels
         private readonly ICartService _cartService;
 
         public IGlobalEventor Eventor { get { return _eventor; } }
-       
+
         public string CountInCart { get { return _cartService.GetCart()?.CartItems.Sum(x => x.Quantity).ToString(); } }
 
         public CartViewModel CartViewModel
@@ -25,7 +21,7 @@ namespace VirtoCommerce.Mobile.ViewModels
             set { _cartViewModel = value; RaisePropertyChanged(); }
             get { return _cartViewModel; }
         }
-        
+
         public ProductsGridViewModel ProductsGridViewModel
         {
             set { _productsGridViewModel = value; RaisePropertyChanged(); }

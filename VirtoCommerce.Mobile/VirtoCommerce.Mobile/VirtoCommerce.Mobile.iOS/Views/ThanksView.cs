@@ -1,26 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using MvvmCross.iOS.Views;
 using VirtoCommerce.Mobile.ViewModels;
 using VirtoCommerce.Mobile.iOS.UI;
 using MvvmCross.Binding.BindingContext;
-using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
-    public class ThanksView:MvxViewController
+    public class ThanksView : MvxViewController
     {
 
         public ThanksViewModel ThanksViewModel { get { return ViewModel as ThanksViewModel; } }
         public ThanksView() : base(null, null)
         {
             Title = "Thanks";
-            View.BackgroundColor = Consts.ColorMainBg;  
+            View.BackgroundColor = Consts.ColorMainBg;
             CreateView();
             var bindingSet = this.CreateBindingSet<ThanksView, ThanksViewModel>();
             bindingSet.Bind(_continueButton).To(x => x.GoToMainCommand);

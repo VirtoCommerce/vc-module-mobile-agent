@@ -1,13 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
-using Xamarin.Forms;
 using CoreGraphics;
-using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI
 {
@@ -98,12 +92,12 @@ namespace VirtoCommerce.Mobile.iOS.UI
             for (int i = 0; i < _images.Count; i++)
             {
                 var img = _images[i];
-                if (_scrollView.Frame.Width!= 0 && img.Size.Width > _scrollView.Frame.Width)
+                if (_scrollView.Frame.Width != 0 && img.Size.Width > _scrollView.Frame.Width)
                 {
                     var scale = _scrollView.Frame.Width / img.Size.Width;
                     img = img.Scale(new CGSize(img.Size.Width * scale, img.Size.Height * scale));
                 }
-                if (_scrollView.Frame.Height != 0 &&  img.Size.Height > _scrollView.Frame.Height)
+                if (_scrollView.Frame.Height != 0 && img.Size.Height > _scrollView.Frame.Height)
                 {
                     var scale = _scrollView.Frame.Height / img.Size.Height;
                     img = img.Scale(new CGSize(img.Size.Width * scale, img.Size.Height * scale));

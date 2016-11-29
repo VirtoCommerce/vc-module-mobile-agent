@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Entities;
 using VirtoCommerce.Mobile.Interfaces;
 
@@ -14,9 +11,9 @@ namespace VirtoCommerce.Mobile.Repositories
         public SqlLiteOrderRepository()
         {
             _connection = Xamarin.Forms.DependencyService.Get<ISqlLiteConnection>().GetConnection();
-            _connection.CreateTable<Entities.OrderEntity>();
-            _connection.CreateTable<Entities.OrderItemEntity>();
-            _connection.CreateTable<Entities.OrderCustomerEntity>();
+            _connection.CreateTable<OrderEntity>();
+            _connection.CreateTable<OrderItemEntity>();
+            _connection.CreateTable<OrderCustomerEntity>();
         }
 
 

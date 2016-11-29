@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 
 namespace VirtoCommerce.Mobile.iOS.NativConvertors
@@ -23,5 +17,4 @@ namespace VirtoCommerce.Mobile.iOS.NativConvertors
             return UIColor.FromRGBA(array[0], array[1], array[2], array[3]);
         }
     }
-
 }

@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -16,7 +13,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
         /// <summary>
         /// Initializes a new instance of the ProductAssociation class.
         /// </summary>
-        public ProductAssociation(string type = default(string), int? priority = default(int?), int? quantity = default(int?), string associatedObjectId = default(string), string associatedObjectName = default(string), string associatedObjectType = default(string), string associatedObjectImg = default(string), System.Collections.Generic.IList<string> tags = default(System.Collections.Generic.IList<string>))
+        public ProductAssociation(string type = default(string), int? priority = default(int?), int? quantity = default(int?), string associatedObjectId = default(string), string associatedObjectName = default(string), string associatedObjectType = default(string), string associatedObjectImg = default(string), IList<string> tags = default(IList<string>))
         {
             Type = type;
             Priority = priority;
@@ -30,43 +27,43 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
+        [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
+        [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "quantity")]
+        [JsonProperty(PropertyName = "quantity")]
         public int? Quantity { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "associatedObjectId")]
+        [JsonProperty(PropertyName = "associatedObjectId")]
         public string AssociatedObjectId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "associatedObjectName")]
+        [JsonProperty(PropertyName = "associatedObjectName")]
         public string AssociatedObjectName { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "associatedObjectType")]
+        [JsonProperty(PropertyName = "associatedObjectType")]
         public string AssociatedObjectType { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "associatedObjectImg")]
+        [JsonProperty(PropertyName = "associatedObjectImg")]
         public string AssociatedObjectImg { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
-        public System.Collections.Generic.IList<string> Tags { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IList<string> Tags { get; set; }
 
     }
 }

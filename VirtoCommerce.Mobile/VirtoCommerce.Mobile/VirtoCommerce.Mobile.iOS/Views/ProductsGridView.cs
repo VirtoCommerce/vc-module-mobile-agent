@@ -1,7 +1,6 @@
 ﻿using MvvmCross.iOS.Views;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using UIKit;
 using System.Linq;
 using Xamarin.Themes;
@@ -13,11 +12,9 @@ using VirtoCommerce.Mobile.iOS.UI.Products;
 using CoreGraphics;
 using System.Drawing;
 using MvvmCross.Binding.BindingContext;
-using Foundation;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.Helpers;
 using VirtoCommerce.Mobile.iOS.UI.Filters;
-using VirtoCommerce.Mobile.Helpers;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -39,7 +36,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             CreateView();
             var set = this.CreateBindingSet<ProductsGridView, ProductsGridViewModel>();
             set.Bind(_busyContainer).For(x => x.Hidden).To(x => x.HideBusy);
-            set.Bind(_busyLabel).For(x=>x.Text).To(x => x.Status);
+            set.Bind(_busyLabel).For(x => x.Text).To(x => x.Status);
             _subscribeProductListChange = ((INotifyPropertyChanged)ViewModel).WeakSubscribe<ICollection<Product>>("Products", (s, e) =>
             {
                 UpdateListProducts();
@@ -73,6 +70,11 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 cell.Bind(product);
                 _listProducts.AddTile(cell);
             }
+            if (_showFilters)
+            {
+                View.BringSubviewToFront(_overlayView);
+                View.BringSubviewToFront(_filterView);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -104,7 +106,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 if (tabSupperView != null)
                 {
                     var frame = _listProducts.Frame;
-                    frame.Height = View.Frame.Height - tabSupperView.TabBar.Frame.Height -30;
+                    frame.Height = View.Frame.Height - tabSupperView.TabBar.Frame.Height - 30;
                     _listProducts.Frame = frame;
                 }
             }
@@ -120,13 +122,13 @@ namespace VirtoCommerce.Mobile.iOS.Views
             clearAllFrame.Width = 120;
             clearAllFrame.Height = 25;
             _clearAll.Frame = clearAllFrame;
-            _clearAll.Center = new CGPoint(filtesViewFrame.Width / 2 - _padding / 2 - clearAllFrame.Width/2, filtesViewFrame.Height - clearAllFrame.Height / 2 - _padding);
+            _clearAll.Center = new CGPoint(filtesViewFrame.Width / 2 - _padding / 2 - clearAllFrame.Width / 2, filtesViewFrame.Height - clearAllFrame.Height / 2 - _padding);
             //apply button
             var applyButtonFrame = _applyFilters.Frame;
             applyButtonFrame.Width = 120;
             applyButtonFrame.Height = 25;
             _applyFilters.Frame = applyButtonFrame;
-            _applyFilters.Center = new CGPoint(filtesViewFrame.Width / 2 + _padding / 2 + applyButtonFrame.Width/2, filtesViewFrame.Height - applyButtonFrame.Height / 2 - _padding);
+            _applyFilters.Center = new CGPoint(filtesViewFrame.Width / 2 + _padding / 2 + applyButtonFrame.Width / 2, filtesViewFrame.Height - applyButtonFrame.Height / 2 - _padding);
             //filter items 
             var filterListFrame = filtesViewFrame;
             filterListFrame.X = 0;
@@ -149,7 +151,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             return result;
         }
 
-        
+
 
         #region View
         private GridView _listProducts;
@@ -171,7 +173,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 BackgroundColor = Consts.ColorMainBg,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
             };
-            
+
             _busyContainer = new UIView(new CGRect(0, 0, 600, 600))
             {
                 BackgroundColor = UIColor.FromRGBA(0, 0, 0, 127),
@@ -206,7 +208,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 BackgroundColor = UIColor.FromRGBA(0, 0, 0, 150)
             };
-            _overlayView.AddGestureRecognizer(new UITapGestureRecognizer(() => {
+            _overlayView.AddGestureRecognizer(new UITapGestureRecognizer(() =>
+            {
                 ShowHideFilter(_overlayView, new EventArgs());
             }));
             //table filters
@@ -224,9 +227,6 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //apply filters
             _applyFilters = UICreator.CreateSimpleButton("Done");
             _applyFilters.BackgroundColor = Consts.ColorDivider;
-            /* nfloat r, g, b, a;
-             Consts.ColorMain.GetRGBA(out r, out g, out b, out a);
-             _applyFilters.SetTitleColor(UIColor.FromRGBA(new nfloat(1.0) - r, new nfloat(1.0) - g, new nfloat(1.0) - b, a), UIControlState.Normal);*/
             _applyFilters.SetTitleColor(UIColor.White, UIControlState.Normal);
             _applyFilters.Layer.BorderWidth = 0;
             _applyFilters.TouchDown += ApplyFilters;
@@ -261,7 +261,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             }
             if (_showFilters)
             {
-                
+
                 _filterView.SlideHorizontalyRight(false, onFinished: () => { _filterView.RemoveFromSuperview(); _overlayView.RemoveFromSuperview(); });
             }
             else

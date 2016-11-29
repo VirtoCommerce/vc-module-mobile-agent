@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -24,12 +20,12 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "languageCode")]
+        [JsonProperty(PropertyName = "languageCode")]
         public string LanguageCode { get; set; }
 
     }

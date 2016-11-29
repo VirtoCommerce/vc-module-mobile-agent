@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VirtoCommerce.Mobile.Convertors
+﻿namespace VirtoCommerce.Mobile.Convertors
 {
     public static class ShippingConvertors
     {
         public static Entities.ShippingMethodEntity ApiModelToEntity(this ApiClient.Models.ShippingMethod method)
         {
-            return new Entities.ShippingMethodEntity {
+            return new Entities.ShippingMethodEntity
+            {
                 Id = method.Id,
                 Name = method.Name
             };

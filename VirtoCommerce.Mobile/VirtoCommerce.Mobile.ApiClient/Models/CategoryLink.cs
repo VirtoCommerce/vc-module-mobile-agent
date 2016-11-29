@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -27,27 +23,27 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
+        [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceItemId")]
+        [JsonProperty(PropertyName = "sourceItemId")]
         public string SourceItemId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceCategoryId")]
+        [JsonProperty(PropertyName = "sourceCategoryId")]
         public string SourceCategoryId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "catalogId")]
+        [JsonProperty(PropertyName = "catalogId")]
         public string CatalogId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "categoryId")]
+        [JsonProperty(PropertyName = "categoryId")]
         public string CategoryId { get; set; }
 
     }

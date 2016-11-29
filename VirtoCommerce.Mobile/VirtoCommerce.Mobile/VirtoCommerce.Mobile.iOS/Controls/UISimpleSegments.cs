@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using CoreAnimation;
 using CoreGraphics;
 using UIKit;
@@ -8,16 +7,17 @@ using VirtoCommerce.Mobile.iOS.UI;
 
 namespace VirtoCommerce.Mobile.iOS.Controls
 {
-    public class UISimpleSegments:UIView
+    public class UISimpleSegments : UIView
     {
         public List<string> _titleSegments = new List<string>();
         public List<UIView> _segments = new List<UIView>();
         public int CurrentSegment { set; get; }
         public event EventHandler<int> ChangeSegment;
-        public UISimpleSegments() {
+        public UISimpleSegments()
+        {
             BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
         }
-        public UISimpleSegments(CGRect rect):base(rect)
+        public UISimpleSegments(CGRect rect) : base(rect)
         {
             BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
         }
@@ -28,7 +28,8 @@ namespace VirtoCommerce.Mobile.iOS.Controls
             _titleSegments.Add(title);
             label.Text = title;
             label.Tag = _titleSegments.Count - 1;
-            UITapGestureRecognizer tapGisture = new UITapGestureRecognizer(() => {
+            UITapGestureRecognizer tapGisture = new UITapGestureRecognizer(() =>
+            {
                 CurrentSegment = (int)label.Tag;
                 ChangeSegment?.Invoke(this, CurrentSegment);
                 Draw(Frame);

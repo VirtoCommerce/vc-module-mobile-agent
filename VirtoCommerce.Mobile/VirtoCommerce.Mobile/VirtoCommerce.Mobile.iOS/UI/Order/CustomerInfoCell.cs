@@ -1,20 +1,18 @@
 using CoreAnimation;
 using CoreGraphics;
-using Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UIKit;
 using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Order
 {
-   public  class CustomerInfoCell: UITableViewCell
+    public class CustomerInfoCell : UITableViewCell
     {
         public const string CellId = "CustomerInfoCell";
         public const float CellHeight = 40;
-        public string[] Headers {private set; get; }
+        public string[] Headers { private set; get; }
         private ICollection<UITextField> _valueFields;
         private ICollection<KeyValuePair<string, Customer>> _data;
         private ICollection<CALayer> _bottomLayers { set; get; }

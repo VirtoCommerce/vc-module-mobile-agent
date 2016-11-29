@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -20,7 +17,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
         /// 'withProducts', 'withCategories', 'withProperties',
         /// 'withCatalogs', 'withVariations', 'withPriceRanges',
         /// 'withOutlines', 'full'</param>
-        public SearchCriteria(string storeId = default(string), string responseGroup = default(string), string keyword = default(string), bool? searchInChildren = default(bool?), bool? searchInVariations = default(bool?), string categoryId = default(string), System.Collections.Generic.IList<string> categoryIds = default(System.Collections.Generic.IList<string>), string catalogId = default(string), System.Collections.Generic.IList<string> catalogIds = default(System.Collections.Generic.IList<string>), string languageCode = default(string), string code = default(string), string sort = default(string), bool? hideDirectLinkedCategories = default(bool?), System.Collections.Generic.IList<PropertyValue> propertyValues = default(System.Collections.Generic.IList<PropertyValue>), string currency = default(string), double? startPrice = default(double?), double? endPrice = default(double?), int? skip = default(int?), int? take = default(int?), System.DateTime? indexDate = default(System.DateTime?), string pricelistId = default(string), System.Collections.Generic.IList<string> pricelistIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> terms = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> facets = default(System.Collections.Generic.IList<string>), string outline = default(string), bool? withHidden = default(bool?), bool? onlyBuyable = default(bool?), bool? onlyWithTrackingInventory = default(bool?), string productType = default(string), System.Collections.Generic.IList<string> productTypes = default(System.Collections.Generic.IList<string>), string vendorId = default(string), System.Collections.Generic.IList<string> vendorIds = default(System.Collections.Generic.IList<string>), System.DateTime? startDateFrom = default(System.DateTime?))
+        public SearchCriteria(string storeId = default(string), string responseGroup = default(string), string keyword = default(string), bool? searchInChildren = default(bool?), bool? searchInVariations = default(bool?), string categoryId = default(string), IList<string> categoryIds = default(IList<string>), string catalogId = default(string), IList<string> catalogIds = default(IList<string>), string languageCode = default(string), string code = default(string), string sort = default(string), bool? hideDirectLinkedCategories = default(bool?), IList<PropertyValue> propertyValues = default(IList<PropertyValue>), string currency = default(string), double? startPrice = default(double?), double? endPrice = default(double?), int? skip = default(int?), int? take = default(int?), System.DateTime? indexDate = default(System.DateTime?), string pricelistId = default(string), IList<string> pricelistIds = default(IList<string>), IList<string> terms = default(IList<string>), IList<string> facets = default(IList<string>), string outline = default(string), bool? withHidden = default(bool?), bool? onlyBuyable = default(bool?), bool? onlyWithTrackingInventory = default(bool?), string productType = default(string), IList<string> productTypes = default(IList<string>), string vendorId = default(string), IList<string> vendorIds = default(IList<string>), System.DateTime? startDateFrom = default(System.DateTime?))
         {
             StoreId = storeId;
             ResponseGroup = responseGroup;
@@ -59,7 +56,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "storeId")]
+        [JsonProperty(PropertyName = "storeId")]
         public string StoreId { get; set; }
 
         /// <summary>
@@ -67,162 +64,162 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
         /// 'withCategories', 'withProperties', 'withCatalogs',
         /// 'withVariations', 'withPriceRanges', 'withOutlines', 'full'
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "responseGroup")]
+        [JsonProperty(PropertyName = "responseGroup")]
         public string ResponseGroup { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "keyword")]
+        [JsonProperty(PropertyName = "keyword")]
         public string Keyword { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "searchInChildren")]
+        [JsonProperty(PropertyName = "searchInChildren")]
         public bool? SearchInChildren { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "searchInVariations")]
+        [JsonProperty(PropertyName = "searchInVariations")]
         public bool? SearchInVariations { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "categoryId")]
+        [JsonProperty(PropertyName = "categoryId")]
         public string CategoryId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "categoryIds")]
-        public System.Collections.Generic.IList<string> CategoryIds { get; set; }
+        [JsonProperty(PropertyName = "categoryIds")]
+        public IList<string> CategoryIds { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "catalogId")]
+        [JsonProperty(PropertyName = "catalogId")]
         public string CatalogId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "catalogIds")]
-        public System.Collections.Generic.IList<string> CatalogIds { get; set; }
+        [JsonProperty(PropertyName = "catalogIds")]
+        public IList<string> CatalogIds { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "languageCode")]
+        [JsonProperty(PropertyName = "languageCode")]
         public string LanguageCode { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sort")]
+        [JsonProperty(PropertyName = "sort")]
         public string Sort { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "hideDirectLinkedCategories")]
+        [JsonProperty(PropertyName = "hideDirectLinkedCategories")]
         public bool? HideDirectLinkedCategories { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "propertyValues")]
-        public System.Collections.Generic.IList<PropertyValue> PropertyValues { get; set; }
+        [JsonProperty(PropertyName = "propertyValues")]
+        public IList<PropertyValue> PropertyValues { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = "currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startPrice")]
+        [JsonProperty(PropertyName = "startPrice")]
         public double? StartPrice { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endPrice")]
+        [JsonProperty(PropertyName = "endPrice")]
         public double? EndPrice { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "skip")]
+        [JsonProperty(PropertyName = "skip")]
         public int? Skip { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "take")]
+        [JsonProperty(PropertyName = "take")]
         public int? Take { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "indexDate")]
+        [JsonProperty(PropertyName = "indexDate")]
         public System.DateTime? IndexDate { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "pricelistId")]
+        [JsonProperty(PropertyName = "pricelistId")]
         public string PricelistId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "pricelistIds")]
-        public System.Collections.Generic.IList<string> PricelistIds { get; set; }
+        [JsonProperty(PropertyName = "pricelistIds")]
+        public IList<string> PricelistIds { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "terms")]
-        public System.Collections.Generic.IList<string> Terms { get; set; }
+        [JsonProperty(PropertyName = "terms")]
+        public IList<string> Terms { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "facets")]
-        public System.Collections.Generic.IList<string> Facets { get; set; }
+        [JsonProperty(PropertyName = "facets")]
+        public IList<string> Facets { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "outline")]
+        [JsonProperty(PropertyName = "outline")]
         public string Outline { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "withHidden")]
+        [JsonProperty(PropertyName = "withHidden")]
         public bool? WithHidden { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "onlyBuyable")]
+        [JsonProperty(PropertyName = "onlyBuyable")]
         public bool? OnlyBuyable { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "onlyWithTrackingInventory")]
+        [JsonProperty(PropertyName = "onlyWithTrackingInventory")]
         public bool? OnlyWithTrackingInventory { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "productType")]
+        [JsonProperty(PropertyName = "productType")]
         public string ProductType { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "productTypes")]
-        public System.Collections.Generic.IList<string> ProductTypes { get; set; }
+        [JsonProperty(PropertyName = "productTypes")]
+        public IList<string> ProductTypes { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "vendorId")]
+        [JsonProperty(PropertyName = "vendorId")]
         public string VendorId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "vendorIds")]
-        public System.Collections.Generic.IList<string> VendorIds { get; set; }
+        [JsonProperty(PropertyName = "vendorIds")]
+        public IList<string> VendorIds { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startDateFrom")]
+        [JsonProperty(PropertyName = "startDateFrom")]
         public System.DateTime? StartDateFrom { get; set; }
 
     }

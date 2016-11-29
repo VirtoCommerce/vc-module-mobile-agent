@@ -1,13 +1,7 @@
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
@@ -15,12 +9,12 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class SignInResult :  IEquatable<SignInResult>
+    public partial class SignInResult : IEquatable<SignInResult>
     {
         /// <summary>
         /// Gets or Sets Status
         /// </summary>
-        [DataMember(Name="status", EmitDefaultValue=false)]
+        [DataMember(Name = "status", EmitDefaultValue = false)]
         public string Status { get; set; }
 
         /// <summary>
@@ -35,7 +29,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -67,7 +61,7 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
             if (other == null)
                 return false;
 
-            return 
+            return
                 (
                     this.Status == other.Status ||
                     this.Status != null &&

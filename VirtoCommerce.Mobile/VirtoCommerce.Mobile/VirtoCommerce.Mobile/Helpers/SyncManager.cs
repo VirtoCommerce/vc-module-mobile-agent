@@ -1,9 +1,5 @@
 ﻿using MvvmCross.Platform;
 using Plugin.Connectivity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Enums;
 using VirtoCommerce.Mobile.Events;
@@ -61,7 +57,7 @@ namespace VirtoCommerce.Mobile.Helpers
                 SendEvent(result);
                 return false;
             }
-            
+
             result = await syncService.SyncTheme();
             if (result.SyncStatus != SyncStatus.Ok)
             {

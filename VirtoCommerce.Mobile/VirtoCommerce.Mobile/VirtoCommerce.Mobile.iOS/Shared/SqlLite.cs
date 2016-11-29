@@ -1,14 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using SQLite;
-using UIKit;
 using VirtoCommerce.Mobile.Interfaces;
 using System.IO;
-using System.Runtime.CompilerServices;
 using VirtoCommerce.Mobile.iOS.Shared;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SqlLite))]

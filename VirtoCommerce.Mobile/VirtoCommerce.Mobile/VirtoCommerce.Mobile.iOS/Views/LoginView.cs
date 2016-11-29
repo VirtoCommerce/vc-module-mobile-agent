@@ -1,15 +1,10 @@
-﻿using CoreAnimation;
-using CoreGraphics;
+﻿using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UIKit;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.ViewModels;
-using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -61,7 +56,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             var width = 500;
             _container = new UIView(new CGRect(0, 0, width, 560));
             _logoImage = new UIImageView(new CGRect(0, 0, 150, 150));
-            _logoImage.Center = new CGPoint(width/2, 75);
+            _logoImage.Center = new CGPoint(width / 2, 75);
             _logoImage.Image = UIImage.FromFile("logo.png");
             _login = Helpers.UICreator.CreateTextField("Login", UIImage.FromFile("user-black.png"), Consts.ColorBlack, new CGRect(0, 250, width, 30));
             _pass = Helpers.UICreator.CreateTextField("Password", UIImage.FromFile("password-black.png"), Consts.ColorBlack, new CGRect(0, 320, width, 30));

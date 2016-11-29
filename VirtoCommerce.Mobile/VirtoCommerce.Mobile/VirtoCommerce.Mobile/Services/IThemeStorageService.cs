@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VirtoCommerce.Mobile.ApiClient.Models;
 using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.Services
@@ -12,7 +8,7 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// Save theme to LocalStorage
         /// </summary>
-        bool SaveTheme(ApiClient.Models.MobileTheme theme);
+        bool SaveTheme(MobileTheme theme);
         /// <summary>
         /// Get current theme from LocalStorage
         /// </summary>

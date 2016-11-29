@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Models;
 using VirtoCommerce.Mobile.Convertors;
-using VirtoCommerce.Mobile.Model;
+using VirtoCommerce.Mobile.Repositories;
 
 namespace VirtoCommerce.Mobile.Services
 {
     public class ShippingMethodsService : IShippingMethodsService
     {
 
-        private readonly Repositories.IShippingRepository _shippingRepository;
+        private readonly IShippingRepository _shippingRepository;
         public ShippingMethodsService(Repositories.IShippingRepository shippingRepository) {
             _shippingRepository = shippingRepository;
         }
@@ -35,7 +32,7 @@ namespace VirtoCommerce.Mobile.Services
             return null;
         }
 
-        public void SaveShippingMethods(ICollection<ApiClient.Models.ShippingMethod> methods)
+        public void SaveShippingMethods(ICollection<ShippingMethod> methods)
         {
             foreach (var method in methods)
             {

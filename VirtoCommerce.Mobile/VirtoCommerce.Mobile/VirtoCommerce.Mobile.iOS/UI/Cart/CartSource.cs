@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Foundation;
 using UIKit;
-using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Cart
 {
@@ -13,7 +10,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
     {
         private bool _isEdit;
         public Model.Cart Cart { set; get; }
-        private readonly Action<Model.CartItem> _updateCartItem; 
+        private readonly Action<Model.CartItem> _updateCartItem;
         public CartSource(UITableView tableView, Model.Cart cart, Action<Model.CartItem> updateCartItem, bool isEdit = true)
         {
             _isEdit = isEdit;
@@ -21,13 +18,13 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             _updateCartItem = updateCartItem;
             Cart = cart;
         }
-        
+
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(CartCell.CellId, indexPath) as CartCell;
             cell.UpdateCell(Cart.CartItems.ElementAt(indexPath.Row), _updateCartItem, _isEdit);
             cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-            if(!_isEdit)
+            if (!_isEdit)
             {
                 cell.BackgroundColor = Consts.ColorTransparent;
             }

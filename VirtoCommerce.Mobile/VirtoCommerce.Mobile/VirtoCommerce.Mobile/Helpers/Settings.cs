@@ -2,12 +2,6 @@
 using Newtonsoft.Json.Serialization;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.Helpers

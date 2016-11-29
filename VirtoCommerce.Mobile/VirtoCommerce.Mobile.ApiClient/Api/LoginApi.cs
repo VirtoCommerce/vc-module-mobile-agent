@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Models;
 
 namespace VirtoCommerce.Mobile.ApiClient.Api
 {
-    public class LoginApi:BaseApi, ILoginApi
+    public class LoginApi : BaseApi, ILoginApi
     {
-        public LoginApi(BaseApiClient client):base(client)
+        public LoginApi(BaseApiClient client) : base(client)
         {
 
         }

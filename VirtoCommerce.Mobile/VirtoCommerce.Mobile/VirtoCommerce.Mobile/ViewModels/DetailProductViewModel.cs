@@ -1,9 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 
@@ -60,7 +56,8 @@ namespace VirtoCommerce.Mobile.ViewModels
             }
         }
 
-        public MvxCommand OpenCartCommad {
+        public MvxCommand OpenCartCommad
+        {
             get
             {
                 return _cartOpenCommand ?? (_cartOpenCommand = new MvxCommand(() => { _globalEventor.Publish(new Events.OpenCartEvent()); Close(this); }));
@@ -95,7 +92,7 @@ namespace VirtoCommerce.Mobile.ViewModels
 
         public void UnSubscribeEventor()
         {
-            _globalEventor.UnSubcribe<Events.CartChangeEvent>(CartChange);
+            _globalEventor.Unsubscribe<Events.CartChangeEvent>(CartChange);
         }
         #endregion
 

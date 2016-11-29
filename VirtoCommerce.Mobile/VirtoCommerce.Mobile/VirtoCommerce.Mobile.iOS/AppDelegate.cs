@@ -7,6 +7,7 @@ using VirtoCommerce.Mobile.Services;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
 using ToastIOS;
 using VirtoCommerce.Mobile.Helpers;
+using Xamarin.Forms;
 
 namespace VirtoCommerce.Mobile.iOS
 {
@@ -22,7 +23,7 @@ namespace VirtoCommerce.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
-            Xamarin.Forms.Forms.Init();
+            Forms.Init();
             //Xamarin.Themes.GridlockTheme.Apply();
             //init theme
             
@@ -44,7 +45,7 @@ namespace VirtoCommerce.Mobile.iOS
             UIApplication.SharedApplication.NetworkActivityIndicatorVisible = !eventArgs.IsEnd;
             if (eventArgs.IsEnd)
             {
-                Mvx.Resolve<IGlobalEventor>().UnSubcribe<Events.SyncEvent>(SetSyncIndicator);
+                Mvx.Resolve<IGlobalEventor>().Unsubscribe<Events.SyncEvent>(SetSyncIndicator);
                 var toaster = Toast.MakeText(string.IsNullOrEmpty(eventArgs.Message) ? "Sync complete" : eventArgs.Message).SetDuration(1500).SetCornerRadius(0).SetBgAlpha(1).SetGravity(ToastGravity.Center);
                 SetTheme();
                 

@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using MvvmCross.iOS.Views;
-using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.ViewModels;
 using CoreGraphics;
 using MvvmCross.Binding.BindingContext;
@@ -14,7 +10,6 @@ using System.Drawing;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.UI.ProductDetail;
 using VirtoCommerce.Mobile.iOS.NativConvertors;
-using Xamarin.Themes;
 using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.Views
@@ -31,14 +26,14 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public DetailProductView() : base(null, null)
         {
             _deviceOrientation = UIApplication.SharedApplication.StatusBarOrientation;
-            
+
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             CreateView();
-            
+
         }
         public override void ViewWillAppear(bool animated)
         {
@@ -186,7 +181,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             //add to cart item
             _cartButton = Helpers.UICreator.CreateSimpleButton("Add to cart");
             _detailView.AddSubview(_cartButton);
-            
+
             #endregion
             //cart button
             _cartOpenButton = new UIBarButtonItem("Cart", UIBarButtonItemStyle.Plain, (s, e) => { DetailViewModel.OpenCartCommad.Execute(); });
@@ -279,7 +274,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
                 _listPriceLable.SizeToFit();
                 var listPriceFrame = _listPriceLable.Frame;
                 listPriceFrame.X = mainViewFrame.Width - _listPriceLable.Frame.Width - salePriceFrame.Width - Padding * 2;
-                listPriceFrame.Y = titleFrame.Y + (salePriceFrame.Height - _listPriceLable.Frame.Height)-2;
+                listPriceFrame.Y = titleFrame.Y + (salePriceFrame.Height - _listPriceLable.Frame.Height) - 2;
                 _listPriceLable.Frame = listPriceFrame;
             }
             else
@@ -303,7 +298,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             {
                 _profitPriceLabel.Hidden = true;
             }
-            
+
         }
 
         private nfloat GetMainInfoHeight()

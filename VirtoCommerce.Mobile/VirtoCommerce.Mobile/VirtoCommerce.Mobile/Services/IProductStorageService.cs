@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using VirtoCommerce.Mobile.Model;
+using ApiClientModel = VirtoCommerce.Mobile.ApiClient.Models;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -34,11 +31,11 @@ namespace VirtoCommerce.Mobile.Services
         /// <summary>
         /// Save products in LocalStorage
         /// </summary>
-        bool SaveProducts(ICollection<ApiClient.Models.Product> products);
+        bool SaveProducts(ICollection<ApiClientModel.Product> products);
         /// <summary>
         /// Save currency
         /// </summary>
-        bool SaveCurrency(ApiClient.Models.Currency currency);
+        bool SaveCurrency(ApiClientModel.Currency currency);
         /// <summary>
         /// Get current currency
         /// </summary>

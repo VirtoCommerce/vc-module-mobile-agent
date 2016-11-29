@@ -4,7 +4,6 @@ using MvvmCross.iOS.Views;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform.Platform;
 using UIKit;
-using VirtoCommerce.Mobile.iOS.Views;
 
 namespace VirtoCommerce.Mobile.iOS
 {
@@ -14,7 +13,7 @@ namespace VirtoCommerce.Mobile.iOS
             : base(applicationDelegate, window)
         {
         }
-        
+
         public Setup(MvxApplicationDelegate applicationDelegate, IMvxIosViewPresenter presenter)
             : base(applicationDelegate, presenter)
         {
@@ -27,7 +26,7 @@ namespace VirtoCommerce.Mobile.iOS
         {
             return new App();
         }
-        
+
         protected override IMvxTrace CreateDebugTrace()
         {
             return new DebugTrace();
@@ -42,16 +41,6 @@ namespace VirtoCommerce.Mobile.iOS
         public override void Show(IMvxIosView view)
         {
             base.Show(view);
-            /*var mainView = view as MainView;
-            if (mainView != null)
-            {
-                mainView.
-            }
-            else
-            {
-                ((MvxViewController)view).NavigationController.NavigationBarHidden = false;
-            }*/
-            
         }
     }
 }

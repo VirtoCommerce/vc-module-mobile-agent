@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Repositories;
 using VirtoCommerce.Mobile.Convertors;
 using VirtoCommerce.Mobile.Entities;
 using Xamarin.Forms;
 using System.IO;
-using VirtoCommerce.Mobile.ApiClient.Models;
+using ApiModel = VirtoCommerce.Mobile.ApiClient.Models;
 
 namespace VirtoCommerce.Mobile.Services
 {
@@ -22,12 +20,12 @@ namespace VirtoCommerce.Mobile.Services
             _imageService = DependencyService.Get<ILocalStorageImageService>();
             _productRepository = productRepository;
         }
-        public ICollection<Model.Product> GetAllProducts()
+        public ICollection<Product> GetAllProducts()
         {
             return GetProducts(0, int.MaxValue);
         }
 
-        private Model.Product PrepareProduct(Model.Product product, CurrencyEntity currency)
+        private Product PrepareProduct(Product product, CurrencyEntity currency)
         {
             
             product.Reviews = _productRepository.GetReviewsByProduct(product.Id).Select(x => x.ReviewEntityToReview()).ToArray();
@@ -38,7 +36,7 @@ namespace VirtoCommerce.Mobile.Services
             return product;
         }
 
-        public Model.Product GetProduct(string id)
+        public Product GetProduct(string id)
         {
             var product = _productRepository.GetProductById(id).ProductEntityToProduct();
             if (product != null)
@@ -48,7 +46,7 @@ namespace VirtoCommerce.Mobile.Services
             return product;
         }
 
-        public ICollection<Model.Product> GetProducts(int start, int count)
+        public ICollection<Product> GetProducts(int start, int count)
         {
             var result = _productRepository.GetAllProducts().Skip(start).Take(count).Select(x => x.ProductEntityToProduct()).ToArray();
             var currency = _productRepository.GetCurrentCurrency();
@@ -65,7 +63,7 @@ namespace VirtoCommerce.Mobile.Services
         }
 
 
-        public bool SaveProducts(ICollection<ApiClient.Models.Product> products)
+        public bool SaveProducts(ICollection<ApiModel.Product> products)
         {
             try
             {
@@ -81,19 +79,19 @@ namespace VirtoCommerce.Mobile.Services
                     //set
                     if (prod.Images == null)
                     {
-                        prod.Images = new ApiClient.Models.Image[0];
+                        prod.Images = new ApiModel.Image[0];
                     }
                     if (prod.Prices == null)
                     {
-                        prod.Prices = new ApiClient.Models.Price[0];
+                        prod.Prices = new ApiModel.Price[0];
                     }
                     if (prod.Reviews == null)
                     {
-                        prod.Reviews = new ApiClient.Models.EditorialReview[0];
+                        prod.Reviews = new ApiModel.EditorialReview[0];
                     }
                     if (prod.Properties == null)
                     {
-                        prod.Properties = new ApiClient.Models.Property[0];
+                        prod.Properties = new ApiModel.Property[0];
                     }
 
                     //save images for product
@@ -187,7 +185,7 @@ namespace VirtoCommerce.Mobile.Services
                 }
                 _productRepository.EndTransaction();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _productRepository.RollBackTransaction();
                 return false;
@@ -195,12 +193,12 @@ namespace VirtoCommerce.Mobile.Services
             return true;
         }
 
-        public bool SaveCurrency(ApiClient.Models.Currency currency)
+        public bool SaveCurrency(ApiModel.Currency currency)
         {
             return _productRepository.SaveCurrency(currency.ApiToEntities());
         }
 
-        public Model.Currency GetCurrentCurrency()
+        public Currency GetCurrentCurrency()
         {
             var currency = _productRepository.GetCurrentCurrency();
             if (currency != null)
@@ -209,7 +207,7 @@ namespace VirtoCommerce.Mobile.Services
             }
             else
             {
-                return new Model.Currency
+                return new Currency
                 {
                     Code = "USD",
                     Symbol = "$"
@@ -217,7 +215,7 @@ namespace VirtoCommerce.Mobile.Services
             }
         }
 
-        public ICollection<Model.Product> GetProductByFilter(FilterRequest request)
+        public ICollection<Product> GetProductByFilter(FilterRequest request)
         {
             var products = GetAllProducts().ToList();
 

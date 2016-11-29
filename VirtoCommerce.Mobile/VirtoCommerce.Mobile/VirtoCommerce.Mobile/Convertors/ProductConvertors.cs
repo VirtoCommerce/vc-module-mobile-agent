@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VirtoCommerce.Mobile.ApiClient.Models;
+﻿using System.IO;
 using VirtoCommerce.Mobile.Entities;
-
+using ApiClientModel = VirtoCommerce.Mobile.ApiClient.Models;
 namespace VirtoCommerce.Mobile.Convertors
 {
     public static class ProductConvertors
     {
-        public static ProductEntity ApiProductToProductEntity(this ApiClient.Models.Product product)
+        public static ProductEntity ApiProductToProductEntity(this ApiClientModel.Product product)
         {
             return new ProductEntity
             {

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.ViewModels;
-using Xamarin.Themes;
 using VirtoCommerce.Mobile.Model;
 using CoreGraphics;
 

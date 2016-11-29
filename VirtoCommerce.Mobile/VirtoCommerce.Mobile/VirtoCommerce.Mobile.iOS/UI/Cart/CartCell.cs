@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.Model;
 using System.Drawing;
-using CoreGraphics;
 using System.IO;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Cart
@@ -160,7 +154,8 @@ namespace VirtoCommerce.Mobile.iOS.UI.Cart
             {
                 PrepareEdit();
             }
-            else {
+            else
+            {
                 PrepareNotEdit();
             }
 

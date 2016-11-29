@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
-    public partial class Asset
+    public class Asset
     {
         /// <summary>
         /// Initializes a new instance of the Asset class.
@@ -32,52 +28,52 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "size")]
+        [JsonProperty(PropertyName = "size")]
         public long? Size { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "mimeType")]
+        [JsonProperty(PropertyName = "mimeType")]
         public string MimeType { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "relativeUrl")]
+        [JsonProperty(PropertyName = "relativeUrl")]
         public string RelativeUrl { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "typeId")]
+        [JsonProperty(PropertyName = "typeId")]
         public string TypeId { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "group")]
+        [JsonProperty(PropertyName = "group")]
         public string Group { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "languageCode")]
+        [JsonProperty(PropertyName = "languageCode")]
         public string LanguageCode { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isInherited")]
+        [JsonProperty(PropertyName = "isInherited")]
         public bool? IsInherited { get; set; }
 
     }

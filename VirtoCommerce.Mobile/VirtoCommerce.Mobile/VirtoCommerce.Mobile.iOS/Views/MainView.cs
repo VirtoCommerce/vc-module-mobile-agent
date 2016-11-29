@@ -1,8 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UIKit;
 using VirtoCommerce.Mobile.Events;
 using VirtoCommerce.Mobile.ViewModels;
@@ -17,13 +14,13 @@ namespace VirtoCommerce.Mobile.iOS.Views
         public MainView()
         {
             _constracted = true;
-           ViewDidLoad();
+            ViewDidLoad();
         }
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            MainViewModel.Eventor.UnSubcribe<CartChangeEvent>(UpdateCartBage);
-            MainViewModel.Eventor.UnSubcribe<OpenCartEvent>(SetCart);
+            MainViewModel.Eventor.Unsubscribe<CartChangeEvent>(UpdateCartBage);
+            MainViewModel.Eventor.Unsubscribe<OpenCartEvent>(SetCart);
         }
 
         protected MainViewModel MainViewModel
@@ -48,7 +45,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
             if (!_constracted)
                 return;
             base.ViewDidLoad();
-            
+
             if (ViewModel == null)
                 return;
             var viewControllers = new UIViewController[] {
@@ -80,7 +77,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private void SetTitleAndTabBarItem(UIViewController screen, string title, string imageName)
         {
             screen.Title = title;
-            screen.TabBarItem = new UITabBarItem(title, UIImage.FromBundle(imageName + ".png").Scale(new CoreGraphics.CGSize(25,25)),
+            screen.TabBarItem = new UITabBarItem(title, UIImage.FromBundle(imageName + ".png").Scale(new CoreGraphics.CGSize(25, 25)),
                                                  _createdSoFarCount);
             _createdSoFarCount++;
         }

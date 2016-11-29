@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
+using ApiClientModel = VirtoCommerce.Mobile.ApiClient.Models;
 namespace VirtoCommerce.Mobile.Services
 {
     public interface IPaymentMethodService
@@ -13,7 +9,7 @@ namespace VirtoCommerce.Mobile.Services
         /// </summary>
         /// <param name="method"></param>
         /// <returns></returns>
-        void SaveMethods(ICollection<ApiClient.Models.PaymentMethod> methods);
+        void SaveMethods(ICollection<ApiClientModel.PaymentMethod> methods);
         /// <summary>
         /// Delete payment method
         /// </summary>

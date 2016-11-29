@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace VirtoCommerce.Mobile.ApiClient.Models
 {
-    public partial class EditorialReview
+    public class EditorialReview
     {
         /// <summary>
         /// Initializes a new instance of the EditorialReview class.
@@ -27,27 +23,27 @@ namespace VirtoCommerce.Mobile.ApiClient.Models
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "content")]
+        [JsonProperty(PropertyName = "content")]
         public string Content { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "reviewType")]
+        [JsonProperty(PropertyName = "reviewType")]
         public string ReviewType { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "languageCode")]
+        [JsonProperty(PropertyName = "languageCode")]
         public string LanguageCode { get; set; }
 
         /// <summary>
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isInherited")]
+        [JsonProperty(PropertyName = "isInherited")]
         public bool? IsInherited { get; set; }
 
     }

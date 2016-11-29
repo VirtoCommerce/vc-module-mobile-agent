@@ -2,13 +2,10 @@
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using VirtoCommerce.Mobile.ApiClient.Exceptions;
-using Xamarin.Forms;
-using VirtoCommerce.Mobile.ApiClient.Models;
 using System.Net.Http.Headers;
 
 namespace VirtoCommerce.Mobile.ApiClient
@@ -30,7 +27,7 @@ namespace VirtoCommerce.Mobile.ApiClient
         }
 
         protected bool ExistInternet
-        { 
+        {
             get { return CrossConnectivity.Current.IsConnected; }
         }
 
@@ -60,9 +57,7 @@ namespace VirtoCommerce.Mobile.ApiClient
                 }
                 using (var content = response.Content)
                 {
-                    // ... Read the string.
                     var result = await content.ReadAsStringAsync();
-
                     return JsonConvert.DeserializeObject<TResponse>(result);
                 }
             }
@@ -87,11 +82,8 @@ namespace VirtoCommerce.Mobile.ApiClient
 
                 using (var content = response.Content)
                 {
-
                     var result = await content.ReadAsStringAsync();
-                    
                     return JsonConvert.DeserializeObject<TResponse>(result);
-
                 }
             }
         }
@@ -114,10 +106,8 @@ namespace VirtoCommerce.Mobile.ApiClient
                 }
                 using (var content = response.Content)
                 {
-
                     var result = await content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<TResponse>(result);
-
                 }
             }
         }
@@ -139,9 +129,7 @@ namespace VirtoCommerce.Mobile.ApiClient
                 }
                 using (var content = response.Content)
                 {
-                    // ... Read the string.
                     var result = content.ReadAsStringAsync().Result;
-
                     return JsonConvert.DeserializeObject<TResponse>(result);
                 }
             }

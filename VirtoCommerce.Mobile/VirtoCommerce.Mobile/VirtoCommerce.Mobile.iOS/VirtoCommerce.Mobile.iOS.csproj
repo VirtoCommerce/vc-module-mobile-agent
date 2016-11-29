@@ -100,13 +100,11 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\UICustomPageControl.cs" />
     <Compile Include="Controls\UISimpleCheckBoxControl.cs" />
     <Compile Include="Controls\UISimpleRadioButtonControl.cs" />
     <Compile Include="Controls\UISimpleSegments.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="Helpers\Animations.cs" />
-    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\UICreator.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />

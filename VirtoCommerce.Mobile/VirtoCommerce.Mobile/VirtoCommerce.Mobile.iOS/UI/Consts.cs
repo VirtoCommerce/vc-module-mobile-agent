@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UIKit;
 
 namespace VirtoCommerce.Mobile.iOS.UI
@@ -13,12 +9,12 @@ namespace VirtoCommerce.Mobile.iOS.UI
         public const string FontNameRegular = "Helvetica Neue";
         public const string FontNameCursive = "HelveticaNeue-Italic";
         public const string FontNameBold = "Helvetica Bold";
-        public const float FontSizeRegular = 17; 
+        public const float FontSizeRegular = 17;
         #endregion
 
         #region Button
         public const int ButtonHeight = 50;
-        
+
         public const int ButtonCornerRadius = 0;
         public const int ButtonFontSize = 17;
         public static UIColor ButtonTextColor = UIColor.White;

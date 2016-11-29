@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VirtoCommerce.Mobile.Helpers;
-using VirtoCommerce.Mobile.Entities;
+﻿using VirtoCommerce.Mobile.Helpers;
 using VirtoCommerce.Mobile.Model;
 
 namespace VirtoCommerce.Mobile.Repositories

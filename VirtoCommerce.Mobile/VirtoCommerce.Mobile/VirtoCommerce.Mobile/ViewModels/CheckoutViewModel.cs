@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.Services;
 
@@ -11,8 +9,13 @@ namespace VirtoCommerce.Mobile.ViewModels
 {
     public class CheckoutViewModel : MvxViewModel
     {
+
+        #region Services
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
+        #endregion
+
+        #region Private fields
         private Action<ShippingMethodRate> _selectRate;
         private MvxCommand _nextCommad;
         private MvxCommand _backCommnad;
@@ -23,8 +26,9 @@ namespace VirtoCommerce.Mobile.ViewModels
         private bool _showBackButton;
         private string _nextButtonTitle = "Shipping methods";
         private string _shippingMethodId;
+        #endregion
 
-
+        #region Private methods
         private bool NextStepEnable()
         {
             if (_showCustomerInfo)
@@ -41,7 +45,9 @@ namespace VirtoCommerce.Mobile.ViewModels
             }
             return PaymentMethods.FirstOrDefault(x => x.IsSelect) != null;
         }
+        #endregion
 
+        #region Properties
         public Customer Customer { set; get; }
 
         public bool CanCreateOrder
@@ -183,7 +189,9 @@ namespace VirtoCommerce.Mobile.ViewModels
                 }));
             }
         }
+        #endregion
 
+        #region Constructor
         public CheckoutViewModel(ICartService cartService, IOrderService orderService)
         {
             _cartService = cartService;
@@ -193,5 +201,6 @@ namespace VirtoCommerce.Mobile.ViewModels
             ShippingMethods = _orderService.ShippingMethods().SelectMany(x => x.MethodRates).Select(x => new SelectViewModel<ShippingMethodRate>(x, _nextCommad)).ToArray();
             Customer = new Customer();
         }
+        #endregion
     }
 }

@@ -21,7 +21,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.ProductDetail
             var header = new StringBuilder();
             foreach (var word in words)
             {
-                header.Append(char.ToUpper(word[0]) + word.Substring(1).ToLower()+" ");
+                header.Append(char.ToUpper(word[0]) + word.Substring(1).ToLower() + " ");
             }
             _valueLabel.Text = value.Value;
             _headerLabel.Text = header.ToString();

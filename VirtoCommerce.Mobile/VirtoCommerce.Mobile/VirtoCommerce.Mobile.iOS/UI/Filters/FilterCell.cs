@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 using VirtoCommerce.Mobile.ViewModels;
 using VirtoCommerce.Mobile.iOS.Controls;
 
 namespace VirtoCommerce.Mobile.iOS.UI.Filters
 {
-    public class FilterCell:UITableViewCell
+    public class FilterCell : UITableViewCell
     {
         public const string CellId = "Filter";
         public const float CellHeight = 40;
@@ -33,7 +28,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
                 TextColor = Consts.ColorDark,
             };
             Add(_name);
-            
+
         }
         private void SelectChange()
         {
@@ -60,7 +55,7 @@ namespace VirtoCommerce.Mobile.iOS.UI.Filters
             //title
             _name.SizeToFit();
             var nameFrame = _name.Frame;
-            nameFrame.X = buttonFrame.Width + _padding+ buttonFrame.X;
+            nameFrame.X = buttonFrame.Width + _padding + buttonFrame.X;
             nameFrame.Y = CellHeight / 2 - nameFrame.Height / 2;
             nameFrame.Width = ContentView.Frame.Width - buttonFrame.Width - _padding * 2;
             _name.Frame = nameFrame;

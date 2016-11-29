@@ -1,21 +1,15 @@
-﻿using Foundation;
-using MvvmCross.Binding.BindingContext;
+﻿using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using MvvmCross.Platform.WeakSubscription;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using UIKit;
-using VirtoCommerce.Mobile.iOS.NativConvertors;
 using VirtoCommerce.Mobile.iOS.UI;
 using VirtoCommerce.Mobile.iOS.UI.Cart;
-using VirtoCommerce.Mobile.iOS.UI.Order;
 using VirtoCommerce.Mobile.Model;
 using VirtoCommerce.Mobile.ViewModels;
-using System.Linq;
-using Xamarin.Themes;
 
 namespace VirtoCommerce.Mobile.iOS.Views
 {
@@ -69,7 +63,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
         {
             var result = new List<TotalRowData>();
 
-            result.Add(new TotalRowData {
+            result.Add(new TotalRowData
+            {
                 Header = "Subtotal",
                 Value = CartViewModel.Cart?.FormattedSubTotal,
                 TextColor = Consts.ColorBlack,
@@ -146,7 +141,7 @@ namespace VirtoCommerce.Mobile.iOS.Views
         private UIView _infoView;
         private UIButton _chekoutButton;
         private UILabel _emptyMessageLabel;
-        
+
 
         private void CreateView()
         {
@@ -158,7 +153,8 @@ namespace VirtoCommerce.Mobile.iOS.Views
             _cartItems.ScrollEnabled = true;
             Add(_cartItems);
             //info view
-            _infoView = new UIView() {
+            _infoView = new UIView()
+            {
                 BackgroundColor = Consts.ColorSecondBg
             };
             Add(_infoView);
