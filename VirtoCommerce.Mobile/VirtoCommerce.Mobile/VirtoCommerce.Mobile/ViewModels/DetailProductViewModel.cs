@@ -80,8 +80,8 @@ namespace VirtoCommerce.Mobile.ViewModels
                     HideProperties = true;
                     break;
             }
-            RaisePropertyChanged("HideDescription");
-            RaisePropertyChanged("HideProperties");
+            RaisePropertyChanged(nameof(HideDescription));
+            RaisePropertyChanged(nameof(HideProperties));
 
         }
 

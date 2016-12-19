@@ -33,11 +33,12 @@ namespace VirtoCommerce.Mobile.ViewModels
         {
             if (_showCustomerInfo)
             {
-                return !(string.IsNullOrEmpty(Customer.Address) || string.IsNullOrEmpty(Customer.Apt) || string.IsNullOrEmpty(Customer.City) ||
-                    string.IsNullOrEmpty(Customer.Coutry) || string.IsNullOrEmpty(Customer.Email) ||
-                    string.IsNullOrEmpty(Customer.FirstName) ||
-                    string.IsNullOrEmpty(Customer.LastName) ||
-                    string.IsNullOrEmpty(Customer.PostalCode));
+                //return !(string.IsNullOrEmpty(Customer.Address) || string.IsNullOrEmpty(Customer.Apt) || string.IsNullOrEmpty(Customer.City) ||
+                //    string.IsNullOrEmpty(Customer.Coutry) || string.IsNullOrEmpty(Customer.Email) ||
+                //    string.IsNullOrEmpty(Customer.FirstName) ||
+                //    string.IsNullOrEmpty(Customer.LastName) ||
+                //    string.IsNullOrEmpty(Customer.PostalCode));
+                return CustomerFields().Any(String.IsNullOrEmpty);
             }
             if (_showShippingInfo)
             {
@@ -46,6 +47,18 @@ namespace VirtoCommerce.Mobile.ViewModels
             return PaymentMethods.FirstOrDefault(x => x.IsSelect) != null;
         }
         #endregion
+
+        public IEnumerable<string> CustomerFields()
+        {
+            yield return Customer.Address;
+            yield return Customer.Apt;
+            yield return Customer.City;
+            yield return Customer.Coutry;
+            yield return Customer.Email;
+            yield return Customer.FirstName;
+            yield return Customer.LastName;
+            yield return Customer.PostalCode;
+        }
 
         #region Properties
         public Customer Customer { set; get; }
@@ -69,8 +82,14 @@ namespace VirtoCommerce.Mobile.ViewModels
             get { return _showBackButton; }
         }
 
-        public bool ShowCustomerInfo {
-            set {
+        public bool ShowCustomerInfo
+        {
+            get
+            {
+                return _showCustomerInfo;
+            }
+            set
+            {
                 _showCustomerInfo = value;
                 if (value)
                 {
@@ -80,9 +99,7 @@ namespace VirtoCommerce.Mobile.ViewModels
                 }
                 RaisePropertyChanged();
             }
-            get {
-                return _showCustomerInfo;
-            }
+           
         }
         public bool ShowShippingInfo
         {
@@ -106,6 +123,7 @@ namespace VirtoCommerce.Mobile.ViewModels
 
         public bool ShowPaymentInfo
         {
+            get { return _showPaymentInfo; }
             set
             {
                 _showPaymentInfo = value;
@@ -117,7 +135,7 @@ namespace VirtoCommerce.Mobile.ViewModels
                 }
                 RaisePropertyChanged();
             }
-            get { return _showPaymentInfo; }
+           
         }
 
         public MvxCommand NextCommand
@@ -131,7 +149,7 @@ namespace VirtoCommerce.Mobile.ViewModels
                     if (ShowCustomerInfo)
                     {
                         ShowShippingInfo = true;
-                        
+
                         ShowBackButton = true;
                     }
                     else if (ShowShippingInfo)
@@ -141,7 +159,8 @@ namespace VirtoCommerce.Mobile.ViewModels
                     }
                     else
                     {
-                        _orderService.CreateOreder(new OrderCreateCreteria {
+                        _orderService.CreateOreder(new OrderCreateCreteria
+                        {
                             Cart = Cart,
                             Customer = Customer,
                             PaymentId = PaymentMethods.FirstOrDefault(x => x.IsSelect).Method.Id,
@@ -154,7 +173,8 @@ namespace VirtoCommerce.Mobile.ViewModels
             }
         }
 
-        public MvxCommand BackCommand {
+        public MvxCommand BackCommand
+        {
             get
             {
                 return _backCommnad ?? (_backCommnad = new MvxCommand(() =>

@@ -10,8 +10,6 @@ using VirtoCommerce.Domain.Pricing.Model.Search;
 using VirtoCommerce.Domain.Pricing.Services;
 using VirtoCommerce.Mobile.SyncModule.Web.Models;
 using VirtoCommerce.Platform.Core.Assets;
-using VirtoCommerce.PricingModule.Web.Model;
-using VirtoCommerce.PricingModule.Web.Converters;
 using System.Web.Http.Description;
 using VirtoCommerce.Mobile.SyncModule.Data.Services;
 using VirtoCommerce.Domain.Commerce.Services;
@@ -22,6 +20,7 @@ using VirtoCommerce.Domain.Order.Services;
 using VirtoCommerce.Domain.Order.Model;
 using VirtoCommerce.Domain.Customer.Services;
 using VirtoCommerce.Domain.Commerce.Model;
+using VirtoCommerce.Mobile.SyncModule.Web.Convertors;
 
 namespace VirtoCommerce.Mobile.SyncModule.Web.Controllers.Api
 {
