@@ -15,3 +15,4 @@ dealer network.
 - SQLLite
 - Visual Studio
 ![технологии](https://pp.vk.me/c639419/v639419978/dbce/d2WWSb_A1J4.jpg)
+![azure](http://vamsystems.com/Images/ContentImages/2015/1/windows-azure-cloud.png)
