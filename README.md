@@ -16,4 +16,4 @@ We welcome contributors to VCFMobile project. Follow the guide below to contribu
 - You’ll now have your own copy of that repository in your github account.
 - Make your changes to file. Don’t forget to test your code before the contribution! If our development team will  approve your contribution, it will be pulled to the appropriate branch.
 
-***Full rules you can find on Contribute to someone's repository.***
+***Full rules you can find on [Contribute to someone's repository](http://kbroman.org/github_tutorial/pages/fork.html).***
