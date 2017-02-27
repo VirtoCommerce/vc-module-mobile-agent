@@ -3,11 +3,6 @@
 Here you can find all the materials from 
 installing VCFMobile to customizing it. 
 
-# I am Dealer installation
-
-This document includes all items for Virto Commerce system installation and I am Dealer configuration. 
-To know more about Virto Commerce system [click here]()
-
 # Technology Stack
 - Xamarin
 - Virto Commerce platform
@@ -16,3 +11,16 @@ To know more about Virto Commerce system [click here]()
 - Visual Studio
 ![технологии](https://pp.vk.me/c639419/v639419978/dbce/d2WWSb_A1J4.jpg)
 ![azure](http://vamsystems.com/Images/ContentImages/2015/1/windows-azure-cloud.png)
+
+# I am Dealer installation
+
+This document contains all items for Virto Commerce system installation and I am Dealer initial configuration.
+The application consists of Virto Commerce module and includes three apps for Android, IOS and Windows platforms.
+To know more about Virto Commerce system you may [click here](https://virtocommerce.com/docs).
+
+# Virto Commerce module installation
+
+1. You have to download Virto Commerce module for I am Dealer app. [(Download)](https://github.com/VirtoCommerce)
+2. Go to Configuration→Modules→Advanced to install the module.
+![azure](http://www.picshare.ru/view/7943958/)
+3. Choose the previously downloaded module package and **click installation**.
