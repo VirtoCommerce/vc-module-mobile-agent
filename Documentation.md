@@ -3,11 +3,10 @@
 Here you can find all the materials from 
 installing VCFMobile to customizing it. 
 
-# Overview
+# I am Dealer installation
 
-VCFMobile is an application for enterpreneurs, 
-who want to start or to expand their business 
-dealer network. 
+This document includes all items for Virto Commerce system installation and I am Dealer configuration. 
+To know more about Virto Commerce system [click here]()
 
 # Technology Stack
 - Xamarin
