@@ -1,3 +1,7 @@
+# *I am Dealer* User Guide
+
+If you want to know how to use Virto Commerce click [here (Virto Commerce user guide)](https://virtocommerce.com/docs/vc2userguide).
+
 # *I am Dealer* Developer Guide
 
 Here you can find all the materials from 
