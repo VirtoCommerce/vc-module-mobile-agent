@@ -1,5 +1,6 @@
 # *I am Dealer* User Guide
 
+The main User information you can find here [PDF file](http://docdro.id/hjeVX47).
 If you want to know how to use Virto Commerce click [here (Virto Commerce user guide)](https://virtocommerce.com/docs/vc2userguide).
 
 # *I am Dealer* Developer Guide
